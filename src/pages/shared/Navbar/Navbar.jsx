@@ -3,12 +3,12 @@ import { Link, NavLink } from "react-router-dom";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const activeClass = "text-[#db3c26]";
+  const activeClass = "text-primary";
   const navItems = (
     <>
       <NavLink
         to={"/"}
-        className={`px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-[#db3c26]`}
+        className={`px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-primary`}
       >
         {({ isActive }) => (
           <span className={`${isActive ? activeClass : ""}`}>Join Slack</span>
@@ -16,7 +16,7 @@ export default function Navbar() {
       </NavLink>
       <NavLink
         to={"/dashboard"}
-        className={`px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-[#db3c26]`}
+        className={`px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-primary`}
       >
         {({ isActive }) => (
           <span className={`${isActive ? activeClass : ""}`}>
@@ -26,7 +26,7 @@ export default function Navbar() {
       </NavLink>
       <NavLink
         to={"/some"}
-        className={`px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-[#db3c26]`}
+        className={`px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-primary`}
       >
         {({ isActive }) => (
           <span className={`${isActive ? activeClass : ""}`}>Random Item</span>
@@ -34,7 +34,7 @@ export default function Navbar() {
       </NavLink>
       <NavLink
         to={"/some"}
-        className={`px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-[#db3c26]`}
+        className={`px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-primary`}
       >
         {({ isActive }) => (
           <span className={`${isActive ? activeClass : ""}`}>Experts</span>
@@ -53,12 +53,13 @@ export default function Navbar() {
             <div className="flex items-center justify-between">
               <div className="text-xl font-semibold text-gray-700">
                 <NavLink
+                  id="header"
                   to={""}
                   className="text-2xl font-bold text-gray-800 transition-colors duration-300 transform dark:text-white lg:text-3xl hover:text-gray-700 dark:hover:text-gray-300 flex items-center gap-2"
                 >
                   <img className="" src="../../../public/favicon.ico" alt="" />
                   <span>
-                    re<span className="text-[#db3c26]">BOOK</span>
+                    re<span className="text-primary">BOOK</span>
                   </span>
                 </NavLink>
               </div>
@@ -148,7 +149,7 @@ export default function Navbar() {
             </div>
 
             {isOpen && (
-              <div class="absolute right-0 z-20 w-1/2 px-6 py-4 transition-all duration-300 ease-in-out bg-white flex flex-col">
+              <div className="absolute right-0 z-20 w-1/2 px-6 py-4 transition-all duration-300 ease-in-out bg-white flex flex-col">
                 {navItems}
               </div>
             )}
