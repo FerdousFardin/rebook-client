@@ -1,8 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    function onWindowResize() {
+      setWindowWidth(window.innerWidth);
+    }
+    window.addEventListener("resize", onWindowResize);
+    return () => {
+      window.removeEventListener("resize", onWindowResize);
+    };
+  }, []);
   const activeClass = "text-primary";
   const navItems = (
     <>
@@ -11,25 +21,25 @@ export default function Navbar() {
         className={`px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-primary`}
       >
         {({ isActive }) => (
-          <span className={`${isActive ? activeClass : ""}`}>Join Slack</span>
+          <span className={`${isActive ? activeClass : ""}`}>Home</span>
         )}
       </NavLink>
-      <NavLink
-        to={"/dashboard"}
-        className={`px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-primary`}
-      >
-        {({ isActive }) => (
-          <span className={`${isActive ? activeClass : ""}`}>
-            Browse Topics
-          </span>
-        )}
-      </NavLink>
+      {"user.uid" && (
+        <NavLink
+          to={"/dashboard"}
+          className={`px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-primary`}
+        >
+          {({ isActive }) => (
+            <span className={`${isActive ? activeClass : ""}`}>Dashboard</span>
+          )}
+        </NavLink>
+      )}
       <NavLink
         to={"/some"}
         className={`px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-primary`}
       >
         {({ isActive }) => (
-          <span className={`${isActive ? activeClass : ""}`}>Random Item</span>
+          <span className={`${isActive ? activeClass : ""}`}>Blog</span>
         )}
       </NavLink>
       <NavLink
@@ -148,7 +158,7 @@ export default function Navbar() {
               </div>
             </div>
 
-            {isOpen && (
+            {windowWidth < 1024 && isOpen && (
               <div className="absolute right-0 z-20 w-1/2 px-6 py-4 transition-all duration-300 ease-in-out bg-white flex flex-col">
                 {navItems}
               </div>

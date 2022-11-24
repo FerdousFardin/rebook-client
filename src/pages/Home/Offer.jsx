@@ -1,3 +1,4 @@
+import { ShoppingCartIcon } from "@heroicons/react/24/solid";
 import React from "react";
 import PrimaryBtn from "../../components/Buttons/PrimaryBtn";
 
@@ -17,11 +18,9 @@ export default function Offer() {
               velit!
             </p>
             <div className="flex flex-wrap gap-6">
-              <PrimaryBtn>Shop Now</PrimaryBtn>
-              <a
-                href="#"
-                className="relative flex h-12 w-full items-center justify-center px-8 before:absolute before:inset-0 before:rounded-full before:border before:border-gray-200 before:bg-gray-50 before:bg-gradient-to-b before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 dark:before:border-gray-700 dark:before:bg-gray-800 sm:w-max"
-              ></a>
+              <PrimaryBtn className={"sm:w-max h-12 w-full"}>
+                Shop Now <ShoppingCartIcon className="w-6 h-6" />
+              </PrimaryBtn>
             </div>
           </div>
           <div className="grid grid-cols-5 grid-rows-4 gap-4 md:w-5/12 lg:w-6/12">

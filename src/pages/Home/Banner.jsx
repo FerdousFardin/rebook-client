@@ -22,7 +22,9 @@ export default function Banner() {
           </p>
 
           <div className="mt-8 flex flex-wrap gap-4 text-center">
-            <PrimaryBtn to={`/categories`}>Explore Now</PrimaryBtn>
+            <PrimaryBtn className={"sm:w-max h-12 w-full"} to={`/categories`}>
+              Explore Now <ShoppingCartIcon className="w-6 h-6" />
+            </PrimaryBtn>
           </div>
         </div>
       </div>
