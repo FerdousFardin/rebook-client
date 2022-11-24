@@ -36,7 +36,6 @@ export default function HomeCategories() {
           {/* <!-- product - start --> */}
           {categories.map(({ _id, name, img }) => (
             <Link
-              preventScrollReset={false}
               key={_id}
               to={`/category/${_id}`}
               className="group h-80 flex items-end bg-gray-100 rounded-lg overflow-hidden shadow-lg relative p-4"

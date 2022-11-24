@@ -1,5 +1,13 @@
+import {
+  ArrowRightIcon,
+  CheckIcon,
+  HandRaisedIcon,
+  MapPinIcon,
+} from "@heroicons/react/24/solid";
+import { CurrencyDollarIcon } from "@heroicons/react/24/outline";
 import React from "react";
 import { useLoaderData } from "react-router-dom";
+import { format } from "date-fns";
 
 export default function CategoryProduct() {
   const products = useLoaderData();
@@ -36,14 +44,47 @@ export default function CategoryProduct() {
                 <h3 class="text-2xl font-semibold text-gray-800 dark:text-white">
                   {product.name}
                 </h3>
-                <h3 class="text-lg font-semibold text-gray-700 dark:text-white">
+                <h3 class="text-lg font-thin text-gray-700 dark:text-white">
                   by {product.writer}
+                </h3>
+                <div className="flex  gap-5">
+                  <h3 class="text-lg flex items-center gap-1 font-thin text-gray-700 dark:text-white">
+                    <MapPinIcon className="w-5 h-5" />
+                    {product.location}
+                  </h3>
+                  <h3 class="text-lg flex items-center gap-1 font-thin text-gray-700 dark:text-white">
+                    <CurrencyDollarIcon className="h-5 w-5" />
+                    {product.orginalPrice}
+                    <small className="text-primary-100">(Original Price)</small>
+                  </h3>
+                  <h3 class="text-lg flex items-center gap-1 font-thin text-gray-700 dark:text-white">
+                    <HandRaisedIcon className="h-5 w-5" />
+                    {product.yearsOfUse} years
+                  </h3>
+                </div>
+                <h3 class="text-lg flex items-center gap-1 font-thin text-gray-500 dark:text-white">
+                  Listed at {format(product.date, "PP")} by{" "}
+                  <strong className="hover:underline cursor-pointer hover:text-primary text-gray-800">
+                    {product.seller}
+                  </strong>
+                  {product.isVerified && (
+                    <span className="text-xs font-thin bg-blue-500 rounded-xl px-1 py-0.5 text-white">
+                      <CheckIcon className="h-3 w-3 inline-block" /> verified
+                      seller
+                    </span>
+                  )}
                 </h3>
                 <p class="mt-6 mb-8 text-gray-600 dark:text-gray-300">
                   {product.description.slice(0, 150)}...
                 </p>
-                <a class="inline-block" href="#">
-                  <span class="text-primary">Book Now</span>
+                <a
+                  class="inline-block hover:translate-x-2 duration-300"
+                  href="#"
+                >
+                  <span class="text-primary flex gap-1 items-center">
+                    Book Now for <strong>${product.resalePrice}</strong>
+                    <ArrowRightIcon className="h-5 w-5 text-primary" />
+                  </span>
                 </a>
               </div>
             </div>
