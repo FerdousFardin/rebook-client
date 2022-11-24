@@ -14,42 +14,6 @@ export default function HomeCategories() {
         res.json()
       ),
   });
-  const handleBook = (e) => {
-    e.preventDefault();
-    const name = e.target.name.value;
-    const writer = e.target.writer.value;
-    const description = e.target.description.value;
-    const category = e.target.category.value;
-    const categoryId = e.target.categoryId.value;
-    const img = e.target.img.value;
-    const orginalPrice = e.target.orginalPrice.value;
-    const resalePrice = e.target.resalelPrice.value;
-    const yearsOfUse = e.target.useTime.value;
-    const date = Date.now();
-    // console.log();
-    fetch(`${import.meta.env.VITE_API_URL}/products`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        name,
-        writer,
-        category,
-        categoryId,
-        description,
-        img,
-        orginalPrice,
-        resalePrice,
-        yearsOfUse,
-        date,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.acknowledged) alert("success");
-      });
-  };
   if (isLoading) return <div className="text-7xl">Loading</div>;
   return (
     <div className="bg-white py-6 sm:py-8 lg:py-12">
@@ -72,8 +36,9 @@ export default function HomeCategories() {
           {/* <!-- product - start --> */}
           {categories.map(({ _id, name, img }) => (
             <Link
+              preventScrollReset={false}
               key={_id}
-              to={`/categories/${_id}`}
+              to={`/category/${_id}`}
               className="group h-80 flex items-end bg-gray-100 rounded-lg overflow-hidden shadow-lg relative p-4"
             >
               <img
@@ -94,24 +59,6 @@ export default function HomeCategories() {
             </Link>
           ))}
           {/* <!-- product - end --> */}
-          <form onSubmit={handleBook}>
-            <input type="text" name="name" placeholder="name" />
-            <input type="text" name="writer" placeholder="writer" />
-            <input type="text" name="seller" placeholder="seller" />
-            <input type="text" name="description" placeholder="desc" />
-            <input type="text" name="category" placeholder="cate" />
-            <input type="text" name="categoryId" placeholder="cateId" />
-            <input type="text" name="condition" placeholder="condition" />
-            <input type="text" name="orginalPrice" placeholder="o price" />
-            <input type="text" name="resalelPrice" placeholder="r price" />
-            <input type="text" name="useTime" placeholder="use" />
-            <input type="text" name="img" placeholder="img" />
-            <input
-              className="bg-slate-100 p-2"
-              type="submit"
-              value={"submit"}
-            />
-          </form>
         </div>
       </div>
     </div>
