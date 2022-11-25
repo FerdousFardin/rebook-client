@@ -1,13 +1,16 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
+import useToken from "../../hooks/useToken";
 
 export default function SignUp() {
   const { signupUser, loading, setLoading, googleLogin } =
     useContext(AuthContext);
   const [signUpErrors, setSignUpErrors] = useState("");
+  const [sendToken, setSendToken] = useState("");
+  const [token] = useToken({ email: sendToken });
   const {
     handleSubmit,
     register,
@@ -18,7 +21,10 @@ export default function SignUp() {
     "flex justify-center w-full px-6 py-3 text-white bg-primary rounded-md md:w-auto md:mx-2 <focus:outline-none></focus:outline-none>";
   const inActiveClass =
     "flex justify-center w-full px-6 py-3 mt-4 text-primary border border-primary rounded-md md:mt-0 md:w-auto md:mx-2 dark:border-primary dark:text-primary/25 focus:outline-none";
-
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  if (token) navigate(from, { replace: true });
   const handleSignup = (data, e) => {
     setSignUpErrors("");
     const { password, confirmPassword, email } = data;
@@ -57,7 +63,9 @@ export default function SignUp() {
                   console.log(res);
 
                   if (res.data.acknowledged) {
+                    setSendToken(userInfo.email);
                     e.reset();
+                    setSendToken({ email });
                   }
                 });
             }
@@ -68,6 +76,36 @@ export default function SignUp() {
         setSignUpErrors(er.code);
         setLoading(false);
       });
+  };
+  const handleGoogle = () => {
+    googleLogin()
+      .then((res) => {
+        if (res.user) {
+          console.log(res.user);
+          const userInfo = {
+            name: res.user.displayName,
+            email: res.user.email,
+            photoURL: res.user.photoURL,
+            role: ["buyer"],
+          };
+          axios
+            .post(`${import.meta.env.VITE_API_URL}/users`, userInfo)
+            .then((res) => {
+              // console.log(res.data);
+              if (res.data.acknowledged) {
+                alert("signed in successfully.");
+                setSendToken({ email: userInfo.email });
+              }
+            })
+            .catch((er) => {
+              console.error(er);
+            });
+        }
+      })
+      .catch((er) => {
+        console.error(er);
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -285,9 +323,10 @@ export default function SignUp() {
               </a>
             </div>
             <div className="w-1/2">
-              <a
-                href="#"
-                class="flex items-center justify-center mt-5 px-6 py-3 text-gray-600 transition-colors duration-300 transform bg-gray-100 border rounded-lg dark:border-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600"
+              <button
+                disabled={loading}
+                onClick={handleGoogle}
+                class="flex w-full items-center justify-center mt-5 px-6 py-3 text-gray-600 transition-colors duration-300 transform bg-gray-100 border disabled:bg-gray-800 disabled:text-white disabled:cursor-not-allowed rounded-lg dark:border-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600"
               >
                 <svg class="w-6 h-6 mx-2" viewBox="0 0 40 40">
                   <path
@@ -308,8 +347,12 @@ export default function SignUp() {
                   />
                 </svg>
 
-                <span class="mx-2">Sign in with Google</span>
-              </a>
+                <span class="mx-2">
+                  {loading
+                    ? "Signing in with Google..."
+                    : "Sign in with Google"}
+                </span>
+              </button>
             </div>
             <div className="w-1/2 text-gray-700 mt-5">
               Already have an account?{" "}

@@ -1,52 +1,65 @@
+import axios from "axios";
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import PrimaryBtn from "../../components/Buttons/PrimaryBtn";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
+import useToken from "../../hooks/useToken";
 
 export default function Login() {
-  const { loginUser, loading, setLoading } = useContext(AuthContext);
+  const { loginUser, loading, setLoading, googleLogin } =
+    useContext(AuthContext);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  const navigate = useNavigate();
   const handleSignIn = (data, e) => {
     // console.log(data);
     const { email, password } = data;
     loginUser(email, password)
       .then((res) => {
         console.log(res.user);
+        useToken({ email: res.user.email });
+        navigate(from, { replace: true });
       })
       .catch((er) => {
         console.error(er);
+      })
+      .finally(() => {
         setLoading(false);
       });
+  };
+  const handleGoogle = () => {
+    googleLogin().then((res) => {
+      const userInfo = {
+        name: res.user.displayName,
+        email: res.user.email,
+        photoURL: res.user.photoURL,
+        role: ["buyer"],
+      };
+      axios
+        .post(`${import.meta.env.VITE_API_URL}/users`, userInfo)
+        .then((res) => {
+          if (res.data.acknowledged) {
+            useToken({ email: userInfo.email });
+            alert("signed in successfully.");
+          }
+        });
+    });
   };
   return (
     <div class="m-auto xl:container px-12 sm:px-0 mx-auto">
       <div class="mx-auto h-full sm:w-max">
-        <div class="m-auto  py-12">
-          <div class="space-y-4">
-            <a href="">
-              <img
-                src="images/tailus.svg"
-                class="w-40 dark:hidden"
-                alt="tailus logo"
-              />
-              <img
-                src="images/logo.svg"
-                class="w-40 hidden dark:block"
-                alt="tailus logo"
-              />
-            </a>
-          </div>
-          <div class="mt-12 rounded-3xl border bg-gray-50 dark:border-gray-700 dark:bg-gray-800 -mx-6 sm:-mx-10 p-8 sm:p-10">
+        <div class="m-auto  py-12 ">
+          <div class="mt-12 rounded-3xl border bg-slate-50 dark:border-gray-700 dark:bg-gray-800 -mx-6 sm:-mx-10 p-8 sm:p-10">
             <h3 class="text-2xl font-semibold text-gray-700 dark:text-white">
               Login to your account
             </h3>
             <div class="mt-12 flex flex-wrap  gap-6 ">
-              <button class="w-full h-11 rounded-full border hover:bg-gray-100 border-gray-300/75 bg-white px-6 transition active:bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-800 dark:hover:border-gray-700 ">
+              <button class="w-full h-11 rounded-full border hover:bg-gray-200 border-gray-300/75 bg-white px-6 transition active:bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-800 dark:hover:border-gray-700 ">
                 <div class="w-full mx-auto flex items-center justify-center space-x-4 ">
                   <svg class="w-5 h-5 " viewBox="0 0 40 40">
                     <path

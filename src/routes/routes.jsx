@@ -4,6 +4,7 @@ import CategoryProduct from "../pages/CategoryProducts/CategoryProduct";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import SignUp from "../pages/SignUp/SignUp";
+import PrivateRoute from "./PrivateRoute/PrivateRoute";
 
 export const routes = createBrowserRouter([
   {
@@ -13,7 +14,11 @@ export const routes = createBrowserRouter([
       { path: "/", element: <Home /> },
       {
         path: "/category/:id",
-        element: <CategoryProduct />,
+        element: (
+          <PrivateRoute>
+            <CategoryProduct />
+          </PrivateRoute>
+        ),
         loader: ({ params }) =>
           fetch(
             `${import.meta.env.VITE_API_URL}/products?categoryId=${params.id}`
