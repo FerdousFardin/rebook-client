@@ -1,9 +1,53 @@
 import { Transition } from "@headlessui/react";
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Fragment } from "react";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthProvider";
 
-export default function BookModal({ isOpen, setIsOpen, Dialog }) {
+export default function BookModal({
+  isOpen,
+  setIsOpen,
+  Dialog,
+  selectedProduct: { name, _id, category, location, resalePrice },
+}) {
+  const { user } = useContext(AuthContext);
+  const [uploading, setUploading] = useState(false);
+  const { handleSubmit, register, formState: errors } = useForm();
+  const handleBooking = (data, e) => {
+    setUploading(true);
+    // console.log(data);
+    const { mobile, location: userLocation } = data;
+    console.log("first");
+    const bookingInfo = {
+      name,
+      productId: _id,
+      category,
+      resalePrice,
+      customerName: user?.displayName || "No Name",
+      customerEmail: user?.email,
+      mobile,
+      location: userLocation || location,
+    };
+    fetch(`${import.meta.env.VITE_API_URL}/bookings`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        authorization: `bearer ${localStorage.getItem("rebookToken")}`,
+      },
+      body: JSON.stringify(bookingInfo),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          alert("added to bookings");
+          setIsOpen(false);
+        }
+      })
+      .finally(() => {
+        setUploading(false);
+      });
+  };
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
@@ -50,7 +94,7 @@ export default function BookModal({ isOpen, setIsOpen, Dialog }) {
 
                 {/* modal body start*/}
                 <div class="max-w-2xl mx-auto bg-white p-16">
-                  <form>
+                  <form onSubmit={handleSubmit(handleBooking)}>
                     <div class="grid gap-6 mb-6 lg:grid-cols-2">
                       <div>
                         <label
@@ -60,11 +104,12 @@ export default function BookModal({ isOpen, setIsOpen, Dialog }) {
                           Full name
                         </label>
                         <input
+                          {...register("customerName", { required: false })}
                           type="text"
                           id="name"
-                          class="text-white border bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full max-w-sm px-5 py-2.5  focus-visible:ring-primary/30 focus-visible:ring-offset-1"
-                          defaultValue={""}
-                          required
+                          class="border bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full max-w-sm px-5 py-2.5  focus-visible:ring-primary/30 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:placeholder:text-black"
+                          placeholder={user?.displayName || "N/A"}
+                          disabled={true}
                         />
                       </div>
                       <div>
@@ -75,10 +120,12 @@ export default function BookModal({ isOpen, setIsOpen, Dialog }) {
                           Book Name
                         </label>
                         <input
+                          {...register("productName", { required: false })}
                           type="text"
                           id="bookName"
-                          class="text-white border bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full max-w-sm px-5 py-2.5  focus-visible:ring-primary/30 focus-visible:ring-offset-1"
-                          required
+                          class="border bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full max-w-sm px-5 py-2.5  focus-visible:ring-primary/30 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:placeholder:text-black"
+                          placeholder={name}
+                          disabled={true}
                         />
                       </div>
                       <div>
@@ -89,12 +136,12 @@ export default function BookModal({ isOpen, setIsOpen, Dialog }) {
                           Mobile number
                         </label>
                         <input
+                          {...register("mobile", { required: false })}
                           type="tel"
                           id="phone"
-                          class="text-white border bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full max-w-sm px-5 py-2.5  focus-visible:ring-primary/30 focus-visible:ring-offset-1"
-                          placeholder="123-45-678"
-                          pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-                          required
+                          class="border bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full max-w-sm px-5 py-2.5  focus-visible:ring-primary/30 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:placeholder:text-black"
+                          placeholder="017123 456789"
+                          pattern="[0-9]{11}"
                         />
                       </div>
                       <div>
@@ -105,42 +152,64 @@ export default function BookModal({ isOpen, setIsOpen, Dialog }) {
                           Location
                         </label>
                         <input
+                          {...register("location", { required: false })}
                           type="text"
                           id="location"
-                          class="text-white border bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full max-w-sm px-5 py-2.5  focus-visible:ring-primary/30 focus-visible:ring-offset-1"
-                          defaultValue={""}
-                          required
+                          class="border bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full max-w-sm px-5 py-2.5  focus-visible:ring-primary/30 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:placeholder:text-black"
+                          placeholder={location}
+                        />
+                      </div>
+                      <div>
+                        <label
+                          for="price"
+                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        >
+                          Price
+                        </label>
+                        <input
+                          {...register("price", { required: false })}
+                          type="text"
+                          id="price"
+                          class="border bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full max-w-sm px-5 py-2.5  focus-visible:ring-primary/30 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:placeholder:text-black"
+                          placeholder={`$${resalePrice}`}
+                          disabled={true}
+                        />
+                      </div>
+                      <div>
+                        <label
+                          for="email"
+                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        >
+                          Email address
+                        </label>
+                        <input
+                          {...register("customerEmail", {
+                            required: false,
+                          })}
+                          type="email"
+                          id="email"
+                          class="border bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full max-w-sm px-5 py-2.5  focus-visible:ring-primary/30 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:placeholder:text-black"
+                          placeholder={user?.email}
+                          disabled={true}
                         />
                       </div>
                     </div>
-                    <div class="mb-6">
-                      <label
-                        for="email"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                      >
-                        Email address
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        class="text-white border bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full max-w-sm px-5 py-2.5  focus-visible:ring-primary/30 focus-visible:ring-offset-1"
-                        placeholder="john.doe@company.com"
-                        required
-                      />
-                    </div>
+
                     <div className="flex gap-5">
                       <button
+                        disabled={uploading}
                         type="submit"
-                        class="text-white bg-primary-100 hover:bg-primary focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center focus-visible:ring-primary/10 focus-visible:ring-offset-2"
+                        class="text-white bg-primary-100 hover:bg-primary focus:ring-4 focus:outline-none focus:ring-primary
+                        disabled:bg-primary/50 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center focus-visible:ring-primary/10 focus-visible:ring-offset-2"
                       >
-                        Submit
+                        {uploading ? "Booking..." : "Book Now"}
                       </button>
                       <button
                         type="button"
                         className="inline-flex justify-center rounded-md border border-transparent bg-primary/10 px-4 py-2 text-sm font-medium text-primary-100 hover:bg-primary/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
                         onClick={() => setIsOpen(false)}
                       >
-                        Got it, thanks!
+                        Cancel
                       </button>
                     </div>
                   </form>

@@ -5,7 +5,7 @@ import {
   MapPinIcon,
 } from "@heroicons/react/24/solid";
 import { CurrencyDollarIcon } from "@heroicons/react/24/outline";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import { format } from "date-fns";
 import { Dialog } from "@headlessui/react";
@@ -14,6 +14,11 @@ import BookModal from "./BookModal";
 export default function CategoryProduct() {
   const products = useLoaderData();
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState({});
+  const handleModal = (product) => {
+    setSelectedProduct(product);
+    setIsOpen(true);
+  };
   return (
     <div class="py-12">
       <div class="xl:container m-auto px-6 text-gray-600 md:px-12 xl:px-6">
@@ -78,21 +83,21 @@ export default function CategoryProduct() {
                   )}
                 </h3>
                 <p class="mt-6 mb-8 text-gray-600 dark:text-gray-300">
-                  {product.description.slice(0, 150)}...
+                  {product.description}
                 </p>
-                <a
+                <button
                   class="inline-block hover:translate-x-2 duration-300"
-                  onClick={() => setIsOpen(true)}
+                  onClick={() => handleModal(product)}
                 >
                   <span class="text-primary flex gap-1 items-center">
                     Book Now for <strong>${product.resalePrice}</strong>
                     <ArrowRightIcon className="h-5 w-5 text-primary" />
                   </span>
-                </a>
+                </button>
               </div>
             </div>
           ))}
-          <BookModal {...{ isOpen, setIsOpen, Dialog }} />
+          <BookModal {...{ isOpen, setIsOpen, Dialog, selectedProduct }} />
         </div>
       </div>
     </div>

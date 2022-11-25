@@ -21,9 +21,7 @@ export default function AuthProvider({ children }) {
       setLoading(false);
     });
 
-    return () => {
-      unsubscribe();
-    };
+    return () => unsubscribe();
   }, []);
   const loginUser = (email, password) => {
     setLoading(true);
@@ -46,9 +44,9 @@ export default function AuthProvider({ children }) {
   return (
     <AuthContext.Provider
       value={{
+        user,
         loading,
         setLoading,
-        user,
         loginUser,
         signupUser,
         googleLogin,

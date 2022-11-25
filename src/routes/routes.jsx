@@ -21,7 +21,12 @@ export const routes = createBrowserRouter([
         ),
         loader: ({ params }) =>
           fetch(
-            `${import.meta.env.VITE_API_URL}/products?categoryId=${params.id}`
+            `${import.meta.env.VITE_API_URL}/products?categoryId=${params.id}`,
+            {
+              headers: {
+                authorization: `bearer ${localStorage.getItem("rebookToken")}`,
+              },
+            }
           ),
       },
       {
