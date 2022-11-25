@@ -1,11 +1,13 @@
 import axios from "axios";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
 import useToken from "../../hooks/useToken";
 
 export default function Login() {
+  const [userEmail, setUserEmail] = useState("");
+  const [loginErr, setLoginErr] = useState("");
   const { loginUser, loading, setLoading, googleLogin } =
     useContext(AuthContext);
   const {
@@ -16,17 +18,24 @@ export default function Login() {
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
   const navigate = useNavigate();
+  const [token] = useToken(userEmail);
+  if (token) {
+    navigate(from, { replace: true });
+  }
   const handleSignIn = (data, e) => {
+    setUserEmail("");
+    setLoginErr("");
     // console.log(data);
     const { email, password } = data;
     loginUser(email, password)
       .then((res) => {
         console.log(res.user);
-        useToken({ email: res.user.email });
-        navigate(from, { replace: true });
+        setUserEmail({ email });
+        e.target.reset();
       })
       .catch((er) => {
         console.error(er);
+        setLoginErr(er.code);
       })
       .finally(() => {
         setLoading(false);
@@ -44,8 +53,8 @@ export default function Login() {
         .post(`${import.meta.env.VITE_API_URL}/users`, userInfo)
         .then((res) => {
           if (res.data.acknowledged) {
-            useToken({ email: userInfo.email });
             alert("signed in successfully.");
+            setUserEmail({ email: userInfo.email });
           }
         });
     });
@@ -59,7 +68,10 @@ export default function Login() {
               Login to your account
             </h3>
             <div class="mt-12 flex flex-wrap  gap-6 ">
-              <button class="w-full h-11 rounded-full border hover:bg-gray-200 border-gray-300/75 bg-white px-6 transition active:bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-800 dark:hover:border-gray-700 ">
+              <button
+                onClick={handleGoogle}
+                class="w-full h-11 rounded-full border hover:bg-gray-200 border-gray-300/75 bg-white px-6 transition active:bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-800 dark:hover:border-gray-700 "
+              >
                 <div class="w-full mx-auto flex items-center justify-center space-x-4 ">
                   <svg class="w-5 h-5 " viewBox="0 0 40 40">
                     <path
