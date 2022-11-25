@@ -109,40 +109,42 @@ export default function SignUp() {
   };
 
   return (
-    <section class="bg-white dark:bg-gray-900">
-      <div class="flex justify-center min-h-screen">
+    <section className="bg-white dark:bg-gray-900">
+      <div className="flex justify-center min-h-screen">
         <div
-          class="hidden bg-cover lg:block lg:w-2/5"
+          className="hidden bg-cover lg:block lg:w-2/5"
           style={{
             backgroundImage:
               "url(https://images.unsplash.com/photo-1494621930069-4fd4b2e24a11?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=715&q=80)",
           }}
         ></div>
 
-        <div class="flex items-center w-full max-w-3xl p-8 mx-auto lg:px-12 lg:w-3/5">
-          <div class="w-full">
-            <h1 class="text-2xl font-semibold tracking-wider text-gray-800 capitalize dark:text-white">
+        <div className="flex items-center w-full max-w-3xl p-8 mx-auto lg:px-12 lg:w-3/5">
+          <div className="w-full">
+            <h1 className="text-2xl font-semibold tracking-wider text-gray-800 capitalize dark:text-white">
               Get your free account now.
             </h1>
 
-            <p class="mt-4 text-gray-500 dark:text-gray-400">
+            <p className="mt-4 text-gray-500 dark:text-gray-400">
               Let’s get you all set up so you can verify your personal account
               and begin setting up your profile.
             </p>
 
-            <div class="mt-6">
-              <h1 class="text-gray-500 dark:text-gray-300">
+            <div className="mt-6">
+              <h1 className="text-gray-500 dark:text-gray-300">
                 Select type of account
               </h1>
 
-              <div class="mt-3 md:flex md:items-center md:-mx-2">
+              <div className="mt-3 md:flex md:items-center md:-mx-2">
                 <button
                   onClick={() => setAccountType("buyer")}
-                  class={accountType === "buyer" ? activeClass : inActiveClass}
+                  className={
+                    accountType === "buyer" ? activeClass : inActiveClass
+                  }
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="w-6 h-6"
+                    className="w-6 h-6"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -154,16 +156,18 @@ export default function SignUp() {
                       d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
                     />
                   </svg>
-                  <span class="mx-2">buyer</span>
+                  <span className="mx-2">buyer</span>
                 </button>
 
                 <button
                   onClick={() => setAccountType("seller")}
-                  class={accountType === "seller" ? activeClass : inActiveClass}
+                  className={
+                    accountType === "seller" ? activeClass : inActiveClass
+                  }
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="w-6 h-6"
+                    className="w-6 h-6"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -176,17 +180,17 @@ export default function SignUp() {
                     />
                   </svg>
 
-                  <span class="mx-2">seller</span>
+                  <span className="mx-2">seller</span>
                 </button>
               </div>
             </div>
 
             <form
               onSubmit={handleSubmit(handleSignup)}
-              class="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2"
+              className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2"
             >
               <div>
-                <label class="block mb-2 text-sm text-gray-600 dark:text-gray-200">
+                <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
                   First Name
                 </label>
                 <input
@@ -195,12 +199,12 @@ export default function SignUp() {
                   })}
                   type="text"
                   placeholder="John"
-                  class="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-primary dark:focus:border-primary focus:ring-primary focus:outline-none focus:ring focus:ring-opacity-40"
+                  className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-primary dark:focus:border-primary focus:ring-primary focus:outline-none focus:ring focus:ring-opacity-40"
                 />
               </div>
 
               <div>
-                <label class="block mb-2 text-sm text-gray-600 dark:text-gray-200">
+                <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
                   Last name
                 </label>
                 <input
@@ -209,21 +213,21 @@ export default function SignUp() {
                   })}
                   type="text"
                   placeholder="Snow"
-                  class="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-primary dark:focus:border-primary focus:ring-primary focus:outline-none focus:ring focus:ring-opacity-40"
+                  className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-primary dark:focus:border-primary focus:ring-primary focus:outline-none focus:ring focus:ring-opacity-40"
                 />
               </div>
 
               <div>
-                <p class="block mb-2 text-sm text-gray-600 dark:text-gray-200">
+                <p className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
                   Upload Profile Picture
                 </p>
                 <label
                   for="dropzone-file"
-                  class="flex  items-center w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-primary dark:focus:border-primary focus:ring-primary focus:outline-none focus:ring focus:ring-opacity-40"
+                  className="flex  items-center w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-primary dark:focus:border-primary focus:ring-primary focus:outline-none focus:ring focus:ring-opacity-40"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="w-6 h-6 text-gray-300 dark:text-gray-500"
+                    className="w-6 h-6 text-gray-300 dark:text-gray-500"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -236,7 +240,7 @@ export default function SignUp() {
                     />
                   </svg>
 
-                  <h2 class="mx-3 text-gray-400">Profile Photo</h2>
+                  <h2 className="mx-3 text-gray-400">Profile Photo</h2>
 
                   <input
                     {...register("image", {
@@ -244,13 +248,13 @@ export default function SignUp() {
                     })}
                     id="dropzone-file"
                     type="file"
-                    class="invisible h-0 w-0"
+                    className="invisible h-0 w-0"
                   />
                 </label>
               </div>
 
               <div>
-                <label class="block mb-2 text-sm text-gray-600 dark:text-gray-200">
+                <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
                   Email address
                 </label>
                 <input
@@ -259,12 +263,12 @@ export default function SignUp() {
                   })}
                   type="email"
                   placeholder="johnsnow@example.com"
-                  class="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-primary dark:focus:border-primary focus:ring-primary focus:outline-none focus:ring focus:ring-opacity-40"
+                  className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-primary dark:focus:border-primary focus:ring-primary focus:outline-none focus:ring focus:ring-opacity-40"
                 />
               </div>
 
               <div>
-                <label class="block mb-2 text-sm text-gray-600 dark:text-gray-200">
+                <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
                   Password
                 </label>
                 <input
@@ -273,12 +277,12 @@ export default function SignUp() {
                   })}
                   type="password"
                   placeholder="Enter your password"
-                  class="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-primary dark:focus:border-primary focus:ring-primary focus:outline-none focus:ring focus:ring-opacity-40"
+                  className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-primary dark:focus:border-primary focus:ring-primary focus:outline-none focus:ring focus:ring-opacity-40"
                 />
               </div>
 
               <div>
-                <label class="block mb-2 text-sm text-gray-600 dark:text-gray-200">
+                <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
                   Confirm password
                 </label>
                 <input
@@ -287,7 +291,7 @@ export default function SignUp() {
                   })}
                   type="password"
                   placeholder="Enter your password"
-                  class="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-primary dark:focus:border-primary focus:ring-primary focus:outline-none focus:ring focus:ring-opacity-40"
+                  className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-primary dark:focus:border-primary focus:ring-primary focus:outline-none focus:ring focus:ring-opacity-40"
                 />
               </div>
 
@@ -295,13 +299,13 @@ export default function SignUp() {
                 <button
                   disabled={loading}
                   type="submit"
-                  class="flex items-center justify-between w-full px-6 py-3 text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-black rounded-md disabled:cursor-not-allowed disabled:bg-gray-400 hover:bg-primary focus:outline-none focus:ring focus:ring-primary-100/20 focus:ring-opacity-50"
+                  className="flex items-center justify-between w-full px-6 py-3 text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-black rounded-md disabled:cursor-not-allowed disabled:bg-gray-400 hover:bg-primary focus:outline-none focus:ring focus:ring-primary-100/20 focus:ring-opacity-50"
                 >
                   <span>{loading ? "Signing Up..." : "Sign Up"}</span>
 
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="w-5 h-5 rtl:-scale-x-100"
+                    className="w-5 h-5 rtl:-scale-x-100"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                   >
@@ -317,7 +321,7 @@ export default function SignUp() {
             <div className="w-1/2 text-center my-5">
               <a
                 href="#"
-                class="text-xs text-center text-gray-500 uppercase dark:text-gray-400 hover:underline"
+                className="text-xs text-center text-gray-500 uppercase dark:text-gray-400 hover:underline"
               >
                 or login with Social Media
               </a>
@@ -326,9 +330,9 @@ export default function SignUp() {
               <button
                 disabled={loading}
                 onClick={handleGoogle}
-                class="flex w-full items-center justify-center mt-5 px-6 py-3 text-gray-600 transition-colors duration-300 transform bg-gray-100 border disabled:bg-gray-800 disabled:text-white disabled:cursor-not-allowed rounded-lg dark:border-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600"
+                className="flex w-full items-center justify-center mt-5 px-6 py-3 text-gray-600 transition-colors duration-300 transform bg-gray-100 border disabled:bg-gray-800 disabled:text-white disabled:cursor-not-allowed rounded-lg dark:border-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600"
               >
-                <svg class="w-6 h-6 mx-2" viewBox="0 0 40 40">
+                <svg className="w-6 h-6 mx-2" viewBox="0 0 40 40">
                   <path
                     d="M36.3425 16.7358H35V16.6667H20V23.3333H29.4192C28.045 27.2142 24.3525 30 20 30C14.4775 30 10 25.5225 10 20C10 14.4775 14.4775 9.99999 20 9.99999C22.5492 9.99999 24.8683 10.9617 26.6342 12.5325L31.3483 7.81833C28.3717 5.04416 24.39 3.33333 20 3.33333C10.7958 3.33333 3.33335 10.7958 3.33335 20C3.33335 29.2042 10.7958 36.6667 20 36.6667C29.2042 36.6667 36.6667 29.2042 36.6667 20C36.6667 18.8825 36.5517 17.7917 36.3425 16.7358Z"
                     fill="#FFC107"
@@ -347,7 +351,7 @@ export default function SignUp() {
                   />
                 </svg>
 
-                <span class="mx-2">
+                <span className="mx-2">
                   {loading
                     ? "Signing in with Google..."
                     : "Sign in with Google"}
@@ -356,8 +360,8 @@ export default function SignUp() {
             </div>
             <div className="w-1/2 text-gray-700 mt-5">
               Already have an account?{" "}
-              <Link to={"/login"} class="-ml-3 w-max p-3">
-                <span class="text-sm tracking-wide text-primary dark:text-primary">
+              <Link to={"/login"} className="-ml-3 w-max p-3">
+                <span className="text-sm tracking-wide text-primary dark:text-primary">
                   Sign In here
                 </span>
               </Link>

@@ -36,7 +36,7 @@ export default function Navbar() {
       </NavLink>
       {user?.uid && (
         <NavLink
-          to={"/dashboard"}
+          to={"/dashboard/my-orders"}
           className={`px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-primary`}
         >
           {({ isActive }) => (
@@ -61,8 +61,22 @@ export default function Navbar() {
         )}
       </NavLink>
       {user?.uid ? (
-        <PrimaryBtn className={"h-10"} onClick={handleSignout}>
-          {loading ? "Signing Out..." : "Sign Out"}
+        <PrimaryBtn className={"h-12"} onClick={handleSignout}>
+          {loading ? "Signing Out..." : "Sign Out"}{" "}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+            />
+          </svg>
         </PrimaryBtn>
       ) : (
         <PrimaryBtn className={"h-10"} to={"/login"}>
@@ -75,7 +89,7 @@ export default function Navbar() {
     <>
       <nav
         // x-data="{ isOpen: false }"
-        className="relative bg-white shadow dark:bg-gray-800"
+        className="sticky top-0 min-h-16 z-50 border-b bg-white dark:bg-gray-800 dark:border-gray-700 lg:py-2.5"
       >
         <div className="container px-6 py-4 mx-auto">
           <div className="lg:flex lg:items-center lg:justify-between">

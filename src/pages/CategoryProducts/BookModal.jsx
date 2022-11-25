@@ -93,13 +93,13 @@ export default function BookModal({
                 </Dialog.Title>
 
                 {/* modal body start*/}
-                <div class="max-w-2xl mx-auto bg-white p-16">
+                <div className="max-w-2xl mx-auto bg-white p-16">
                   <form onSubmit={handleSubmit(handleBooking)}>
-                    <div class="grid gap-6 mb-6 lg:grid-cols-2">
+                    <div className="grid gap-6 mb-6 lg:grid-cols-2">
                       <div>
                         <label
                           for="name"
-                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >
                           Full name
                         </label>
@@ -107,7 +107,7 @@ export default function BookModal({
                           {...register("customerName", { required: false })}
                           type="text"
                           id="name"
-                          class="border bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full max-w-sm px-5 py-2.5  focus-visible:ring-primary/30 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:placeholder:text-black"
+                          className="border bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full max-w-sm px-5 py-2.5  focus-visible:ring-primary/30 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:placeholder:text-black"
                           placeholder={user?.displayName || "N/A"}
                           disabled={true}
                         />
@@ -115,7 +115,7 @@ export default function BookModal({
                       <div>
                         <label
                           for="bookName"
-                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >
                           Book Name
                         </label>
@@ -123,7 +123,7 @@ export default function BookModal({
                           {...register("productName", { required: false })}
                           type="text"
                           id="bookName"
-                          class="border bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full max-w-sm px-5 py-2.5  focus-visible:ring-primary/30 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:placeholder:text-black"
+                          className="border bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full max-w-sm px-5 py-2.5  focus-visible:ring-primary/30 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:placeholder:text-black"
                           placeholder={name}
                           disabled={true}
                         />
@@ -131,7 +131,7 @@ export default function BookModal({
                       <div>
                         <label
                           for="phone"
-                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >
                           Mobile number
                         </label>
@@ -139,7 +139,7 @@ export default function BookModal({
                           {...register("mobile", { required: false })}
                           type="tel"
                           id="phone"
-                          class="border bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full max-w-sm px-5 py-2.5  focus-visible:ring-primary/30 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:placeholder:text-black"
+                          className="border bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full max-w-sm px-5 py-2.5  focus-visible:ring-primary/30 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:placeholder:text-black"
                           placeholder="017123 456789"
                           pattern="[0-9]{11}"
                         />
@@ -147,7 +147,7 @@ export default function BookModal({
                       <div>
                         <label
                           for="location"
-                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >
                           Location
                         </label>
@@ -155,14 +155,14 @@ export default function BookModal({
                           {...register("location", { required: false })}
                           type="text"
                           id="location"
-                          class="border bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full max-w-sm px-5 py-2.5  focus-visible:ring-primary/30 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:placeholder:text-black"
+                          className="border bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full max-w-sm px-5 py-2.5  focus-visible:ring-primary/30 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:placeholder:text-black"
                           placeholder={location}
                         />
                       </div>
                       <div>
                         <label
                           for="price"
-                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >
                           Price
                         </label>
@@ -170,7 +170,7 @@ export default function BookModal({
                           {...register("price", { required: false })}
                           type="text"
                           id="price"
-                          class="border bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full max-w-sm px-5 py-2.5  focus-visible:ring-primary/30 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:placeholder:text-black"
+                          className="border bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full max-w-sm px-5 py-2.5  focus-visible:ring-primary/30 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:placeholder:text-black"
                           placeholder={`$${resalePrice}`}
                           disabled={true}
                         />
@@ -178,7 +178,7 @@ export default function BookModal({
                       <div>
                         <label
                           for="email"
-                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >
                           Email address
                         </label>
@@ -188,7 +188,7 @@ export default function BookModal({
                           })}
                           type="email"
                           id="email"
-                          class="border bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full max-w-sm px-5 py-2.5  focus-visible:ring-primary/30 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:placeholder:text-black"
+                          className="border bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full max-w-sm px-5 py-2.5  focus-visible:ring-primary/30 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:placeholder:text-black"
                           placeholder={user?.email}
                           disabled={true}
                         />
@@ -199,7 +199,7 @@ export default function BookModal({
                       <button
                         disabled={uploading}
                         type="submit"
-                        class="text-white bg-primary-100 hover:bg-primary focus:ring-4 focus:outline-none focus:ring-primary
+                        className="text-white bg-primary-100 hover:bg-primary focus:ring-4 focus:outline-none focus:ring-primary
                         disabled:bg-primary/50 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center focus-visible:ring-primary/10 focus-visible:ring-offset-2"
                       >
                         {uploading ? "Booking..." : "Book Now"}

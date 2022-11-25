@@ -60,20 +60,20 @@ export default function Login() {
     });
   };
   return (
-    <div class="m-auto xl:container px-12 sm:px-0 mx-auto">
-      <div class="mx-auto h-full sm:w-max">
-        <div class="m-auto  py-12 ">
-          <div class="mt-12 rounded-3xl border bg-slate-50 dark:border-gray-700 dark:bg-gray-800 -mx-6 sm:-mx-10 p-8 sm:p-10">
-            <h3 class="text-2xl font-semibold text-gray-700 dark:text-white">
+    <div className="m-auto xl:container px-12 sm:px-0 mx-auto">
+      <div className="mx-auto h-full sm:w-max">
+        <div className="m-auto  py-12 ">
+          <div className="mt-12 rounded-3xl border bg-slate-50 dark:border-gray-700 dark:bg-gray-800 -mx-6 sm:-mx-10 p-8 sm:p-10">
+            <h3 className="text-2xl font-semibold text-gray-700 dark:text-white">
               Login to your account
             </h3>
-            <div class="mt-12 flex flex-wrap  gap-6 ">
+            <div className="mt-12 flex flex-wrap  gap-6 ">
               <button
                 onClick={handleGoogle}
-                class="w-full h-11 rounded-full border hover:bg-gray-200 border-gray-300/75 bg-white px-6 transition active:bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-800 dark:hover:border-gray-700 "
+                className="w-full h-11 rounded-full border hover:bg-gray-200 border-gray-300/75 bg-white px-6 transition active:bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-800 dark:hover:border-gray-700 "
               >
-                <div class="w-full mx-auto flex items-center justify-center space-x-4 ">
-                  <svg class="w-5 h-5 " viewBox="0 0 40 40">
+                <div className="w-full mx-auto flex items-center justify-center space-x-4 ">
+                  <svg className="w-5 h-5 " viewBox="0 0 40 40">
                     <path
                       d="M36.3425 16.7358H35V16.6667H20V23.3333H29.4192C28.045 27.2142 24.3525 30 20 30C14.4775 30 10 25.5225 10 20C10 14.4775 14.4775 9.99999 20 9.99999C22.5492 9.99999 24.8683 10.9617 26.6342 12.5325L31.3483 7.81833C28.3717 5.04416 24.39 3.33333 20 3.33333C10.7958 3.33333 3.33335 10.7958 3.33335 20C3.33335 29.2042 10.7958 36.6667 20 36.6667C29.2042 36.6667 36.6667 29.2042 36.6667 20C36.6667 18.8825 36.5517 17.7917 36.3425 16.7358Z"
                       fill="#FFC107"
@@ -91,7 +91,7 @@ export default function Login() {
                       fill="#1976D2"
                     />
                   </svg>
-                  <span class="block w-max text-sm font-semibold tracking-wide text-black dark:text-white">
+                  <span className="block w-max text-sm font-semibold tracking-wide text-black dark:text-white">
                     With Google
                   </span>
                 </div>
@@ -100,10 +100,10 @@ export default function Login() {
 
             <form
               onSubmit={handleSubmit(handleSignIn)}
-              class="mt-10 space-y-8 dark:text-white"
+              className="mt-10 space-y-8 dark:text-white"
             >
               <div>
-                <div class="relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-primary-100 dark:before:bg-primary-100/50 focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
+                <div className="relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-primary-100 dark:before:bg-primary-100/50 focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
                   <input
                     {...register("email", {
                       required: "User must provide an email.",
@@ -111,13 +111,13 @@ export default function Login() {
                     id="email"
                     type="email"
                     placeholder="Your email or user name"
-                    class="w-full bg-transparent pb-3  border-b border-gray-300 dark:placeholder-gray-300 dark:border-gray-600 outline-none  invalid:border-red-400 transition"
+                    className="w-full bg-transparent pb-3  border-b border-gray-300 dark:placeholder-gray-300 dark:border-gray-600 outline-none  invalid:border-red-400 transition"
                   />
                 </div>
               </div>
 
-              <div class="flex flex-col items-end">
-                <div class="w-full relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-primary-100 dark:before:bg-primary-100/50 focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
+              <div className="flex flex-col items-end">
+                <div className="w-full relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-primary-100 dark:before:bg-primary-100/50 focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
                   <input
                     {...register("password", {
                       required: "User must provide a password.",
@@ -125,11 +125,11 @@ export default function Login() {
                     id="password"
                     type="password"
                     placeholder="Your Password"
-                    class="w-full bg-transparent pb-3  border-b border-gray-300 dark:placeholder-gray-300 dark:border-gray-600 outline-none  invalid:border-red-400 transition"
+                    className="w-full bg-transparent pb-3  border-b border-gray-300 dark:placeholder-gray-300 dark:border-gray-600 outline-none  invalid:border-red-400 transition"
                   />
                 </div>
-                <button class="-mr-3 w-max p-3">
-                  <span class="text-sm tracking-wide text-primary-100 dark:text-sky-400">
+                <button className="-mr-3 w-max p-3">
+                  <span className="text-sm tracking-wide text-primary-100 dark:text-sky-400">
                     Forgot password ?
                   </span>
                 </button>
@@ -146,8 +146,8 @@ export default function Login() {
                     <input type="submit" value="Log In" />
                   )}
                 </button>
-                <Link to={"/signup"} class="-ml-3  w-max p-3">
-                  <span class="text-sm tracking-wide text-primary dark:text-primary">
+                <Link to={"/signup"} className="-ml-3  w-max p-3">
+                  <span className="text-sm tracking-wide text-primary dark:text-primary">
                     Create new account
                   </span>
                 </Link>
