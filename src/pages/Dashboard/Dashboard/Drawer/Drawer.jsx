@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import PrimaryBtn from "../../../components/Buttons/PrimaryBtn";
+import PrimaryBtn from "../../../../components/Buttons/PrimaryBtn";
 // import PrimaryBtn from '@components/Button/index.tsx';
 // PrimaryBtn
 

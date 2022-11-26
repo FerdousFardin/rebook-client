@@ -61,7 +61,7 @@ export default function Navbar() {
         )}
       </NavLink>
       {user?.uid ? (
-        <PrimaryBtn className={"h-12"} onClick={handleSignout}>
+        <PrimaryBtn className={"h-10 px-4"} onClick={handleSignout}>
           {loading ? "Signing Out..." : "Sign Out"}{" "}
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +79,7 @@ export default function Navbar() {
           </svg>
         </PrimaryBtn>
       ) : (
-        <PrimaryBtn className={"h-10"} to={"/login"}>
+        <PrimaryBtn className={"h-10 px-4"} to={"/login"}>
           Log in
         </PrimaryBtn>
       )}

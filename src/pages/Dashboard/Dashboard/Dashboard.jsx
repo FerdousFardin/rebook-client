@@ -31,6 +31,8 @@ export default function Dashboard() {
   });
   const activeClass =
     "relative flex items-center space-x-4 rounded-xl bg-gradient-to-br from-primary to-primary-100/50 px-4 py-3 text-white";
+  if (isLoading) return <div>Loading</div>;
+  if (error) return;
   const dashboardList = (
     <ul className="mt-8 space-y-2 tracking-wide">
       {userInfo.role.includes("buyer") && (
@@ -142,8 +144,7 @@ export default function Dashboard() {
       )}
     </ul>
   );
-  if (isLoading) return <div>Loading</div>;
-  if (error) return;
+
   return (
     userInfo && (
       <section className="bg-gray-100 dark:bg-gray-900 relative">
@@ -207,8 +208,8 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div className="px-6 pt-6 2xl:container">
-            <div className="flex min-h-[80vh] items-center justify-center">
+          <div className="2xl:container">
+            <div className="min-h-[80vh]">
               <Outlet />
             </div>
           </div>

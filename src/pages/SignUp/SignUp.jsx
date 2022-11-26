@@ -18,7 +18,7 @@ export default function SignUp() {
   } = useForm();
   const [accountType, setAccountType] = useState("buyer");
   const activeClass =
-    "flex justify-center w-full px-6 py-3 text-white bg-primary rounded-md md:w-auto md:mx-2 <focus:outline-none></focus:outline-none>";
+    "flex justify-center w-full px-6 py-3 text-white bg-primary rounded-md md:w-auto md:mx-2 focus:outline-none";
   const inActiveClass =
     "flex justify-center w-full px-6 py-3 mt-4 text-primary border border-primary rounded-md md:mt-0 md:w-auto md:mx-2 dark:border-primary dark:text-primary/25 focus:outline-none";
   const navigate = useNavigate();
