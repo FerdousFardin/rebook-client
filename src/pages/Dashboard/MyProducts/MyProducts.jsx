@@ -1,12 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
 
 export default function MyProducts() {
+  const [loading, setLoading] = useState(false);
   const {
     isLoading,
     data: myProducts,
     error,
+    refetch,
   } = useQuery({
     queryKey: ["my-products"],
     queryFn: () =>
@@ -16,9 +17,31 @@ export default function MyProducts() {
         },
       }).then((res) => res.json()),
   });
+  const handleAdvertise = (_id) => {
+    setLoading(true);
+    fetch(`${import.meta.env.VITE_API_URL}/my-products?advertised=true`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+        authorization: `bearer ${localStorage.getItem("rebookToken")}`,
+      },
+      body: JSON.stringify({ _id }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.modifiedCount > 0) {
+          alert("Advertised");
+          refetch();
+        }
+      })
+      .finally(() => {
+        setLoading(true);
+      });
+  };
   if (isLoading) return <div>Loading</div>;
   if (error) return;
-  console.log(myProducts);
+  //   console.log(myProducts);
   return (
     <table class="border-collapse w-full">
       <thead>
@@ -83,13 +106,17 @@ export default function MyProducts() {
                 <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
                   Actions
                 </span>
-                {!advertised && inStock ? (
-                  <Link
-                    to={`/checkout/${""}`}
+                {advertised ? (
+                  <span class="rounded bg-green-600 text-gray-100 py-1 px-3 text-xs font-bold">
+                    Advertised
+                  </span>
+                ) : inStock ? (
+                  <button
+                    onClick={() => handleAdvertise(_id)}
                     class="text-blue-400 hover:text-blue-600 underline pl-6"
                   >
                     Advertise
-                  </Link>
+                  </button>
                 ) : (
                   "-"
                 )}
