@@ -62,7 +62,7 @@ export default function CategoryProduct() {
                   </h3>
                   <h3 className="text-lg flex items-center gap-1 font-thin text-gray-700 dark:text-white">
                     <CurrencyDollarIcon className="h-5 w-5" />
-                    {product.orginalPrice}
+                    {product.originalPrice}
                     <small className="text-primary-100">(Original Price)</small>
                   </h3>
                   <h3 className="text-lg flex items-center gap-1 font-thin text-gray-700 dark:text-white">
@@ -71,7 +71,7 @@ export default function CategoryProduct() {
                   </h3>
                 </div>
                 <h3 className="text-lg flex items-center gap-1 font-thin text-gray-500 dark:text-white">
-                  Listed at {format(product.date, "PP")} by{" "}
+                  Listed on {format(product.date, "PP")} by{" "}
                   <strong className="hover:underline cursor-pointer hover:text-primary text-gray-800">
                     {product.seller}
                   </strong>

@@ -1,9 +1,13 @@
+import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 import Drawer from "./Drawer/Drawer";
 
 export default function Dashboard() {
+  const location = useLocation();
+  const dashboardMenu =
+    location.pathname?.split("/")[2]?.split("-")?.join(" ") || undefined;
   const [isOpen, setIsOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -174,9 +178,13 @@ export default function Dashboard() {
             <div className="flex items-center justify-between space-x-4 px-6 2xl:container">
               <h5
                 hidden
-                className="text-2xl font-medium text-gray-600 lg:block dark:text-white"
+                className="text-2xl font-light text-gray-600 lg:block dark:text-white uppercase"
               >
-                Dashboard
+                Dashboard{" "}
+                {dashboardMenu && (
+                  <ChevronRightIcon className="w-5 h-5 inline-block" />
+                )}{" "}
+                {dashboardMenu}
               </h5>
               <button
                 onClick={() => setIsOpen(true)}
@@ -201,8 +209,12 @@ export default function Dashboard() {
                 <Drawer {...{ isOpen, setIsOpen }}>{dashboardList}</Drawer>
               )}
               <div className="flex space-x-4">
-                <h5 className="text-2xl text-center font-medium text-gray-600 lg:hidden dark:text-white">
-                  Dashboard
+                <h5 className="text-xl text-center font-medium text-gray-600 lg:hidden dark:text-white uppercase">
+                  Dashboard{" "}
+                  {dashboardMenu && (
+                    <ChevronRightIcon className="w-5 h-5 inline-block" />
+                  )}{" "}
+                  {dashboardMenu}
                 </h5>
               </div>
             </div>
