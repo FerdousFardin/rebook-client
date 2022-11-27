@@ -163,9 +163,9 @@ export default function Dashboard() {
               <h5 className="mt-4 hidden text-xl font-semibold text-gray-600 lg:block dark:text-gray-300">
                 {userInfo.name}
               </h5>
-              <span className="hidden text-gray-400 lg:block">
+              <span className="hidden text-gray-400 lg:block uppercase">
                 {userInfo && userInfo?.role?.length > 1
-                  ? userInfo.role.split().join(" and ")
+                  ? userInfo.role.join(" and ")
                   : userInfo.role[0]}
               </span>
             </div>
