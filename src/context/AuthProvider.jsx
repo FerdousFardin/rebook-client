@@ -11,13 +11,15 @@ import {
 } from "firebase/auth";
 export const AuthContext = createContext();
 export default function AuthProvider({ children }) {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const auth = getAuth(app);
   const googleProvider = new GoogleAuthProvider();
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+      if (user === null) {
+        setUser(currentUser);
+      }
       setLoading(false);
     });
 

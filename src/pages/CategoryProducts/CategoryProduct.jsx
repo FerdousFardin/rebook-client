@@ -4,7 +4,7 @@ import {
   HandRaisedIcon,
   MapPinIcon,
 } from "@heroicons/react/24/solid";
-import { CurrencyDollarIcon } from "@heroicons/react/24/outline";
+import { CurrencyDollarIcon, FlagIcon } from "@heroicons/react/24/outline";
 import React, { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import { format } from "date-fns";
@@ -15,9 +15,27 @@ export default function CategoryProduct() {
   const products = useLoaderData();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState({});
+  const [loading, setLoading] = useState(false);
   const handleModal = (product) => {
     setSelectedProduct(product);
     setIsOpen(true);
+  };
+  const handleReport = (id) => {
+    setLoading(true);
+    fetch(`${import.meta.env.VITE_API_URL}/products?reported=true`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+        authorization: `bearer ${localStorage.getItem("rebookToken")}`,
+      },
+      body: JSON.stringify({ id }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount > 0) {
+          alert("reported");
+        }
+      });
   };
   return (
     <div className="py-12">
@@ -55,20 +73,37 @@ export default function CategoryProduct() {
                 <h3 className="text-lg font-thin text-gray-700 dark:text-white">
                   by {product.writer}
                 </h3>
-                <div className="flex  gap-5">
-                  <h3 className="text-lg flex items-center gap-1 font-thin text-gray-700 dark:text-white">
-                    <MapPinIcon className="w-5 h-5" />
-                    {product.location}
-                  </h3>
-                  <h3 className="text-lg flex items-center gap-1 font-thin text-gray-700 dark:text-white">
-                    <CurrencyDollarIcon className="h-5 w-5" />
-                    {product.originalPrice}
-                    <small className="text-primary-100">(Original Price)</small>
-                  </h3>
-                  <h3 className="text-lg flex items-center gap-1 font-thin text-gray-700 dark:text-white">
-                    <HandRaisedIcon className="h-5 w-5" />
-                    {product.yearsOfUse} years
-                  </h3>
+                <div className="flex justify-between items-center">
+                  <div className="flex gap-5">
+                    <h3 className="text-lg flex items-center gap-1 font-thin text-gray-700 dark:text-white">
+                      <MapPinIcon className="w-5 h-5" />
+                      {product.location}
+                    </h3>
+                    <h3 className="text-lg flex items-center gap-1 font-thin text-gray-700 dark:text-white">
+                      <CurrencyDollarIcon className="h-5 w-5" />
+                      {product.originalPrice}
+                      <small className="text-primary-100">
+                        (Original Price)
+                      </small>
+                    </h3>
+                    <h3 className="text-lg flex items-center gap-1 font-thin text-gray-700 dark:text-white">
+                      <HandRaisedIcon className="h-5 w-5" />
+                      {product.yearsOfUse} years
+                    </h3>
+                  </div>
+
+                  {product.isReported ? (
+                    <span className="px-5 py-2 bg-green-300 h-10 rounded-lg text-white">
+                      Reported
+                    </span>
+                  ) : (
+                    <button
+                      onClick={() => handleReport(product._id)}
+                      className="w-28 bg-warning hover:bg-yellow-500 h-10 rounded-lg text-white"
+                    >
+                      Report <FlagIcon className="inline w-5" />
+                    </button>
+                  )}
                 </div>
                 <h3 className="text-lg flex items-center gap-1 font-thin text-gray-500 dark:text-white">
                   Listed on {format(product.date, "PP")} by{" "}
