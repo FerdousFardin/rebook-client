@@ -42,6 +42,7 @@ export default function Dashboard() {
       {userInfo.role.includes("buyer") && (
         <li>
           <NavLink
+            onClick={() => setIsOpen(false)}
             to={"/dashboard/my-orders"}
             aria-label="dashboard"
             className={({ isActive }) =>
@@ -58,6 +59,7 @@ export default function Dashboard() {
         <>
           <li>
             <NavLink
+              onClick={() => setIsOpen(false)}
               to={"/dashboard/all-sellers"}
               className={({ isActive }) =>
                 isActive
@@ -72,6 +74,7 @@ export default function Dashboard() {
           </li>
           <li>
             <NavLink
+              onClick={() => setIsOpen(false)}
               to={"/dashboard/all-buyers"}
               className={({ isActive }) =>
                 isActive
@@ -86,6 +89,7 @@ export default function Dashboard() {
           </li>
           <li>
             <NavLink
+              onClick={() => setIsOpen(false)}
               to={"/dashboard/reported-items"}
               className={({ isActive }) =>
                 isActive
@@ -104,6 +108,7 @@ export default function Dashboard() {
         <>
           <li>
             <NavLink
+              onClick={() => setIsOpen(false)}
               to={"/dashboard/add-a-product"}
               className={({ isActive }) =>
                 isActive
@@ -118,6 +123,7 @@ export default function Dashboard() {
           </li>
           <li>
             <NavLink
+              onClick={() => setIsOpen(false)}
               to={"/dashboard/my-buyers"}
               className={({ isActive }) =>
                 isActive
@@ -132,6 +138,7 @@ export default function Dashboard() {
           </li>
           <li>
             <NavLink
+              onClick={() => setIsOpen(false)}
               to={"/dashboard/my-products"}
               className={({ isActive }) =>
                 isActive

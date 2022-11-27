@@ -3,6 +3,7 @@ import Main from "../layout/Main";
 import CategoryProduct from "../pages/CategoryProducts/CategoryProduct";
 import AddProduct from "../pages/Dashboard/AddProduct/AddProduct";
 import AllSellers from "../pages/Dashboard/AllSellers/AllSellers";
+import Checkout from "../pages/Dashboard/Checkout/Checkout";
 import Dashboard from "../pages/Dashboard/Dashboard/Dashboard";
 import Myorders from "../pages/Dashboard/MyOrders/Myorders";
 import MyProducts from "../pages/Dashboard/MyProducts/MyProducts";
@@ -68,8 +69,27 @@ export const routes = createBrowserRouter([
             path: "/dashboard/all-sellers",
             element: <AllSellers />,
           },
+          {
+            path: "/dashboard/checkout/:id",
+            element: <Checkout />,
+            loader: ({ params }) =>
+              fetch(
+                `${import.meta.env.VITE_API_URL}/bookings?id=${params.id}`,
+                {
+                  headers: {
+                    authorization: `bearer ${localStorage.getItem(
+                      "rebookToken"
+                    )}`,
+                  },
+                }
+              ),
+          },
         ],
       },
     ],
+  },
+  {
+    path: "/error",
+    element: <Error />,
   },
 ]);

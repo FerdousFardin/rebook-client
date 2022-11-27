@@ -38,7 +38,10 @@ export default function Myorders() {
       </thead>
       <tbody>
         {myOrders.map((myOrder) => (
-          <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+          <tr
+            key={myOrder._id}
+            class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0"
+          >
             <td class="w-full lg:w-fit lg:max-w-xs p-3 text-gray-700 text-center lg:text-left border border-b block lg:table-cell relative lg:static font-semibold">
               <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
                 Product name
@@ -74,7 +77,7 @@ export default function Myorders() {
                 "-"
               ) : (
                 <Link
-                  to={`/checkout/${myOrder._id}`}
+                  to={`/dashboard/checkout/${myOrder._id}`}
                   class="text-blue-400 hover:text-blue-600 underline pl-6"
                 >
                   Pay
