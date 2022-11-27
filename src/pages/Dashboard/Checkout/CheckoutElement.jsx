@@ -2,10 +2,11 @@ import { async } from "@firebase/util";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 export default function CheckoutElement({ bookedPoduct }) {
-  const [disabled, setDisabled] = useState(false);
+  const [disabled, setDisabled] = useState(true);
   const [processing, setProcessing] = useState("");
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
@@ -16,18 +17,27 @@ export default function CheckoutElement({ bookedPoduct }) {
   const cardStyle = {
     style: {
       base: {
-        color: "#32325d",
-        fontFamily: "Arial, sans-serif",
-        fontSmoothing: "antialiased",
+        iconColor: "#222",
+        color: "#111",
+        fontWeight: 500,
+        fontFamily: "Roboto, Open Sans, Segoe UI, sans-serif",
         fontSize: "16px",
+        fontSmoothing: "antialiased",
+
+        ":-webkit-autofill": {
+          color: "#fce883",
+        },
         "::placeholder": {
-          color: "#32325d",
+          color: "#00000064",
         },
       },
       invalid: {
-        fontFamily: "Arial, sans-serif",
-        color: "#fa755a",
-        iconColor: "#fa755a",
+        iconColor: "#854d0e",
+        color: "#854d0e",
+      },
+      complete: {
+        iconColor: "#14632d",
+        color: "#14632d",
       },
     },
   };
@@ -52,7 +62,6 @@ export default function CheckoutElement({ bookedPoduct }) {
   const handleSubmit = async (ev) => {
     ev.preventDefault();
     setProcessing(true);
-    // setSucceeded(false)
     const payload = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
         card: elements.getElement(CardElement),
@@ -61,11 +70,12 @@ export default function CheckoutElement({ bookedPoduct }) {
     if (payload.error) {
       setError(`Payment failed ${payload.error.message}`);
       setProcessing(false);
+      toast.error(`Payment for ${bookedPoduct.name} was unsuccessful!`);
+      return;
     } else {
       setError(null);
-      setProcessing(false);
       setSucceeded(true);
-      //
+
       fetch(`${import.meta.env.VITE_API_URL}/bookings?isPaid=true`, {
         method: "PUT",
         headers: {
@@ -77,46 +87,53 @@ export default function CheckoutElement({ bookedPoduct }) {
         .then((res) => res.json())
         .then((data) => {
           if (data.modifiedCount > 0) {
-            alert("payment done");
+            toast.success(`Payment for ${bookedPoduct.name} was successful!`);
+            setProcessing(false);
             navigate("/dashboard/my-orders");
           }
+        })
+        .finally(() => {
+          setProcessing(false);
         });
     }
   };
   return (
     <form onSubmit={handleSubmit}>
-      <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="username">
+          <label className="text-gray-700 dark:text-gray-200" for="username">
             Name on Card
           </label>
           <input
             id="username"
             type="text"
-            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-primary/40 focus:ring-primary-100/50 focus:ring-opacity-40 dark:focus:border-primary focus:outline-none focus:ring"
+            className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-primary/40 focus:ring-primary-100/50 focus:ring-opacity-40 dark:focus:border-primary focus:outline-none focus:ring"
           />
         </div>
         <div>
           <h2>Card Information</h2>
-          <div class="h-12 px-4 py-2">
+          <div className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-primary/40 focus:ring-primary-100/50 focus:ring-opacity-40 dark:focus:border-primary focus:outline-none focus:ring">
             <CardElement options={cardStyle} onChange={handleChange} />
           </div>
         </div>
 
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="emailAddress">
+          <label
+            className="text-gray-700 dark:text-gray-200"
+            for="emailAddress"
+          >
             Email Address
           </label>
           <input
             id="emailAddress"
             type="email"
-            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-primary/40 focus:ring-primary-100/50 focus:ring-opacity-40 dark:focus:border-primary focus:outline-none focus:ring"
+            className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-primary/40 focus:ring-primary-100/50 focus:ring-opacity-40 dark:focus:border-primary focus:outline-none focus:ring"
           />
         </div>
 
         <div>
           <label
-            class="text-gray-700 dark:text-gray-200"
+            className="text-gray-700 dark:text-gray-200"
             for="deliveryLocation"
           >
             Delivery Location
@@ -124,7 +141,7 @@ export default function CheckoutElement({ bookedPoduct }) {
           <input
             id="deliveryLocation"
             type="text"
-            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-primary/40 focus:ring-primary-100/50 focus:ring-opacity-40 dark:focus:border-primary focus:outline-none focus:ring"
+            className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-primary/40 focus:ring-primary-100/50 focus:ring-opacity-40 dark:focus:border-primary focus:outline-none focus:ring"
           />
         </div>
       </div>
@@ -133,7 +150,7 @@ export default function CheckoutElement({ bookedPoduct }) {
         disabled={processing || disabled || succeeded}
         id="submit"
         type="submit"
-        class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-primary-100 text-lg rounded-md disabled:bg-black/40 hover:bg-primary focus:outline-none focus:bg-gray-600"
+        className="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-primary-100 cursor-not-allowed text-lg rounded-md disabled:bg-black/40 hover:bg-primary focus:outline-none focus:bg-gray-600"
       >
         <span id="button-text">
           {processing ? (

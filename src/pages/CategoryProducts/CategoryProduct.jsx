@@ -10,6 +10,7 @@ import { useLoaderData } from "react-router-dom";
 import { format } from "date-fns";
 import { Dialog } from "@headlessui/react";
 import BookModal from "./BookModal";
+import toast from "react-hot-toast";
 
 export default function CategoryProduct() {
   const products = useLoaderData();
@@ -33,7 +34,7 @@ export default function CategoryProduct() {
       .then((res) => res.json())
       .then((data) => {
         if (data.modifiedCount > 0) {
-          alert("reported");
+          toast.success("Item reported.")
         }
       });
   };

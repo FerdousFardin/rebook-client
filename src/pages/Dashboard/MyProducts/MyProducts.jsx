@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function MyProducts() {
   const [loading, setLoading] = useState(false);
@@ -31,34 +32,39 @@ export default function MyProducts() {
       .then((data) => {
         console.log(data);
         if (data.modifiedCount > 0) {
-          alert("Advertised");
+          toast.success("Item advertised.");
           refetch();
         }
+      })
+      .catch((er) => {
+        console.error(er);
+        toast.error("This item can not be advertised at this moment.");
       })
       .finally(() => {
         setLoading(true);
       });
   };
+
   if (isLoading) return <div>Loading</div>;
   if (error) return;
   //   console.log(myProducts);
   return (
-    <table class="border-collapse w-full">
+    <table className="border-collapse w-full">
       <thead>
         <tr>
-          <th class="p-3 font-bold text-left uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
+          <th className="p-3 font-bold text-left uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
             Product name
           </th>
-          <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
+          <th className="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
             Category
           </th>
-          <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
+          <th className="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
             Price
           </th>
-          <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
+          <th className="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
             Status
           </th>
-          <th class="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
+          <th className="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
             Actions
           </th>
         </tr>
@@ -68,52 +74,52 @@ export default function MyProducts() {
           ({ name, _id, category, resalePrice, advertised, inStock }) => (
             <tr
               key={_id}
-              class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0"
+              className="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0"
             >
-              <td class="w-full lg:w-fit lg:max-w-xs p-3 text-gray-700 text-center lg:text-left border border-b block lg:table-cell relative lg:static font-semibold">
-                <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
+              <td className="w-full lg:w-fit lg:max-w-xs p-3 text-gray-700 text-center lg:text-left border border-b block lg:table-cell relative lg:static font-semibold">
+                <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
                   Product name
                 </span>
                 {name}
               </td>
-              <td class="w-full lg:w-auto p-3 text-gray-800 text-center  border border-b  block lg:table-cell relative lg:static">
-                <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
+              <td className="w-full lg:w-auto p-3 text-gray-800 text-center  border border-b  block lg:table-cell relative lg:static">
+                <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
                   Category
                 </span>
                 {category}
               </td>
-              <td class="w-full lg:w-auto p-3 text-gray-800 text-center  border border-b  block lg:table-cell relative lg:static">
-                <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
+              <td className="w-full lg:w-auto p-3 text-gray-800 text-center  border border-b  block lg:table-cell relative lg:static">
+                <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
                   Price
                 </span>
                 ${resalePrice}
               </td>
-              <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b  block lg:table-cell relative lg:static">
-                <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
+              <td className="w-full lg:w-auto p-3 text-gray-800 text-center border border-b  block lg:table-cell relative lg:static">
+                <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
                   Status
                 </span>
                 {inStock ? (
-                  <span class="rounded bg-green-600 text-gray-100 py-1 px-3 text-xs font-bold">
+                  <span className="rounded bg-green-600 text-gray-100 py-1 px-3 text-xs font-bold">
                     Available
                   </span>
                 ) : (
-                  <span class="rounded text-gray-50 bg-red-500 py-1 px-3 text-xs font-bold">
+                  <span className="rounded text-gray-50 bg-red-500 py-1 px-3 text-xs font-bold">
                     Stock Out!
                   </span>
                 )}
               </td>
-              <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b  block lg:table-cell relative lg:static">
-                <span class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
+              <td className="w-full lg:w-auto p-3 text-gray-800 text-center border border-b  block lg:table-cell relative lg:static">
+                <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
                   Actions
                 </span>
                 {advertised ? (
-                  <span class="rounded bg-green-600 text-gray-100 py-1 px-3 text-xs font-bold">
+                  <span className="rounded bg-green-600 text-gray-100 py-1 px-3 text-xs font-bold">
                     Advertised
                   </span>
                 ) : inStock ? (
                   <button
                     onClick={() => handleAdvertise(_id)}
-                    class="text-blue-400 hover:text-blue-600 underline pl-6"
+                    className="text-blue-400 hover:text-blue-600 underline pl-6"
                   >
                     Advertise
                   </button>

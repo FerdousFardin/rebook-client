@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
 import useToken from "../../hooks/useToken";
@@ -21,6 +22,7 @@ export default function Login() {
   const [token] = useToken(userEmail);
   if (token) {
     navigate(from, { replace: true });
+    toast.success(`Signed in successfully.`);
   }
   const handleSignIn = (data, e) => {
     setUserEmail("");
@@ -31,6 +33,7 @@ export default function Login() {
       .then((res) => {
         console.log(res.user);
         setUserEmail({ email });
+
         e.target.reset();
       })
       .catch((er) => {
@@ -42,6 +45,7 @@ export default function Login() {
       });
   };
   const handleGoogle = () => {
+    setLoading(true);
     googleLogin().then((res) => {
       const userInfo = {
         name: res.user.displayName,
@@ -53,9 +57,16 @@ export default function Login() {
         .post(`${import.meta.env.VITE_API_URL}/users`, userInfo)
         .then((res) => {
           if (res.data.acknowledged) {
-            alert("signed in successfully.");
+            toast.success(`Signed in successfully.`);
             setUserEmail({ email: userInfo.email });
           }
+        })
+        .catch((er) => {
+          console.error(er);
+          toast.error(`Can't sign in at this moment.`);
+        })
+        .then(() => {
+          setLoading(false);
         });
     });
   };
@@ -69,8 +80,9 @@ export default function Login() {
             </h3>
             <div className="mt-12 flex flex-wrap  gap-6 ">
               <button
+                disabled={loading}
                 onClick={handleGoogle}
-                className="w-full h-11 rounded-full border hover:bg-gray-200 border-gray-300/75 bg-white px-6 transition active:bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-800 dark:hover:border-gray-700 "
+                className="w-full h-11 rounded-full border hover:bg-gray-200 border-gray-300/75 bg-white disabled:bg-gray-400 disabled:cursor-not-allowed px-6 transition active:bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-800 dark:hover:border-gray-700 "
               >
                 <div className="w-full mx-auto flex items-center justify-center space-x-4 ">
                   <svg className="w-5 h-5 " viewBox="0 0 40 40">
@@ -92,7 +104,7 @@ export default function Login() {
                     />
                   </svg>
                   <span className="block w-max text-sm font-semibold tracking-wide text-black dark:text-white">
-                    With Google
+                    {loading && "Signing In"} With Google
                   </span>
                 </div>
               </button>
@@ -138,7 +150,8 @@ export default function Login() {
               <div>
                 <button
                   disabled={loading}
-                  className="w-full rounded-full bg-primary dark:bg-primary/25 h-11 flex items-center justify-center px-6 py-3 transition hover:bg-primary-100 focus:bg-primary/70 active:bg-primary-100 cursor-pointer text-white"
+                  className="w-full rounded-full bg-primary disabled:bg-red-800
+                  disabled:cursor-not-allowed dark:bg-primary/25 h-11 flex items-center justify-center px-6 py-3 transition hover:bg-primary-100 focus:bg-primary/70 active:bg-primary-100 cursor-pointer text-white"
                 >
                   {loading ? (
                     "Signing In..."

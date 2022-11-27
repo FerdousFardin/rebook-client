@@ -2,6 +2,7 @@ import { Transition } from "@headlessui/react";
 import React, { useContext, useState } from "react";
 import { Fragment } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
 
@@ -40,9 +41,12 @@ export default function BookModal({
       .then((res) => res.json())
       .then((data) => {
         if (data.acknowledged) {
-          alert("added to bookings");
+          toast.success(`${name} added to bookings`);
           setIsOpen(false);
         }
+      }).catch((er)=>{
+        toast.error(`${name} couldn't be added to bookings`)
+        console.error(er)
       })
       .finally(() => {
         setUploading(false);

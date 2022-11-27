@@ -39,6 +39,20 @@ export default function Dashboard() {
   if (error) return;
   const dashboardList = (
     <ul className="mt-8 space-y-2 tracking-wide">
+      <li>
+        <NavLink
+          onClick={() => setIsOpen(false)}
+          to={"/dashboard/my-profile"}
+          aria-label="dashboard"
+          className={({ isActive }) =>
+            isActive
+              ? activeClass
+              : "group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600 dark:text-gray-300 hover:text-black"
+          }
+        >
+          <span className="-mr-1 font-medium">My Profile</span>
+        </NavLink>
+      </li>
       {userInfo.role.includes("buyer") && (
         <li>
           <NavLink

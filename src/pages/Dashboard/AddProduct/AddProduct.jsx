@@ -3,6 +3,7 @@ import { ArchiveBoxIcon, FaceSmileIcon } from "@heroicons/react/24/outline";
 import { useQuery } from "@tanstack/react-query";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthProvider";
 import SelectCategory from "./SelectCategory";
@@ -73,12 +74,16 @@ export default function AddProduct() {
             .then((res) => res.json())
             .then((result) => {
               if (result.acknowledged) {
-                alert("product added");
+                toast.success(`${selected.name} added to product listings`);
                 e.target.reset();
                 navigate("/dashboard/my-products");
               }
             });
         }
+      })
+      .catch(er=>{
+        toast.error(`${selected.name} couldn'e be added to product listings`)
+        console.error(er)
       })
       .finally(() => {
         setLoading(false);
@@ -87,34 +92,34 @@ export default function AddProduct() {
   if (isLoading) return <div>Loading</div>;
   if (error) return;
   return (
-    <section class="bg-gray-100">
-      <div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
-        <div class="rounded-lg bg-white p-8 shadow-lg lg:col-span-3 lg:p-12">
-          <form onSubmit={handleSubmit(handleAddProduct)} class="space-y-4">
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <section className="bg-gray-100">
+      <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="rounded-lg bg-white p-8 shadow-lg lg:col-span-3 lg:p-12">
+          <form onSubmit={handleSubmit(handleAddProduct)} className="space-y-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
-                <label class="sr-only" htmlFor="product-name">
+                <label className="sr-only" htmlFor="product-name">
                   Book Name
                 </label>
                 <input
                   {...register("name", {
                     required: true,
                   })}
-                  class="w-full rounded-lg border-gray-200 p-3 text-sm"
+                  className="w-full rounded-lg border-gray-200 p-3 text-sm"
                   placeholder="Book Name"
                   type="text"
                   id="product-name"
                 />
               </div>
               <div>
-                <label class="sr-only" htmlFor="writer">
+                <label className="sr-only" htmlFor="writer">
                   Writer
                 </label>
                 <input
                   {...register("writer", {
                     required: true,
                   })}
-                  class="w-full rounded-lg border-gray-200 p-3 text-sm"
+                  className="w-full rounded-lg border-gray-200 p-3 text-sm"
                   placeholder="Writer"
                   id="writer"
                 ></input>
@@ -127,7 +132,7 @@ export default function AddProduct() {
                   {...register("resalePrice", {
                     required: true,
                   })}
-                  class="w-full rounded-lg border-gray-200 p-3 text-sm"
+                  className="w-full rounded-lg border-gray-200 p-3 text-sm"
                   placeholder="Resale Price"
                   type="text"
                   id="resalePrice"
@@ -141,7 +146,7 @@ export default function AddProduct() {
                   {...register("originalPrice", {
                     required: true,
                   })}
-                  class="w-full rounded-lg border-gray-200 p-3 text-sm"
+                  className="w-full rounded-lg border-gray-200 p-3 text-sm"
                   placeholder="Original Price"
                   type="text"
                   id="orginalPrice"
@@ -149,14 +154,14 @@ export default function AddProduct() {
               </div>
 
               <div>
-                <label class="sr-only" htmlFor="phone">
+                <label className="sr-only" htmlFor="phone">
                   Phone
                 </label>
                 <input
                   {...register("mobile", {
                     required: true,
                   })}
-                  class="w-full rounded-lg border-gray-200 p-3 text-sm"
+                  className="w-full rounded-lg border-gray-200 p-3 text-sm"
                   placeholder="Phone Number"
                   type="tel"
                   id="phone"
@@ -168,39 +173,39 @@ export default function AddProduct() {
                 </Listbox>
               </div>
               <div>
-                <label class="sr-only" htmlFor="yearsofuse">
+                <label className="sr-only" htmlFor="yearsofuse">
                   Year of purchase
                 </label>
                 <input
                   {...register("yearsOfUse", {
                     required: true,
                   })}
-                  class="w-full rounded-lg border border-gray-300 p-3 text-sm"
+                  className="w-full rounded-lg border border-gray-300 p-3 text-sm"
                   placeholder="Years of Use"
                   id="yearsofuse"
                 ></input>
               </div>
               <div>
-                <label class="sr-only" htmlFor="location">
+                <label className="sr-only" htmlFor="location">
                   Location
                 </label>
                 <input
                   {...register("location", {
                     required: true,
                   })}
-                  class="w-full rounded-lg border border-gray-300 p-3 text-sm"
+                  className="w-full rounded-lg border border-gray-300 p-3 text-sm"
                   placeholder="Your Location"
                   id="location"
                 ></input>
               </div>
-              <div class="flex items-center">
+              <div className="flex items-center">
                 <label
                   for="dropzone-file"
-                  class="mx-auto cursor-pointer flex w-full max-w-lg flex-col items-center rounded-xl border-2 border-dashed border-blue-400 bg-white p-1 text-center"
+                  className="mx-auto cursor-pointer flex w-full max-w-lg flex-col items-center rounded-xl border-2 border-dashed border-blue-400 bg-white p-1 text-center"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="h-6 w-6 text-blue-500"
+                    className="h-6 w-6 text-blue-500"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -213,11 +218,11 @@ export default function AddProduct() {
                     />
                   </svg>
 
-                  <h2 class="mt-4 text-xl font-medium text-gray-700 tracking-wide">
+                  <h2 className="mt-4 text-xl font-medium text-gray-700 tracking-wide">
                     Book's Picture
                   </h2>
 
-                  <p class="mt-2 text-gray-500 tracking-wide">
+                  <p className="mt-2 text-gray-500 tracking-wide">
                     Upload your file SVG, PNG, JPG or GIF
                   </p>
 
@@ -225,13 +230,13 @@ export default function AddProduct() {
                     {...register("image", { required: true })}
                     id="dropzone-file"
                     type="file"
-                    class="hidden"
+                    className="hidden"
                   />
                 </label>
               </div>
               <div>
                 <h3 className="text-gray-800 ml-2 text-xl">Condition</h3>
-                <div class="grid grid-cols-1 gap-4 text-center sm:grid-cols-3 w-fit">
+                <div className="grid grid-cols-1 gap-4 text-center sm:grid-cols-3 w-fit">
                   <button
                     onClick={(e) => handleSelect(e, "Fair")}
                     className={
@@ -277,17 +282,17 @@ export default function AddProduct() {
               </div>
             </div>
 
-            <div class="mt-4">
+            <div className="mt-4">
               <button
                 type="submit"
                 disabled={loading}
-                class="inline-flex w-full items-center justify-center rounded-lg bg-black hover:bg-primary disabled:cursor-not-allowed disabled:bg-black/40 duration-300 px-5 py-3 text-white sm:w-auto group"
+                className="inline-flex w-full items-center justify-center rounded-lg bg-black hover:bg-primary disabled:cursor-not-allowed disabled:bg-black/40 duration-300 px-5 py-3 text-white sm:w-auto group"
               >
-                <span class="font-medium">
+                <span className="font-medium">
                   {loading && (
                     <svg
                       role="status"
-                      class="inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600"
+                      className="inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600"
                       viewBox="0 0 100 101"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
@@ -307,7 +312,7 @@ export default function AddProduct() {
 
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  class="ml-3 h-5 w-5 group-hover:translate-x-1 duration-200"
+                  className="ml-3 h-5 w-5 group-hover:translate-x-1 duration-200"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"

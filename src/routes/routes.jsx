@@ -2,11 +2,13 @@ import { createBrowserRouter } from "react-router-dom";
 import Main from "../layout/Main";
 import CategoryProduct from "../pages/CategoryProducts/CategoryProduct";
 import AddProduct from "../pages/Dashboard/AddProduct/AddProduct";
+import AllBuyers from "../pages/Dashboard/AllBuyers/AllBuyers";
 import AllSellers from "../pages/Dashboard/AllSellers/AllSellers";
 import Checkout from "../pages/Dashboard/Checkout/Checkout";
 import Dashboard from "../pages/Dashboard/Dashboard/Dashboard";
 import Myorders from "../pages/Dashboard/MyOrders/Myorders";
 import MyProducts from "../pages/Dashboard/MyProducts/MyProducts";
+import MyProfile from "../pages/Dashboard/MyProfile/MyProfile";
 import Error from "../pages/Error/Error";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
@@ -54,6 +56,10 @@ export const routes = createBrowserRouter([
         ),
         children: [
           {
+            path: "/dashboard/my-profile",
+            element: <MyProfile />,
+          },
+          {
             path: "/dashboard/my-orders",
             element: <Myorders />,
           },
@@ -68,6 +74,10 @@ export const routes = createBrowserRouter([
           {
             path: "/dashboard/all-sellers",
             element: <AllSellers />,
+          },
+          {
+            path: "/dashboard/all-buyers",
+            element: <AllBuyers />,
           },
           {
             path: "/dashboard/checkout/:id",

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
 import useToken from "../../hooks/useToken";
@@ -91,14 +92,14 @@ export default function SignUp() {
           axios
             .post(`${import.meta.env.VITE_API_URL}/users`, userInfo)
             .then((res) => {
-              // console.log(res.data);
               if (res.data.acknowledged) {
-                alert("signed in successfully.");
+                toast.success("Signed in successfully.");
                 setSendToken({ email: userInfo.email });
               }
             })
             .catch((er) => {
               console.error(er);
+              toast.error("Couldn't Register your account");
             });
         }
       })
