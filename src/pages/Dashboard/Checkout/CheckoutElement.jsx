@@ -101,7 +101,10 @@ export default function CheckoutElement({ bookedPoduct }) {
     <form onSubmit={handleSubmit}>
       <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
         <div>
-          <label className="text-gray-700 dark:text-gray-200" for="username">
+          <label
+            className="text-gray-700 dark:text-gray-200"
+            htmlFor="username"
+          >
             Name on Card
           </label>
           <input
@@ -120,7 +123,7 @@ export default function CheckoutElement({ bookedPoduct }) {
         <div>
           <label
             className="text-gray-700 dark:text-gray-200"
-            for="emailAddress"
+            htmlFor="emailAddress"
           >
             Email Address
           </label>
@@ -134,7 +137,7 @@ export default function CheckoutElement({ bookedPoduct }) {
         <div>
           <label
             className="text-gray-700 dark:text-gray-200"
-            for="deliveryLocation"
+            htmlFor="deliveryLocation"
           >
             Delivery Location
           </label>

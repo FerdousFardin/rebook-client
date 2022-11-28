@@ -1,6 +1,7 @@
 import {
   ArrowRightIcon,
   CheckIcon,
+  ExclamationTriangleIcon,
   HandRaisedIcon,
   MapPinIcon,
 } from "@heroicons/react/24/solid";
@@ -34,7 +35,7 @@ export default function CategoryProduct() {
       .then((res) => res.json())
       .then((data) => {
         if (data.modifiedCount > 0) {
-          toast.success("Item reported.")
+          toast.success("Item reported.");
         }
       });
   };
@@ -112,7 +113,7 @@ export default function CategoryProduct() {
                     {product.seller}
                   </strong>
                   {product.isVerified && (
-                    <span className="text-xs font-thin bg-blue-500 rounded-xl px-1 py-0.5 text-white">
+                    <span className="text-xs text-center font-thin bg-blue-500 rounded-xl lg:px-1 py-px lg:py-0.5 text-white">
                       <CheckIcon className="h-3 w-3 inline-block" /> verified
                       seller
                     </span>
@@ -121,15 +122,22 @@ export default function CategoryProduct() {
                 <p className="mt-6 mb-8 text-gray-600 dark:text-gray-300">
                   {product.description}
                 </p>
-                <button
-                  className="inline-block hover:translate-x-2 duration-300"
-                  onClick={() => handleModal(product)}
-                >
+                {product.inStock ? (
+                  <button
+                    className="inline-block hover:translate-x-2 duration-300 bg-primary-100/10 py-2 px-5 rounded-lg"
+                    onClick={() => handleModal(product)}
+                  >
+                    <span className="text-primary flex gap-1 items-center">
+                      Book Now for <strong>${product.resalePrice}</strong>
+                      <ArrowRightIcon className="h-5 w-5 text-primary" />
+                    </span>
+                  </button>
+                ) : (
                   <span className="text-primary flex gap-1 items-center">
-                    Book Now for <strong>${product.resalePrice}</strong>
-                    <ArrowRightIcon className="h-5 w-5 text-primary" />
+                    <ExclamationTriangleIcon className="h-5 w-5" />
+                    Stock Out!
                   </span>
-                </button>
+                )}
               </div>
             </div>
           ))}

@@ -8,7 +8,9 @@ export default function AllBuyers() {
 
   function closeModal() {
     setIsOpen(false);
-    setUser({});
+    setTimeout(() => {
+      setUser({});
+    }, 200);
   }
 
   function openModal(user) {

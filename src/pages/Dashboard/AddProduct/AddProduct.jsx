@@ -1,6 +1,7 @@
 import { Listbox } from "@headlessui/react";
 import { ArchiveBoxIcon, FaceSmileIcon } from "@heroicons/react/24/outline";
 import { useQuery } from "@tanstack/react-query";
+import { format } from "date-fns";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -39,9 +40,10 @@ export default function AddProduct() {
   const { register, handleSubmit, formState: errors } = useForm();
   const handleAddProduct = (data, e) => {
     setLoading(true);
-    const { image, ...rest } = data;
+    const { image, yearsOfPurchase, ...rest } = data;
     const formData = new FormData();
     formData.append("image", image[0]);
+    setLoading(false);
     fetch(
       `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_imbb_apikey}`,
       {
@@ -51,7 +53,6 @@ export default function AddProduct() {
     )
       .then((res) => res.json())
       .then((dataImg) => {
-        console.log(dataImg);
         if (dataImg.data.url) {
           const productInfo = {
             ...rest,
@@ -61,6 +62,8 @@ export default function AddProduct() {
             seller: user?.displayName,
             advertised: false,
             img: dataImg.data.url,
+            yearsOfUse: format(Date.now(), "y") - yearsOfPurchase,
+            inStock: true,
             date: Date.now(),
           };
           fetch(`${import.meta.env.VITE_API_URL}/products`, {
@@ -76,14 +79,22 @@ export default function AddProduct() {
               if (result.acknowledged) {
                 toast.success(`${selected.name} added to product listings`);
                 e.target.reset();
+                toast.success(
+                  `${rest.name} added to product listings successfully.`
+                );
                 navigate("/dashboard/my-products");
               }
             });
         }
       })
-      .catch(er=>{
-        toast.error(`${selected.name} couldn'e be added to product listings`)
-        console.error(er)
+      .catch((er) => {
+        toast.error(
+          `${image[0].name} couldn'e be uploaded! Try uploading another if it fails again.`
+        );
+        toast.success(
+          `${rest.name} couldn't be added to product listings! Try again.`
+        );
+        console.error(er);
       })
       .finally(() => {
         setLoading(false);
@@ -173,16 +184,16 @@ export default function AddProduct() {
                 </Listbox>
               </div>
               <div>
-                <label className="sr-only" htmlFor="yearsofuse">
+                <label className="sr-only" htmlFor="yearsOfPurchase">
                   Year of purchase
                 </label>
                 <input
-                  {...register("yearsOfUse", {
+                  {...register("yearsOfPurchase", {
                     required: true,
                   })}
                   className="w-full rounded-lg border border-gray-300 p-3 text-sm"
-                  placeholder="Years of Use"
-                  id="yearsofuse"
+                  placeholder="Year of Purchase"
+                  id="yearsOfPurchase"
                 ></input>
               </div>
               <div>
@@ -200,7 +211,7 @@ export default function AddProduct() {
               </div>
               <div className="flex items-center">
                 <label
-                  for="dropzone-file"
+                  htmlFor="dropzone-file"
                   className="mx-auto cursor-pointer flex w-full max-w-lg flex-col items-center rounded-xl border-2 border-dashed border-blue-400 bg-white p-1 text-center"
                 >
                   <svg

@@ -14,10 +14,9 @@ export default function BookModal({
 }) {
   const { user } = useContext(AuthContext);
   const [uploading, setUploading] = useState(false);
-  const { handleSubmit, register, formState: errors } = useForm();
+  const { handleSubmit, register } = useForm();
   const handleBooking = (data, e) => {
     setUploading(true);
-    // console.log(data);
     const { mobile, location: userLocation } = data;
     console.log("first");
     const bookingInfo = {
@@ -43,10 +42,12 @@ export default function BookModal({
         if (data.acknowledged) {
           toast.success(`${name} added to bookings`);
           setIsOpen(false);
+          e.target.reset();
         }
-      }).catch((er)=>{
-        toast.error(`${name} couldn't be added to bookings`)
-        console.error(er)
+      })
+      .catch((er) => {
+        toast.error(`${name} couldn't be added to bookings`);
+        console.error(er);
       })
       .finally(() => {
         setUploading(false);
@@ -102,7 +103,7 @@ export default function BookModal({
                     <div className="grid gap-6 mb-6 lg:grid-cols-2">
                       <div>
                         <label
-                          for="name"
+                          htmlFor="name"
                           className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >
                           Full name
@@ -118,7 +119,7 @@ export default function BookModal({
                       </div>
                       <div>
                         <label
-                          for="bookName"
+                          htmlFor="bookName"
                           className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >
                           Book Name
@@ -134,29 +135,32 @@ export default function BookModal({
                       </div>
                       <div>
                         <label
-                          for="phone"
+                          htmlFor="phone"
                           className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >
                           Mobile number
                         </label>
                         <input
-                          {...register("mobile", { required: false })}
+                          {...register("mobile", { required: true })}
+                          required
                           type="tel"
                           id="phone"
                           className="border bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full max-w-sm px-5 py-2.5  focus-visible:ring-primary/30 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:placeholder:text-black"
                           placeholder="017123 456789"
-                          pattern="[0-9]{11}"
                         />
                       </div>
                       <div>
                         <label
-                          for="location"
+                          htmlFor="location"
                           className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >
                           Location
                         </label>
                         <input
-                          {...register("location", { required: false })}
+                          {...register("location", {
+                            required: true,
+                          })}
+                          required
                           type="text"
                           id="location"
                           className="border bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full max-w-sm px-5 py-2.5  focus-visible:ring-primary/30 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:placeholder:text-black"
@@ -165,7 +169,7 @@ export default function BookModal({
                       </div>
                       <div>
                         <label
-                          for="price"
+                          htmlFor="price"
                           className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >
                           Price
@@ -181,7 +185,7 @@ export default function BookModal({
                       </div>
                       <div>
                         <label
-                          for="email"
+                          htmlFor="email"
                           className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >
                           Email address

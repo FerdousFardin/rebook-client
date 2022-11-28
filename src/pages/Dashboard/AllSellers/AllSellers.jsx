@@ -5,11 +5,14 @@ import DeleteConfirm from "../DeleteConfirm/DeleteConfirm";
 
 export default function AllSellers() {
   const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [user, setUser] = useState({});
 
   function closeModal() {
     setIsOpen(false);
-    setUser({});
+    setTimeout(() => {
+      setUser({});
+    }, 200);
   }
 
   function openModal(user) {
@@ -32,6 +35,7 @@ export default function AllSellers() {
       }).then((res) => res.json()),
   });
   const handleVerify = (id) => {
+    setLoading(true);
     fetch(`${import.meta.env.VITE_API_URL}/users?verify=true`, {
       method: "PUT",
       headers: {
@@ -46,6 +50,9 @@ export default function AllSellers() {
           toast.success("Verified!");
           refetch();
         }
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
   if (isLoading) return <div>Loading</div>;
@@ -112,22 +119,28 @@ export default function AllSellers() {
                   <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
                     Actions
                   </span>
-                  {isVerified ? (
-                    ""
-                  ) : (
+                  <div className="flex justify-center items-center gap-3">
+                    {isVerified ? (
+                      ""
+                    ) : (
+                      <button
+                        onClick={() => handleVerify(_id)}
+                        class="bg-blue-400 flex items-center py-1 px-2 rounded-lg text-white disabled:bg-blue-300 disabled:cursor-not-allowed duration-[500ms,800ms]"
+                        disabled={loading}
+                      >
+                        {loading && (
+                          <div class="grid-1 my-auto h-5 w-5 mr-3 border-t-transparent border-solid animate-spin rounded-full border-white border"></div>
+                        )}
+                        {loading ? "Processing" : "Verify"}
+                      </button>
+                    )}
                     <button
-                      onClick={() => handleVerify(_id)}
-                      className="text-blue-400 hover:text-blue-600 underline pl-6"
+                      className="text-white py-1 px-2  rounded bg-red-600 hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600 disabled:opacity-50"
+                      onClick={() => openModal({ _id, name })}
                     >
-                      Verify
+                      Delete
                     </button>
-                  )}
-                  <button
-                    className="text-white py-1 px-2  rounded bg-red-600 hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600 disabled:opacity-50"
-                    onClick={() => openModal({ _id, name })}
-                  >
-                    Delete
-                  </button>
+                  </div>
                 </td>
               </tr>
             ))
