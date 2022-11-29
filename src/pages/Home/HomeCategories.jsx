@@ -29,9 +29,8 @@ export default function HomeCategories() {
           </h2>
 
           <p className="max-w-screen-md text-gray-500 md:text-lg text-center mx-auto">
-            This is a section of some simple filler text, also known as
-            placeholder text. It shares some characteristics of a real written
-            text but is random or otherwise generated.
+            Browse and shop books and collectibles ranging from Children's book
+            to Fictions and Non-Fiction's.
           </p>
         </div>
         {/* <!-- text - end --> */}

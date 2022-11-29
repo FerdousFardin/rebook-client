@@ -13,9 +13,8 @@ export default function Offer() {
               <span className="text-primary dark:text-sky-300">50% off</span>
             </h1>
             <p className="text-lg text-gray-600 dark:text-gray-300">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. In nemo
-              provident aliquid ipsam iure, itaque est fuga consequatur id
-              velit!
+              Get every item you’ll need this winter, during our Winter Sale!
+              Starts December and runs until January!
             </p>
             <div className="flex flex-wrap gap-6">
               <PrimaryBtn className={"sm:w-max h-12 w-full"}>

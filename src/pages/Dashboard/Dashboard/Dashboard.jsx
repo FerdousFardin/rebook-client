@@ -55,7 +55,7 @@ export default function Dashboard() {
           <span className="-mr-1 font-medium">My Profile</span>
         </NavLink>
       </li>
-      {userInfo?.role?.includes("buyer") && (
+      {userInfo?.role && (
         <li>
           <NavLink
             onClick={() => setIsOpen(false)}

@@ -39,7 +39,6 @@ export default function SignUp() {
 
     signupUser(email, password)
       .then((res) => {
-        console.log(res.user);
         fetch(
           `https://api.imgbb.com/1/upload?key=${
             import.meta.env.VITE_imbb_apikey
@@ -61,8 +60,6 @@ export default function SignUp() {
               axios
                 .post(`${import.meta.env.VITE_API_URL}/users`, userInfo)
                 .then((res) => {
-                  console.log(res);
-
                   if (res.data.acknowledged) {
                     setSendToken(email);
                     e.target.reset();
@@ -83,7 +80,6 @@ export default function SignUp() {
     googleLogin()
       .then((res) => {
         if (res.user) {
-          console.log(res.user);
           const userInfo = {
             name: res.user.displayName,
             email: res.user.email,

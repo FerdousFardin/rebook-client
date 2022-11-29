@@ -196,46 +196,118 @@ export default function Blog() {
             >
               Angular vs React vs Vue
             </a>
-
-            <table className="border-collapse w-full">
-              <thead>
-                <tr>
-                  <th className="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
-                    React
-                  </th>
-                  <th className="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
-                    Vue
-                  </th>
-                  <th className="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
-                    Angular
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-                  <td className="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
-                    <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
-                      React
-                    </span>
-                    Squary
-                  </td>
-                  <td className="w-full lg:w-auto p-3 text-gray-800 text-center border border-b  block lg:table-cell relative lg:static">
-                    <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
-                      Vue
-                    </span>
-                    Schweden
-                  </td>
-                  <td className="w-full lg:w-auto p-3 text-gray-800 text-center border border-b  block lg:table-cell relative lg:static">
-                    <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
-                      Angular
-                    </span>
-                    <span className="rounded bg-green-400 py-1 px-3 text-xs font-bold">
-                      active
-                    </span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <p className="mt-3 text-sm text-gray-500 dark:text-gray-300 md:text-sm">
+              <ol>
+                <li>
+                  <strong> React</strong>
+                  <ul>
+                    <li>
+                      React is the JavaScript library of User Interfaces. It is
+                      build single-page applications and also allows you to
+                      create reusable UI components.
+                    </li>
+                    <li>
+                      Popularity – React has gained a lot of popularity in
+                      recent years and is considered one of the best frameworks
+                      for web development. There are more developers who keep
+                      React as a priority for creating wonderful websites.
+                    </li>
+                    <li>
+                      Architecture – It does not follow any specific pattern,
+                      developers have the freedom to choose any design pattern.
+                      It begins with a single root component. Each can be nested
+                      with another component.{" "}
+                    </li>
+                    <li>
+                      Ecosystem – React has excellent open-source packages that
+                      could be used for developing applications. Front-end
+                      applications rely on global state management (Redux) used
+                      to store information
+                    </li>
+                    <li>
+                      Features – React follows the “Learn Once, Write Anywhere”
+                      feature which helps developers to integrate new features
+                      without the need of rewriting the existing code. It also
+                      has declarative views for each state which will
+                      efficiently update and render the components as per the
+                      change in data. It has virtual DOM{" "}
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <strong>Angular</strong>
+                  <ul>
+                    <li>
+                      Angular, developed by Google, was released in the year
+                      2010. It is a TypeScript-based framework that uses a
+                      regular DOM. Angular provides a set of tools using which a
+                      complex, reactive UI can be built.{" "}
+                    </li>
+                    <li>
+                      Popularity – Angular is used by Google, Upwork, and MS
+                      Office and since this framework was implemented before
+                      React, it is more popular providing a highly functional
+                      framework to create larger applications.
+                    </li>
+                    <li>
+                      Architecture – Angular follows MVC (Model-View-Controller)
+                      architecture, also you don’t have restrictions in
+                      following only MVC architecture
+                    </li>
+                    <li>
+                      Ecosystem – Angular also performs state management,
+                      inspired by Redux in React. You can build cross-platform
+                      mobile applications using NativeScript.
+                    </li>
+                    <li>
+                      Features – The new version of Angular8 comes with immense
+                      features such as it supports cross-platform, two-way data
+                      binding, a set of directives, declarative UI, a real DOM,
+                      CLI (Command Line Interface), and many more.{" "}
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <strong>Vue.js</strong>
+                  <ul>
+                    <li>
+                      Vue was developed by a former Google employee and was
+                      released in the year 2014. It was developed to make the
+                      best version of Angular and make a custom tool. It is used
+                      for developing single-page engaging and high-quality web
+                      applications.{" "}
+                    </li>
+                    <li>
+                      Popularity – Vue has become so popular these days and it
+                      is one of the hottest topics in terms of technology.
+                      Companies that use Vue as their front-end development
+                      framework are UpWork, Netflix, and Nintendo. It has a good
+                      rating on GitHub making it so popular.{" "}
+                    </li>
+                    <li>
+                      Architecture – Vue is called a progressive framework where
+                      you can extend functionality using third-party packages.
+                      It follows the MVVM (Model View ViewModel) pattern but is
+                      also not strictly linked to it.
+                    </li>
+                    <li>
+                      Ecosystem – Vue comes with various libraries used for
+                      creating a full-fledged UI. Vuex is the state management
+                      library for Vue applications. To speed up your
+                      development, it has input components and advanced elements
+                    </li>
+                    <li>
+                      Features – Several features of Vue include two-way data
+                      binding for HTML interface manipulation, virtual DOM to
+                      update the changes made in the website quickly, custom
+                      directives for managing data changes, components for
+                      reusing codes, and transitions that provides methods when
+                      a UI element is removed or inserted in the DOM.
+                    </li>
+                  </ul>
+                </li>
+              </ol>
+            </p>
 
             <a
               href="https://www.codeinwp.com/blog/angular-vs-vue-vs-react/#:~:text=Vue%20provides%20higher%20customizability%20and,two%20is%20an%20easy%20option."

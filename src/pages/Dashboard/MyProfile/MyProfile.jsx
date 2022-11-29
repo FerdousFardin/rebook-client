@@ -38,7 +38,6 @@ function MyProfile() {
     )
       .then((res) => res.json())
       .then((dataImg) => {
-        // console.log(dataImg);
         if (dataImg.data.url) {
           const updatedInfo = {
             ...rest,

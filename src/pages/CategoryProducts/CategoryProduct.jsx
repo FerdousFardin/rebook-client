@@ -57,8 +57,10 @@ export default function CategoryProduct() {
       .then((data) => {
         if (data.modifiedCount > 0) {
           toast.success("Item reported.");
+          refetch();
         }
-      });
+      })
+      .finally(() => setLoading(false));
   };
   if (isLoading || loading) return <Loader />;
   if (error) return navigate("/error");

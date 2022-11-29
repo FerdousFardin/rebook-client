@@ -1,7 +1,7 @@
 import { async } from "@firebase/util";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useQuery } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthProvider";
@@ -87,7 +87,7 @@ export default function CheckoutElement({ bookedPoduct }) {
         body: JSON.stringify({
           id: bookedPoduct._id,
           name: bookedPoduct.name,
-          soldTo: user?.displayName,
+          soldTo: ev.target.name.value,
         }),
       })
         .then((res) => res.json())
@@ -114,8 +114,10 @@ export default function CheckoutElement({ bookedPoduct }) {
           </label>
           <input
             id="username"
+            name="name"
             type="text"
             className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-primary/40 focus:ring-primary-100/50 focus:ring-opacity-40 dark:focus:border-primary focus:outline-none focus:ring"
+            required
           />
         </div>
 
@@ -130,6 +132,7 @@ export default function CheckoutElement({ bookedPoduct }) {
             id="emailAddress"
             type="email"
             className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-primary/40 focus:ring-primary-100/50 focus:ring-opacity-40 dark:focus:border-primary focus:outline-none focus:ring"
+            required
           />
         </div>
 
@@ -144,6 +147,7 @@ export default function CheckoutElement({ bookedPoduct }) {
             id="deliveryLocation"
             type="text"
             className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-primary/40 focus:ring-primary-100/50 focus:ring-opacity-40 dark:focus:border-primary focus:outline-none focus:ring"
+            required
           />
         </div>
         <div>

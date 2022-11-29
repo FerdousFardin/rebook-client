@@ -6,7 +6,6 @@ import CheckoutElement from "./CheckoutElement";
 
 export default function Checkout() {
   const [bookedPoduct] = useLoaderData();
-  console.log(bookedPoduct);
   const stripePromise = loadStripe(import.meta.env.VITE_stripe_key);
   return (
     <section className="mt-10 max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
