@@ -6,10 +6,13 @@ import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { SpinnerCircular } from "spinners-react";
+
+import Loader from "../../../components/Loader/Loader";
 import { AuthContext } from "../../../context/AuthProvider";
 import SelectCategory from "./SelectCategory";
-
+const placeholder = {
+  name: "Please Select a Category.",
+};
 export default function AddProduct() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -21,14 +24,12 @@ export default function AddProduct() {
   } = useQuery({
     queryKey: ["categories"],
     queryFn: () =>
-      fetch(`https://rebook-server.vercel.app/categories`).then((res) =>
+      fetch(`${import.meta.env.VITE_API_URL}/categories`).then((res) =>
         res.json()
       ),
   });
   const [productCondition, setProductCondition] = useState("Fair");
-  const [selected, setSelected] = useState({
-    name: "Please Select a Category.",
-  });
+  const [selected, setSelected] = useState(placeholder);
 
   const activeClass =
     "flex justify-center w-full px-3 py-2 text-white bg-primary rounded-md md:w-auto md:mx-2 focus:outline-none";
@@ -39,8 +40,13 @@ export default function AddProduct() {
     setProductCondition(quality);
   };
   const { register, handleSubmit, formState: errors } = useForm();
+  console.log(errors);
   const handleAddProduct = (data, e) => {
     setLoading(true);
+    if (selected === placeholder.name || selected === placeholder) {
+      setLoading(false);
+      return toast.error("Please select a category.");
+    }
     const { image, yearsOfPurchase, ...rest } = data;
     const formData = new FormData();
     formData.append("image", image[0]);
@@ -67,7 +73,7 @@ export default function AddProduct() {
             inStock: true,
             date: Date.now(),
           };
-          fetch(`https://rebook-server.vercel.app/products`, {
+          fetch(`${import.meta.env.VITE_API_URL}/products`, {
             method: "POST",
             headers: {
               authorization: `bearer ${localStorage.getItem("rebookToken")}`,
@@ -101,12 +107,7 @@ export default function AddProduct() {
         setLoading(false);
       });
   };
-  if (isLoading)
-    return (
-      <div className="w-full h-screen grid place-items-center">
-        <SpinnerCircular />
-      </div>
-    );
+  if (isLoading) return <Loader />;
   if (error) return;
   return (
     <section className="bg-gray-100">
@@ -120,13 +121,18 @@ export default function AddProduct() {
                 </label>
                 <input
                   {...register("name", {
-                    required: true,
+                    required: "You must provide product name",
                   })}
-                  className="w-full rounded-lg border-gray-200 p-3 text-sm"
+                  className="w-full rounded-lg border-primary/20 p-3 text-sm border"
                   placeholder="Book Name"
                   type="text"
                   id="product-name"
                 />
+                {errors.name && (
+                  <p className="text-yellow-600 text-sm mt-2">
+                    *{errors.name.message}
+                  </p>
+                )}
               </div>
               <div>
                 <label className="sr-only" htmlFor="writer">
@@ -134,12 +140,17 @@ export default function AddProduct() {
                 </label>
                 <input
                   {...register("writer", {
-                    required: true,
+                    required: "You must provide writer name",
                   })}
-                  className="w-full rounded-lg border-gray-200 p-3 text-sm"
+                  className="w-full rounded-lg border-primary/20 p-3 text-sm border"
                   placeholder="Writer"
                   id="writer"
                 ></input>
+                {errors.writer && (
+                  <p className="text-yellow-600 text-sm mt-2">
+                    *{errors.writer.message}
+                  </p>
+                )}
               </div>
               <div>
                 <label className="text-gray-800 sr-only" htmlFor="email">
@@ -147,13 +158,18 @@ export default function AddProduct() {
                 </label>
                 <input
                   {...register("resalePrice", {
-                    required: true,
+                    required: "You must provide resale price",
                   })}
-                  className="w-full rounded-lg border-gray-200 p-3 text-sm"
+                  className="w-full rounded-lg border-primary/20 p-3 text-sm border"
                   placeholder="Resale Price"
                   type="text"
                   id="resalePrice"
                 />
+                {errors.resalePrice && (
+                  <p className="text-yellow-600 text-sm mt-2">
+                    *{errors.resalePrice.message}
+                  </p>
+                )}
               </div>
               <div>
                 <label className="text-gray-800 sr-only" htmlFor="email">
@@ -161,13 +177,18 @@ export default function AddProduct() {
                 </label>
                 <input
                   {...register("originalPrice", {
-                    required: true,
+                    required: "You must provide original price",
                   })}
-                  className="w-full rounded-lg border-gray-200 p-3 text-sm"
+                  className="w-full rounded-lg border-primary/20 p-3 text-sm border"
                   placeholder="Original Price"
                   type="text"
                   id="orginalPrice"
                 />
+                {errors.originalPrice && (
+                  <p className="text-yellow-600 text-sm mt-2">
+                    *{errors.originalPrice.message}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -176,13 +197,18 @@ export default function AddProduct() {
                 </label>
                 <input
                   {...register("mobile", {
-                    required: true,
+                    required: "You must provide your mobile number",
                   })}
-                  className="w-full rounded-lg border-gray-200 p-3 text-sm"
+                  className="w-full rounded-lg border-primary/20 p-3 text-sm border"
                   placeholder="Phone Number"
                   type="tel"
                   id="phone"
                 />
+                {errors.mobile && (
+                  <p className="text-yellow-600 text-sm mt-2">
+                    *{errors.mobile.message}
+                  </p>
+                )}
               </div>
               <div>
                 <Listbox value={selected} onChange={setSelected}>
@@ -195,12 +221,17 @@ export default function AddProduct() {
                 </label>
                 <input
                   {...register("yearsOfPurchase", {
-                    required: true,
+                    required: "You must provide when it was purchased",
                   })}
-                  className="w-full rounded-lg border border-gray-300 p-3 text-sm"
+                  className="w-full rounded-lg border border-primary/20 p-3 text-sm"
                   placeholder="Year of Purchase"
                   id="yearsOfPurchase"
                 ></input>
+                {errors.yearsOfPurchase && (
+                  <p className="text-yellow-600 text-sm mt-2">
+                    *{errors.yearsOfPurchase.message}
+                  </p>
+                )}
               </div>
               <div>
                 <label className="sr-only" htmlFor="location">
@@ -208,49 +239,19 @@ export default function AddProduct() {
                 </label>
                 <input
                   {...register("location", {
-                    required: true,
+                    required: "You must provide your location",
                   })}
-                  className="w-full rounded-lg border border-gray-300 p-3 text-sm"
+                  className="w-full rounded-lg border border-primary/20 p-3 text-sm"
                   placeholder="Your Location"
                   id="location"
                 ></input>
-              </div>
-              <div className="flex items-center">
-                <label
-                  htmlFor="dropzone-file"
-                  className="mx-auto cursor-pointer flex w-full max-w-lg flex-col items-center rounded-xl border-2 border-dashed border-blue-400 bg-white p-1 text-center"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 text-blue-500"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                    />
-                  </svg>
-
-                  <h2 className="mt-4 text-xl font-medium text-gray-700 tracking-wide">
-                    Book's Picture
-                  </h2>
-
-                  <p className="mt-2 text-gray-500 tracking-wide">
-                    Upload your file SVG, PNG, JPG or GIF
+                {errors.location && (
+                  <p className="text-yellow-600 text-sm mt-2">
+                    *{errors.location.message}
                   </p>
-
-                  <input
-                    {...register("image", { required: true })}
-                    id="dropzone-file"
-                    type="file"
-                    className="hidden"
-                  />
-                </label>
+                )}
               </div>
+
               <div>
                 <h3 className="text-gray-800 ml-2 text-xl">Condition</h3>
                 <div className="grid grid-cols-1 gap-4 text-center sm:grid-cols-3 w-fit">
@@ -296,6 +297,49 @@ export default function AddProduct() {
                     <span className="mx-2">Excellent</span>
                   </button>
                 </div>
+              </div>
+              <div>
+                <label
+                  htmlFor="dropzone-file"
+                  className="mx-auto cursor-pointer flex w-full max-w-lg flex-col items-center rounded-xl border-2 border-dashed border-blue-400 bg-white p-1 text-center"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6 text-blue-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                    />
+                  </svg>
+
+                  <h2 className="mt-4 text-xl font-medium text-gray-700 tracking-wide">
+                    Book's Picture
+                  </h2>
+
+                  <p className="mt-2 text-gray-500 tracking-wide">
+                    Upload your file SVG, PNG, JPG or GIF
+                  </p>
+
+                  <input
+                    {...register("image", {
+                      required: "You must provide a picture of your product",
+                    })}
+                    id="dropzone-file"
+                    type="file"
+                    className="hidden"
+                  />
+                </label>
+                {errors.image && (
+                  <p className="ml-5 text-yellow-600 text-sm mt-2 ">
+                    *{errors.image.message}
+                  </p>
+                )}
               </div>
             </div>
 

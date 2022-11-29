@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { SpinnerCircular } from "spinners-react";
+
+import Loader from "../../../components/Loader/Loader";
 
 function MyProfile() {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ function MyProfile() {
   } = useQuery({
     queryKey: ["user-info"],
     queryFn: () =>
-      fetch(`https://rebook-server.vercel.app/user`, {
+      fetch(`${import.meta.env.VITE_API_URL}/user`, {
         headers: {
           authorization: `bearer ${localStorage.getItem("rebookToken")}`,
         },
@@ -43,7 +44,7 @@ function MyProfile() {
             ...rest,
             photoURL: dataImg.data.url,
           };
-          fetch(`https://rebook-server.vercel.app/user`, {
+          fetch(`${import.meta.env.VITE_API_URL}/user`, {
             method: "PUT",
             headers: {
               authorization: `bearer ${localStorage.getItem("rebookToken")}`,
@@ -63,12 +64,7 @@ function MyProfile() {
         setLoading(false);
       });
   };
-  if (isLoading)
-    return (
-      <div className="w-full h-screen grid place-items-center">
-        <SpinnerCircular />
-      </div>
-    );
+  if (isLoading) return <Loader />;
   if (error) navigate("/error");
   return (
     <div className="w-2/3">
@@ -86,7 +82,6 @@ function MyProfile() {
             </label>
             <input
               {...register("name", { required: true })}
-              tabIndex={0}
               arial-label="Please input name"
               type="name"
               className="text-base leading-none text-gray-900 p-3 focus:oultine-none focus:border-primary mt-4 bg-gray-100 border rounded border-gray-200 placeholder-gray-500"
@@ -100,7 +95,6 @@ function MyProfile() {
             </label>
             <input
               {...register("email")}
-              tabIndex={0}
               arial-label="Please input email address"
               type="name"
               className="text-base leading-none text-gray-900 p-3 focus:oultine-none focus:border-primary mt-4 bg-gray-100 border rounded border-gray-200 placeholder-gray-500"

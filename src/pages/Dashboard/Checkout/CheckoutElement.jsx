@@ -4,12 +4,14 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../context/AuthProvider";
 
 export default function CheckoutElement({ bookedPoduct }) {
   const [disabled, setDisabled] = useState(true);
   const [processing, setProcessing] = useState("");
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const [clientSecret, setClientSecret] = useState("");
   const stripe = useStripe();
@@ -42,7 +44,7 @@ export default function CheckoutElement({ bookedPoduct }) {
     },
   };
   useEffect(() => {
-    fetch(`https://rebook-server.vercel.app/create-payment-intent`, {
+    fetch(`${import.meta.env.VITE_API_URL}/create-payment-intent`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -76,19 +78,22 @@ export default function CheckoutElement({ bookedPoduct }) {
       setError(null);
       setSucceeded(true);
 
-      fetch(`https://rebook-server.vercel.app/bookings?isPaid=true`, {
+      fetch(`${import.meta.env.VITE_API_URL}/bookings?isPaid=true`, {
         method: "PUT",
         headers: {
           "content-type": "application/json",
           authorization: `bearer ${localStorage.getItem("rebookToken")}`,
         },
-        body: JSON.stringify({ id: bookedPoduct._id }),
+        body: JSON.stringify({
+          id: bookedPoduct._id,
+          name: bookedPoduct.name,
+          soldTo: user?.displayName,
+        }),
       })
         .then((res) => res.json())
-        .then((data) => {
-          if (data.modifiedCount > 0) {
+        .then(({ result1, result2 }) => {
+          if (result1.modifiedCount && result2.modifiedCount) {
             toast.success(`Payment for ${bookedPoduct.name} was successful!`);
-            setProcessing(false);
             navigate("/dashboard/my-orders");
           }
         })
@@ -112,12 +117,6 @@ export default function CheckoutElement({ bookedPoduct }) {
             type="text"
             className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-primary/40 focus:ring-primary-100/50 focus:ring-opacity-40 dark:focus:border-primary focus:outline-none focus:ring"
           />
-        </div>
-        <div>
-          <h2>Card Information</h2>
-          <div className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-primary/40 focus:ring-primary-100/50 focus:ring-opacity-40 dark:focus:border-primary focus:outline-none focus:ring">
-            <CardElement options={cardStyle} onChange={handleChange} />
-          </div>
         </div>
 
         <div>
@@ -147,6 +146,12 @@ export default function CheckoutElement({ bookedPoduct }) {
             className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-primary/40 focus:ring-primary-100/50 focus:ring-opacity-40 dark:focus:border-primary focus:outline-none focus:ring"
           />
         </div>
+        <div>
+          <h2>Card Information</h2>
+          <div className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-primary/40 focus:ring-primary-100/50 focus:ring-opacity-40 dark:focus:border-primary focus:outline-none focus:ring">
+            <CardElement options={cardStyle} onChange={handleChange} />
+          </div>
+        </div>
       </div>
 
       <button
@@ -157,14 +162,20 @@ export default function CheckoutElement({ bookedPoduct }) {
       >
         <span id="button-text">
           {processing ? (
-            <div>Wait</div>
+            <>
+              <span className="flex gap-2">
+                <div className="grid-1 my-auto h-5 w-5 mr-3 border-t-transparent border-solid animate-spin rounded-full border-white border"></div>
+                Wait
+              </span>
+            </>
           ) : succeeded ? (
-            "Paid"
+            "Paid Already"
           ) : (
             `Pay now $${bookedPoduct.resalePrice}`
           )}
         </span>
       </button>
+      {error && <p className="text-sm text-yellow-600 mt-2">*{error}</p>}
     </form>
   );
 }

@@ -2,7 +2,8 @@ import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
-import { SpinnerCircular } from "spinners-react";
+
+import Loader from "../../../components/Loader/Loader";
 import Drawer from "./Drawer/Drawer";
 
 export default function Dashboard() {
@@ -28,7 +29,7 @@ export default function Dashboard() {
   } = useQuery({
     queryKey: ["user"],
     queryFn: () =>
-      fetch(`https://rebook-server.vercel.app/user`, {
+      fetch(`${import.meta.env.VITE_API_URL}/user`, {
         headers: {
           authorization: `bearer ${localStorage.getItem("rebookToken")}`,
         },
@@ -36,12 +37,7 @@ export default function Dashboard() {
   });
   const activeClass =
     "relative flex items-center space-x-4 rounded-xl bg-gradient-to-br from-primary to-primary-100/50 px-4 py-3 text-white";
-  if (isLoading)
-    return (
-      <div className="w-full h-screen grid place-items-center">
-        <SpinnerCircular />
-      </div>
-    );
+  if (isLoading) return <Loader />;
   if (error) return;
   const dashboardList = (
     <ul className="mt-8 space-y-2 tracking-wide">

@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
-import { SpinnerCircular } from "spinners-react";
+
+import Loader from "../../components/Loader/Loader";
 import Advertised from "./Advertised";
 import Banner from "./Banner";
 import HomeCategories from "./HomeCategories";
@@ -15,7 +16,7 @@ export default function Home() {
   } = useQuery({
     queryKey: ["advertised"],
     queryFn: () =>
-      fetch(`https://rebook-server.vercel.app/products`, {
+      fetch(`${import.meta.env.VITE_API_URL}/products`, {
         headers: {
           authorization: `bearer ${localStorage.getItem("rebookToken")}`,
         },
@@ -23,16 +24,13 @@ export default function Home() {
   });
   useEffect(() => {
     if (products?.length) {
-      const advertisedItem = products?.filter((product) => product.advertised);
+      const advertisedItem = products?.filter(
+        (product) => product.advertised && product.inStock
+      );
       setAdvertised(advertisedItem);
     }
   }, [products]);
-  if (isLoading)
-    return (
-      <div className="w-full h-screen grid place-items-center">
-        <SpinnerCircular />
-      </div>
-    );
+  if (isLoading) return <Loader />;
   if (error) return;
 
   return (

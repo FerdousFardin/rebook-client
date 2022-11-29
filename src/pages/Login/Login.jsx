@@ -5,11 +5,14 @@ import toast from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
 import useToken from "../../hooks/useToken";
+import SelectType from "./SelectType";
 
+const loginAs = [{ name: "buyer" }, { name: "seller" }];
 export default function Login() {
-  const [userEmail, setUserEmail] = useState({});
+  const [selected, setSelected] = useState(loginAs[0]);
+  const [sendToken, setSendToken] = useState("");
   const [loginErr, setLoginErr] = useState("");
-  const { loginUser, loading, setLoading, googleLogin } =
+  const { loginUser, loading, setLoading, googleLogin, logoutUser } =
     useContext(AuthContext);
   const {
     register,
@@ -19,22 +22,36 @@ export default function Login() {
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
   const navigate = useNavigate();
-  const [token] = useToken(userEmail);
+  const [token] = useToken({ email: sendToken });
   if (token) {
     navigate(from, { replace: true });
-    toast.success(`Signed in successfully.`);
   }
   const handleSignIn = (data, e) => {
-    setUserEmail("");
+    setSendToken("");
     setLoginErr("");
-    // console.log(data);
     const { email, password } = data;
     loginUser(email, password)
-      .then((res) => {
-        console.log(res.user);
-        setUserEmail({ email });
-
-        e.target.reset();
+      .then(() => {
+        fetch(`${import.meta.env.VITE_API_URL}/user-authenticate`, {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({ email, accountType: selected.name }),
+        })
+          .then((r) => r.json())
+          .then((dataUser) => {
+            if (dataUser) {
+              e.target.reset();
+              toast.success(`Signed in successfully.`);
+              setSendToken(email);
+            } else {
+              setLoginErr(
+                `Account does not have ${selected.name} privileges. Please select correct account type or create a new one.`
+              );
+              logoutUser();
+            }
+          });
       })
       .catch((er) => {
         setLoginErr(er.code);
@@ -45,7 +62,7 @@ export default function Login() {
       });
   };
   const handleGoogle = () => {
-    setLoading(true);
+    setSendToken("");
     googleLogin().then((res) => {
       const userInfo = {
         name: res.user.displayName,
@@ -54,16 +71,15 @@ export default function Login() {
         role: ["buyer"],
       };
       axios
-        .post(`https://rebook-server.vercel.app/users`, userInfo)
+        .post(`${import.meta.env.VITE_API_URL}/users`, userInfo)
         .then((res) => {
           if (res.data.acknowledged) {
-            toast.success(`Signed in successfully.`);
-            setUserEmail({ email: userInfo.email });
+            setSendToken(userInfo.email);
           }
         })
         .catch((er) => {
           console.error(er);
-          toast.error(`Can't sign in at this moment.`);
+          toast.error(`Can't connect to Google at this moment.`);
         })
         .then(() => {
           setLoading(false);
@@ -72,12 +88,16 @@ export default function Login() {
   };
   return (
     <div className="m-auto xl:container px-12 sm:px-0 mx-auto">
-      <div className="mx-auto h-full sm:w-max">
-        <div className="m-auto  py-12 ">
+      <div className="mx-auto  h-full sm:w-max">
+        <div className="m-auto w-full max-w-lg py-12 ">
+          <h3 className="text-2xl font-semibold text-gray-700 dark:text-white">
+            Login to your account
+          </h3>
           <div className="mt-12 rounded-3xl border bg-slate-50 dark:border-gray-700 dark:bg-gray-800 -mx-6 sm:-mx-10 p-8 sm:p-10">
-            <h3 className="text-2xl font-semibold text-gray-700 dark:text-white">
-              Login to your account
-            </h3>
+            <div className="flex gap-5 items-center justify-between">
+              <span className="text-gray-500 text-xl">Login as</span>
+              <SelectType {...{ selected, setSelected, loginAs }} />
+            </div>
             <div className="mt-12 flex flex-wrap  gap-6 ">
               <button
                 disabled={loading}
@@ -85,29 +105,39 @@ export default function Login() {
                 className="w-full h-11 rounded-full border hover:bg-gray-200 border-gray-300/75 bg-white disabled:bg-gray-400 disabled:cursor-not-allowed px-6 transition active:bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-800 dark:hover:border-gray-700 "
               >
                 <div className="w-full mx-auto flex items-center justify-center space-x-4 ">
-                  <svg className="w-5 h-5 " viewBox="0 0 40 40">
-                    <path
-                      d="M36.3425 16.7358H35V16.6667H20V23.3333H29.4192C28.045 27.2142 24.3525 30 20 30C14.4775 30 10 25.5225 10 20C10 14.4775 14.4775 9.99999 20 9.99999C22.5492 9.99999 24.8683 10.9617 26.6342 12.5325L31.3483 7.81833C28.3717 5.04416 24.39 3.33333 20 3.33333C10.7958 3.33333 3.33335 10.7958 3.33335 20C3.33335 29.2042 10.7958 36.6667 20 36.6667C29.2042 36.6667 36.6667 29.2042 36.6667 20C36.6667 18.8825 36.5517 17.7917 36.3425 16.7358Z"
-                      fill="#FFC107"
-                    />
-                    <path
-                      d="M5.25497 12.2425L10.7308 16.2583C12.2125 12.59 15.8008 9.99999 20 9.99999C22.5491 9.99999 24.8683 10.9617 26.6341 12.5325L31.3483 7.81833C28.3716 5.04416 24.39 3.33333 20 3.33333C13.5983 3.33333 8.04663 6.94749 5.25497 12.2425Z"
-                      fill="#FF3D00"
-                    />
-                    <path
-                      d="M20 36.6667C24.305 36.6667 28.2167 35.0192 31.1742 32.34L26.0159 27.975C24.3425 29.2425 22.2625 30 20 30C15.665 30 11.9842 27.2359 10.5975 23.3784L5.16254 27.5659C7.92087 32.9634 13.5225 36.6667 20 36.6667Z"
-                      fill="#4CAF50"
-                    />
-                    <path
-                      d="M36.3425 16.7358H35V16.6667H20V23.3333H29.4192C28.7592 25.1975 27.56 26.805 26.0133 27.9758C26.0142 27.975 26.015 27.975 26.0158 27.9742L31.1742 32.3392C30.8092 32.6708 36.6667 28.3333 36.6667 20C36.6667 18.8825 36.5517 17.7917 36.3425 16.7358Z"
-                      fill="#1976D2"
-                    />
-                  </svg>
+                  {loading || (
+                    <svg className="w-5 h-5 " viewBox="0 0 40 40">
+                      <path
+                        d="M36.3425 16.7358H35V16.6667H20V23.3333H29.4192C28.045 27.2142 24.3525 30 20 30C14.4775 30 10 25.5225 10 20C10 14.4775 14.4775 9.99999 20 9.99999C22.5492 9.99999 24.8683 10.9617 26.6342 12.5325L31.3483 7.81833C28.3717 5.04416 24.39 3.33333 20 3.33333C10.7958 3.33333 3.33335 10.7958 3.33335 20C3.33335 29.2042 10.7958 36.6667 20 36.6667C29.2042 36.6667 36.6667 29.2042 36.6667 20C36.6667 18.8825 36.5517 17.7917 36.3425 16.7358Z"
+                        fill="#FFC107"
+                      />
+                      <path
+                        d="M5.25497 12.2425L10.7308 16.2583C12.2125 12.59 15.8008 9.99999 20 9.99999C22.5491 9.99999 24.8683 10.9617 26.6341 12.5325L31.3483 7.81833C28.3716 5.04416 24.39 3.33333 20 3.33333C13.5983 3.33333 8.04663 6.94749 5.25497 12.2425Z"
+                        fill="#FF3D00"
+                      />
+                      <path
+                        d="M20 36.6667C24.305 36.6667 28.2167 35.0192 31.1742 32.34L26.0159 27.975C24.3425 29.2425 22.2625 30 20 30C15.665 30 11.9842 27.2359 10.5975 23.3784L5.16254 27.5659C7.92087 32.9634 13.5225 36.6667 20 36.6667Z"
+                        fill="#4CAF50"
+                      />
+                      <path
+                        d="M36.3425 16.7358H35V16.6667H20V23.3333H29.4192C28.7592 25.1975 27.56 26.805 26.0133 27.9758C26.0142 27.975 26.015 27.975 26.0158 27.9742L31.1742 32.3392C30.8092 32.6708 36.6667 28.3333 36.6667 20C36.6667 18.8825 36.5517 17.7917 36.3425 16.7358Z"
+                        fill="#1976D2"
+                      />
+                    </svg>
+                  )}
+                  {loading && (
+                    <div className="grid-1 my-auto h-5 w-5 mr-3 border-t-transparent border-solid animate-spin rounded-full border-white border"></div>
+                  )}
                   <span className="block w-max text-sm font-semibold tracking-wide text-black dark:text-white">
                     {loading && "Signing In"} With Google
                   </span>
                 </div>
               </button>
+            </div>
+            <div className="flex w-full justify-center my-5">
+              <span className="text-xs text-gray-500 uppercase dark:text-gray-400 hover:underline">
+                or login with email
+              </span>
             </div>
 
             <form
@@ -159,8 +189,8 @@ export default function Login() {
                   </p>
                 )}
                 {loginErr && (
-                  <p className="text-yellow-600 text-sm mt-2">
-                    *{loginErr.split("/")[1]}
+                  <p className="text-yellow-600 text-sm mt-2 break-words">
+                    *{loginErr}
                   </p>
                 )}
                 <button className="-mr-3 w-max p-3">
@@ -176,6 +206,9 @@ export default function Login() {
                   className="w-full rounded-full bg-primary disabled:bg-red-800
                   disabled:cursor-not-allowed dark:bg-primary/25 h-11 flex items-center justify-center px-6 py-3 transition hover:bg-primary-100 focus:bg-primary/70 active:bg-primary-100 cursor-pointer text-white"
                 >
+                  {loading && (
+                    <div className="grid-1 my-auto h-5 w-5 mr-3 border-t-transparent border-solid animate-spin rounded-full border-white border"></div>
+                  )}
                   {loading ? (
                     "Signing In..."
                   ) : (

@@ -4,15 +4,12 @@ export default function useAdmin(email) {
   const [isAdmin, setIsAdmin] = useState(false);
   const [checkingAdmin, setCheckingAdmin] = useState(true);
   useEffect(() => {
-    setCheckingAdmin(true);
     if (email) {
-      fetch(`https://rebook-server.vercel.app/user`, {
-        method: "POST",
+      setCheckingAdmin(true);
+      fetch(`${import.meta.env.VITE_API_URL}/user-authorize?isAdmin=${email}`, {
         headers: {
-          "content-type": "application/json",
           authorization: `bearer ${localStorage.getItem("rebookToken")}`,
         },
-        body: JSON.stringify({ isAdmin: email }),
       })
         .then((res) => res.json())
         .then((data) => setIsAdmin(data.isAdmin))

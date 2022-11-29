@@ -18,7 +18,6 @@ export default function BookModal({
   const handleBooking = (data, e) => {
     setUploading(true);
     const { mobile, location: userLocation } = data;
-    console.log("first");
     const bookingInfo = {
       name,
       productId: _id,
@@ -29,7 +28,7 @@ export default function BookModal({
       mobile,
       location: userLocation || location,
     };
-    fetch(`https://rebook-server.vercel.app/bookings`, {
+    fetch(`${import.meta.env.VITE_API_URL}/bookings`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

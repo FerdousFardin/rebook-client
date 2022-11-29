@@ -1,50 +1,32 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
-
-import DeleteBtn from "../../../components/Buttons/DeleteBtn";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import Loader from "../../../components/Loader/Loader";
 import NoItems from "../../../components/NoItems/NoItems";
-import DeleteConfirm from "../DeleteConfirm/DeleteConfirm";
 
-export default function AllBuyers() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [user, setUser] = useState({});
-
-  function closeModal() {
-    setIsOpen(false);
-    setTimeout(() => {
-      setUser({});
-    }, 200);
-  }
-
-  function openModal(user) {
-    setIsOpen(true);
-    setUser(user);
-  }
+export default function MyBuyers() {
+  const navigate = useNavigate();
   const {
     isLoading,
-    data: allBuyers,
+    data: myBuyers,
     error,
-    refetch,
   } = useQuery({
-    queryKey: ["all-buyers"],
+    queryKey: ["my-buyers"],
     queryFn: () =>
-      fetch(`${import.meta.env.VITE_API_URL}/all-buyers`, {
+      fetch(`${import.meta.env.VITE_API_URL}/my-buyers`, {
         headers: {
-          "content-type": "application/json",
           authorization: `bearer ${localStorage.getItem("rebookToken")}`,
         },
       }).then((res) => res.json()),
   });
   if (isLoading) return <Loader />;
-  if (error) return;
+  if (error) return navigate("/error");
   return (
     <>
-      {allBuyers.length > 0 ? (
+      {myBuyers.length > 0 ? (
         <table className="border-collapse w-full">
           <thead>
             <tr>
-              <th className="p-3 font-bold text-left uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell"></th>
               <th className="p-3 font-bold text-left uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
                 Customer name
               </th>
@@ -52,49 +34,40 @@ export default function AllBuyers() {
                 Email
               </th>
               <th className="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
-                Actions
+                Purchased Product
               </th>
             </tr>
           </thead>
           <tbody>
-            {allBuyers.map(({ _id, name, email, photoURL }) => (
+            {myBuyers.map(({ _id, name, soldTo, customerEmail, photoURL }) => (
               <tr
                 key={_id}
                 className="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0"
               >
-                <td className="w-full lg:w-fit lg:max-w-xs p-3 text-gray-700 text-center lg:text-left border border-b block lg:table-cell relative lg:static font-semibold">
-                  <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase"></span>
-                  <img
-                    className="w-10 rounded-full object-cover"
-                    src={photoURL}
-                    alt={name}
-                  />
-                </td>
                 <td className="w-full lg:w-auto p-3 text-gray-800 text-center  border border-b  block lg:table-cell relative lg:static">
                   <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
-                    Customer name
+                    Purchased By
                   </span>
-                  {name}
+                  {soldTo}
                 </td>
                 <td className="w-full lg:w-auto p-3 text-gray-800 text-center border border-b  block lg:table-cell relative lg:static">
                   <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
                     Email
                   </span>
-                  {email}
+                  {customerEmail}
                 </td>
                 <td className="w-full lg:w-auto p-3 text-gray-800 text-center border border-b  block lg:table-cell relative lg:static">
                   <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
-                    Actions
+                    Product
                   </span>
-
-                  <DeleteBtn {...{ fetchLink: "users", _id, name }} />
+                  {name}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       ) : (
-        <NoItems page={"All Buyers"} message={"Try again later."} />
+        <NoItems page={"My Buyers"} />
       )}
     </>
   );

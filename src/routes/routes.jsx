@@ -7,7 +7,7 @@ import AllBuyers from "../pages/Dashboard/AllBuyers/AllBuyers";
 import AllSellers from "../pages/Dashboard/AllSellers/AllSellers";
 import Checkout from "../pages/Dashboard/Checkout/Checkout";
 import Dashboard from "../pages/Dashboard/Dashboard/Dashboard";
-import ReportedItems from "../pages/Dashboard/Dashboard/ReportedItems/ReportedItems";
+import ReportedItems from "../pages/Dashboard/ReportedItems/ReportedItems";
 import Myorders from "../pages/Dashboard/MyOrders/Myorders";
 import MyProducts from "../pages/Dashboard/MyProducts/MyProducts";
 import MyProfile from "../pages/Dashboard/MyProfile/MyProfile";
@@ -17,6 +17,8 @@ import Login from "../pages/Login/Login";
 import SignUp from "../pages/SignUp/SignUp";
 import AdminRoute from "./Admin/AdminRoute";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
+import SellerRoute from "./Seller/SellerRoute";
+import MyBuyers from "../pages/Dashboard/MyBuyers/MyBuyers";
 
 export const routes = createBrowserRouter([
   {
@@ -32,15 +34,6 @@ export const routes = createBrowserRouter([
             <CategoryProduct />
           </PrivateRoute>
         ),
-        loader: ({ params }) =>
-          fetch(
-            `https://rebook-server.vercel.app/products?categoryId=${params.id}`,
-            {
-              headers: {
-                authorization: `bearer ${localStorage.getItem("rebookToken")}`,
-              },
-            }
-          ),
       },
       {
         path: "/login",
@@ -72,11 +65,27 @@ export const routes = createBrowserRouter([
           },
           {
             path: "/dashboard/add-a-product",
-            element: <AddProduct />,
+            element: (
+              <SellerRoute>
+                <AddProduct />
+              </SellerRoute>
+            ),
           },
           {
             path: "/dashboard/my-products",
-            element: <MyProducts />,
+            element: (
+              <SellerRoute>
+                <MyProducts />
+              </SellerRoute>
+            ),
+          },
+          {
+            path: "/dashboard/my-buyers",
+            element: (
+              <SellerRoute>
+                <MyBuyers />
+              </SellerRoute>
+            ),
           },
           {
             path: "/dashboard/all-sellers",
@@ -107,7 +116,7 @@ export const routes = createBrowserRouter([
             element: <Checkout />,
             loader: ({ params }) =>
               fetch(
-                `https://rebook-server.vercel.app/bookings?id=${params.id}`,
+                `${import.meta.env.VITE_API_URL}/bookings?id=${params.id}`,
                 {
                   headers: {
                     authorization: `bearer ${localStorage.getItem(

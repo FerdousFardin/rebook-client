@@ -1,40 +1,4 @@
 import React from "react";
-// const blogDetails = [
-//   {
-//     id: 01,
-//     img: "",
-//     question:
-//       "",
-//     details: `
-//       `,
-//     readMore:
-//       "",
-//   },
-//   {
-//     id: 02,
-//     img: "",
-//     question: "",
-//     details: ``,
-//     readMore: "",
-//   },
-//   {
-//     id: 03,
-//     img: "",
-//     details: `
-//     `,
-//     readMore:
-//       "",
-//   },
-//   {
-//     id: 04,
-//     img: "",
-//     details: `
-//
-// `,
-// //     readMore:
-// //       "",
-// //   },
-// // ];
 export default function Blog() {
   return (
     <section className="bg-white dark:bg-gray-900">
@@ -233,48 +197,45 @@ export default function Blog() {
               Angular vs React vs Vue
             </a>
 
-            <p className="mt-3 text-sm text-gray-500 dark:text-gray-300 md:text-sm">
-              If the choice you’re making is based on Angular vs React alone,
-              then you’ll simply need to consider the pros and cons discussed
-              for those libraries in this post. But overall, keep in mind that
-              both libraries can be used for mobile and web apps, while Angular
-              is generally better for more complex apps that are
-              enterprise-ready. React often requires extra modules and
-              components, which keeps the core library small, but means there’s
-              extra work involved when incorporating outside tools. Angular, on
-              the other hand, is more of a full-fledged solution that doesn’t
-              require extras like React often does, though it does have a
-              steeper learning curve for its core compared to React. React is
-              more suitable for intermediate to advanced JavaScript developers
-              who are familiar with concepts from ES6 and up, while Angular
-              favors those same developers who are also familiar with
-              TypeScript. React vs Vue The choice between React vs Vue is often
-              debated and it’s not an easy one. Vue has a vibrant and
-              ever-growing community and has taken over popularity vs. React in
-              many respects. React developers are still churning out lots of new
-              components and extras, so there’s no sign that React is on the
-              decline either. Vue is generally more suited to smaller, less
-              complex apps and is easier to learn from scratch compared to
-              React. Vue can be easier to integrate into new or existing
-              projects and many feel its use of HTML templates along with JSX is
-              an advantage. Overall, Vue might be the best choice if you’re a
-              newer developer and not as familiar with advanced JavaScript
-              concepts, while React is quite well suited for experienced
-              programmers and developers who have worked with object-oriented
-              JavaScript, functional JavaScript, and similar concepts. Angular
-              vs Vue In most cases, you probably wouldn’t be deciding between
-              only Angular and Vue. They are vastly different libraries with
-              very different feature sets and learning curves. Vue is the clear
-              choice for less experienced developers, and Angular would be
-              preferred for those working on larger apps. A large library like
-              Angular would require more diligence in keeping up with what’s
-              new, while Vue would be less demanding in this regard and the fact
-              that the two most recent major releases of Vue are in separate
-              repositories helps. It should also be noted that Vue was created
-              by a developer who formerly worked on Angular for Google, so
-              that’s another thing to keep in mind, though that wouldn’t have a
-              huge impact on your decision.
-            </p>
+            <table className="border-collapse w-full">
+              <thead>
+                <tr>
+                  <th className="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
+                    React
+                  </th>
+                  <th className="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
+                    Vue
+                  </th>
+                  <th className="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">
+                    Angular
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                  <td className="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+                    <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
+                      React
+                    </span>
+                    Squary
+                  </td>
+                  <td className="w-full lg:w-auto p-3 text-gray-800 text-center border border-b  block lg:table-cell relative lg:static">
+                    <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
+                      Vue
+                    </span>
+                    Schweden
+                  </td>
+                  <td className="w-full lg:w-auto p-3 text-gray-800 text-center border border-b  block lg:table-cell relative lg:static">
+                    <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
+                      Angular
+                    </span>
+                    <span className="rounded bg-green-400 py-1 px-3 text-xs font-bold">
+                      active
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
 
             <a
               href="https://www.codeinwp.com/blog/angular-vs-vue-vs-react/#:~:text=Vue%20provides%20higher%20customizability%20and,two%20is%20an%20easy%20option."

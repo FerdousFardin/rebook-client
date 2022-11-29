@@ -4,7 +4,7 @@ const useToken = ({ email }) => {
   const [token, setToken] = useState("");
   useEffect(() => {
     if (email) {
-      fetch(`https://rebook-server.vercel.app/jwt`, {
+      fetch(`${import.meta.env.VITE_API_URL}/jwt`, {
         method: "POST",
         headers: {
           "content-type": "application/json",
