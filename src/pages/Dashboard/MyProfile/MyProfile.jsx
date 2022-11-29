@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { SpinnerCircular } from "spinners-react";
 
 function MyProfile() {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ function MyProfile() {
   } = useQuery({
     queryKey: ["user-info"],
     queryFn: () =>
-      fetch(`${import.meta.env.VITE_API_URL}/user`, {
+      fetch(`https://rebook-server.vercel.app/user`, {
         headers: {
           authorization: `bearer ${localStorage.getItem("rebookToken")}`,
         },
@@ -42,7 +43,7 @@ function MyProfile() {
             ...rest,
             photoURL: dataImg.data.url,
           };
-          fetch(`${import.meta.env.VITE_API_URL}/user`, {
+          fetch(`https://rebook-server.vercel.app/user`, {
             method: "PUT",
             headers: {
               authorization: `bearer ${localStorage.getItem("rebookToken")}`,
@@ -62,7 +63,12 @@ function MyProfile() {
         setLoading(false);
       });
   };
-  if (isLoading) return <div>Loading</div>;
+  if (isLoading)
+    return (
+      <div className="w-full h-screen grid place-items-center">
+        <SpinnerCircular />
+      </div>
+    );
   if (error) navigate("/error");
   return (
     <div className="w-2/3">
@@ -103,29 +109,29 @@ function MyProfile() {
             />
           </div>
         </div>
-        <label class="inline-block my-5 text-gray-500">
+        <label className="inline-block my-5 text-gray-500">
           <strong className="text-gray-900">Update Profile Picture</strong>
         </label>
-        <div class="w-full">
-          <label class="flex flex-col w-full h-32 border-2 hover:border-dotted rounded-lg bg-slate-50 hover:bg-gray-100 hover:border-gray-300">
-            <div class="flex flex-col items-center justify-center pt-7">
+        <div className="w-full">
+          <label className="flex flex-col w-full h-32 border-2 hover:border-dotted rounded-lg bg-slate-50 hover:bg-gray-100 hover:border-gray-300">
+            <div className="flex flex-col items-center justify-center pt-7">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="w-12 h-12 text-gray-400 group-hover:text-gray-600"
+                className="w-12 h-12 text-gray-400 group-hover:text-gray-600"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
-                  clip-rule="evenodd"
+                  clipRule="evenodd"
                 />
               </svg>
-              <p class="pt-1 text-sm tracking-wider text-gray-400 group-hover:text-gray-600">
+              <p className="pt-1 text-sm tracking-wider text-gray-400 group-hover:text-gray-600">
                 Select a photo
               </p>
             </div>
-            <input type="file" class="opacity-0" {...register("image")} />
+            <input type="file" className="opacity-0" {...register("image")} />
           </label>
         </div>
         <div className="flex items-center justify-center w-full">

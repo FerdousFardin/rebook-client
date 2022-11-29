@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { Link } from "react-router-dom";
+import { SpinnerCircular } from "spinners-react";
 
 export default function HomeCategories() {
   const {
@@ -10,11 +11,18 @@ export default function HomeCategories() {
   } = useQuery({
     queryKey: ["categories"],
     queryFn: () =>
-      fetch(`${import.meta.env.VITE_API_URL}/categories`).then((res) =>
+      fetch(`https://rebook-server.vercel.app/categories`).then((res) =>
         res.json()
       ),
   });
-  if (isLoading) return <div className="text-7xl">Loading</div>;
+  if (isLoading)
+    return (
+      <div className="w-full h-screen grid place-items-center">
+        <div className="w-full h-screen grid place-items-center">
+          <SpinnerCircular />
+        </div>
+      </div>
+    );
   return (
     <div className="bg-white py-6 sm:py-8 lg:py-12">
       <div className="max-w-screen-2xl px-4 md:px-8 mx-auto">

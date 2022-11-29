@@ -7,7 +7,7 @@ import { AuthContext } from "../../context/AuthProvider";
 import useToken from "../../hooks/useToken";
 
 export default function Login() {
-  const [userEmail, setUserEmail] = useState("");
+  const [userEmail, setUserEmail] = useState({});
   const [loginErr, setLoginErr] = useState("");
   const { loginUser, loading, setLoading, googleLogin } =
     useContext(AuthContext);
@@ -37,8 +37,8 @@ export default function Login() {
         e.target.reset();
       })
       .catch((er) => {
-        console.error(er);
         setLoginErr(er.code);
+        toast.error("Sign in failed!");
       })
       .finally(() => {
         setLoading(false);
@@ -54,7 +54,7 @@ export default function Login() {
         role: ["buyer"],
       };
       axios
-        .post(`${import.meta.env.VITE_API_URL}/users`, userInfo)
+        .post(`https://rebook-server.vercel.app/users`, userInfo)
         .then((res) => {
           if (res.data.acknowledged) {
             toast.success(`Signed in successfully.`);
@@ -119,6 +119,10 @@ export default function Login() {
                   <input
                     {...register("email", {
                       required: "User must provide an email.",
+                      pattern: {
+                        value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
+                        message: "Email is not valid.",
+                      },
                     })}
                     id="email"
                     type="email"
@@ -126,6 +130,11 @@ export default function Login() {
                     className="w-full bg-transparent pb-3  border-b border-gray-300 dark:placeholder-gray-300 dark:border-gray-600 outline-none  invalid:border-red-400 transition"
                   />
                 </div>
+                {errors?.email && (
+                  <p className="text-yellow-600 text-sm mt-2">
+                    *{errors.email.message}
+                  </p>
+                )}
               </div>
 
               <div className="flex flex-col items-end">
@@ -133,6 +142,10 @@ export default function Login() {
                   <input
                     {...register("password", {
                       required: "User must provide a password.",
+                      minLength: {
+                        value: 6,
+                        message: "Password should be at-least 6 characters.",
+                      },
                     })}
                     id="password"
                     type="password"
@@ -140,6 +153,16 @@ export default function Login() {
                     className="w-full bg-transparent pb-3  border-b border-gray-300 dark:placeholder-gray-300 dark:border-gray-600 outline-none  invalid:border-red-400 transition"
                   />
                 </div>
+                {errors?.password && (
+                  <p className="text-yellow-600 text-sm mt-2">
+                    *{errors.password.message}
+                  </p>
+                )}
+                {loginErr && (
+                  <p className="text-yellow-600 text-sm mt-2">
+                    *{loginErr.split("/")[1]}
+                  </p>
+                )}
                 <button className="-mr-3 w-max p-3">
                   <span className="text-sm tracking-wide text-primary-100 dark:text-sky-400">
                     Forgot password ?

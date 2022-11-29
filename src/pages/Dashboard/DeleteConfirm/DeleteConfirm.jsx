@@ -2,11 +2,17 @@ import { Dialog, Transition } from "@headlessui/react";
 import React, { Fragment, useState } from "react";
 import toast from "react-hot-toast";
 
-export default function DeleteConfirm({ isOpen, closeModal, user, refetch }) {
+export default function DeleteConfirm({
+  isOpen,
+  closeModal,
+  user,
+  refetch,
+  fetchLink,
+}) {
   const [loading, setLoading] = useState(false);
   const handleDelete = (id) => {
     setLoading(true);
-    fetch(`${import.meta.env.VITE_API_URL}/users`, {
+    fetch(`https://rebook-server.vercel.app/${fetchLink}`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
@@ -20,7 +26,7 @@ export default function DeleteConfirm({ isOpen, closeModal, user, refetch }) {
           toast.success(`${user.name} has been deleted`);
           refetch();
           closeModal();
-        }
+        } else toast.error(`Deletion failed`);
       })
       .finally(() => {
         setLoading(false);
@@ -61,23 +67,23 @@ export default function DeleteConfirm({ isOpen, closeModal, user, refetch }) {
                 </Dialog.Title>
                 <div className="mt-2">
                   <p className="text-sm text-gray-500">
-                    Do you really want to delete {user.name}'s account? This
-                    process cannot be undone
+                    Do you really want to delete <strong>{user.name}</strong>?
+                    This process cannot be undone
                   </p>
                 </div>
 
-                <div class="p-3  mt-2 text-center space-x-4 md:block">
+                <div className="p-3  mt-2 text-center space-x-4 md:block">
                   <button
                     disabled={loading}
                     onClick={closeModal}
-                    class="mb-2 md:mb-0 bg-white disabled:bg-gray-400 disabled:cursor-not-allowed px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-full hover:shadow-lg hover:bg-gray-100"
+                    className="mb-2 md:mb-0 bg-white disabled:bg-gray-400 disabled:cursor-not-allowed px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-full hover:shadow-lg hover:bg-gray-100"
                   >
                     Cancel
                   </button>
                   <button
                     disabled={loading}
                     onClick={() => handleDelete(user._id)}
-                    class="mb-2 md:mb-0 bg-red-500 disabled:bg-red-800 disabled:cursor-not-allowed border border-red-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-red-600"
+                    className="mb-2 md:mb-0 bg-red-500 disabled:bg-red-800 disabled:cursor-not-allowed border border-red-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-red-600"
                   >
                     {loading ? "Deleting..." : "Delete"}
                   </button>

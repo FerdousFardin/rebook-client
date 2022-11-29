@@ -1,59 +1,34 @@
+import { ExclamationCircleIcon } from "@heroicons/react/20/solid";
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
-import toast from "react-hot-toast";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import { SpinnerCircular } from "spinners-react";
+import DeleteBtn from "../../../../components/Buttons/DeleteBtn";
 
-export default function MyProducts() {
-  const [loading, setLoading] = useState(false);
+export default function ReportedItems() {
+  const navigate = useNavigate();
   const {
     isLoading,
-    data: myProducts,
+    data: reportedItems,
     error,
     refetch,
   } = useQuery({
-    queryKey: ["my-products"],
+    queryKey: ["reported-items"],
     queryFn: () =>
-      fetch(`https://rebook-server.vercel.app/my-products`, {
+      fetch(`https://rebook-server.vercel.app/reported-items`, {
         headers: {
           authorization: `bearer ${localStorage.getItem("rebookToken")}`,
         },
       }).then((res) => res.json()),
   });
-  const handleAdvertise = (_id) => {
-    setLoading(true);
-    fetch(`https://rebook-server.vercel.app/my-products?advertised=true`, {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json",
-        authorization: `bearer ${localStorage.getItem("rebookToken")}`,
-      },
-      body: JSON.stringify({ _id }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        if (data.modifiedCount > 0) {
-          toast.success("Item advertised.");
-          refetch();
-        }
-      })
-      .catch((er) => {
-        console.error(er);
-        toast.error("This item can not be advertised at this moment.");
-      })
-      .finally(() => {
-        setLoading(true);
-      });
-  };
-
   if (isLoading)
     return (
       <div className="w-full h-screen grid place-items-center">
         <SpinnerCircular />
       </div>
     );
-  if (error) return;
-  //   console.log(myProducts);
+  if (error) return navigate("/error");
+  //TODO: checking if reportedItems null or not
   return (
     <table className="border-collapse w-full">
       <thead>
@@ -76,8 +51,8 @@ export default function MyProducts() {
         </tr>
       </thead>
       <tbody>
-        {myProducts.map(
-          ({ name, _id, category, resalePrice, advertised, inStock }) => (
+        {reportedItems.map(
+          ({ _id, name, category, isReported, resalePrice }) => (
             <tr
               key={_id}
               className="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0"
@@ -104,13 +79,9 @@ export default function MyProducts() {
                 <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
                   Status
                 </span>
-                {inStock ? (
-                  <span className="rounded bg-green-600 text-gray-100 py-1 px-3 text-xs font-bold">
-                    Available
-                  </span>
-                ) : (
-                  <span className="rounded text-gray-50 bg-red-500 py-1 px-3 text-xs font-bold">
-                    Stock Out!
+                {isReported && (
+                  <span className="rounded bg-red-800 text-gray-100 flex items-center w-fit mx-auto py-2 px-3 text-xs font-bold">
+                    <ExclamationCircleIcon className="w-5 h-5" /> Reported
                   </span>
                 )}
               </td>
@@ -118,20 +89,7 @@ export default function MyProducts() {
                 <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
                   Actions
                 </span>
-                {advertised ? (
-                  <span className="rounded bg-green-600 text-gray-100 py-1 px-3 text-xs font-bold">
-                    Advertised
-                  </span>
-                ) : inStock ? (
-                  <button
-                    onClick={() => handleAdvertise(_id)}
-                    className="text-blue-400 hover:text-blue-600 underline pl-6"
-                  >
-                    Advertise
-                  </button>
-                ) : (
-                  "-"
-                )}
+                <DeleteBtn {...{ refetch, name, _id, fetchLink: "products" }} />
               </td>
             </tr>
           )

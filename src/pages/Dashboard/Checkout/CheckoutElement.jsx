@@ -42,7 +42,7 @@ export default function CheckoutElement({ bookedPoduct }) {
     },
   };
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/create-payment-intent`, {
+    fetch(`https://rebook-server.vercel.app/create-payment-intent`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -76,7 +76,7 @@ export default function CheckoutElement({ bookedPoduct }) {
       setError(null);
       setSucceeded(true);
 
-      fetch(`${import.meta.env.VITE_API_URL}/bookings?isPaid=true`, {
+      fetch(`https://rebook-server.vercel.app/bookings?isPaid=true`, {
         method: "PUT",
         headers: {
           "content-type": "application/json",

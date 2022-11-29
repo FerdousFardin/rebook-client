@@ -59,7 +59,7 @@ export default function SignUp() {
                 role: [accountType],
               };
               axios
-                .post(`${import.meta.env.VITE_API_URL}/users`, userInfo)
+                .post(`https://rebook-server.vercel.app/users`, userInfo)
                 .then((res) => {
                   console.log(res);
 
@@ -90,7 +90,7 @@ export default function SignUp() {
             role: ["buyer"],
           };
           axios
-            .post(`${import.meta.env.VITE_API_URL}/users`, userInfo)
+            .post(`https://rebook-server.vercel.app/users`, userInfo)
             .then((res) => {
               if (res.data.acknowledged) {
                 toast.success("Signed in successfully.");
@@ -149,11 +149,11 @@ export default function SignUp() {
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    stroke-width="2"
+                    strokeWidth="2"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
                     />
                   </svg>
@@ -172,11 +172,11 @@ export default function SignUp() {
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    stroke-width="2"
+                    strokeWidth="2"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                     />
                   </svg>
@@ -196,12 +196,17 @@ export default function SignUp() {
                 </label>
                 <input
                   {...register("firstName", {
-                    required: true,
+                    required: "User must provide First Name",
                   })}
                   type="text"
                   placeholder="John"
                   className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-primary dark:focus:border-primary focus:ring-primary focus:outline-none focus:ring focus:ring-opacity-40"
                 />
+                {errors.firstName && (
+                  <p className="text-sm text-yellow-600 mt-2">
+                    *{errors.firstName.message}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -210,12 +215,17 @@ export default function SignUp() {
                 </label>
                 <input
                   {...register("lastName", {
-                    required: true,
+                    required: "User must provide Last Name",
                   })}
                   type="text"
                   placeholder="Snow"
                   className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-primary dark:focus:border-primary focus:ring-primary focus:outline-none focus:ring focus:ring-opacity-40"
                 />
+                {errors.lastName && (
+                  <p className="text-sm text-yellow-600 mt-2">
+                    *{errors.lastName.message}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -232,11 +242,11 @@ export default function SignUp() {
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    stroke-width="2"
+                    strokeWidth="2"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
                     />
                   </svg>
@@ -245,13 +255,18 @@ export default function SignUp() {
 
                   <input
                     {...register("image", {
-                      required: true,
+                      required: "User must provide a picture",
                     })}
                     id="dropzone-file"
                     type="file"
                     className="invisible h-0 w-0"
                   />
                 </label>
+                {errors.image && (
+                  <p className="text-sm text-yellow-600 mt-2">
+                    *{errors.image.message}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -260,12 +275,17 @@ export default function SignUp() {
                 </label>
                 <input
                   {...register("email", {
-                    required: true,
+                    required: "User must provide an email",
                   })}
                   type="email"
                   placeholder="johnsnow@example.com"
                   className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-primary dark:focus:border-primary focus:ring-primary focus:outline-none focus:ring focus:ring-opacity-40"
                 />
+                {errors.email && (
+                  <p className="text-sm text-yellow-600 mt-2">
+                    *{errors.email.message}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -274,12 +294,17 @@ export default function SignUp() {
                 </label>
                 <input
                   {...register("password", {
-                    required: true,
+                    required: "User must provide a password",
                   })}
                   type="password"
                   placeholder="Enter your password"
                   className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-primary dark:focus:border-primary focus:ring-primary focus:outline-none focus:ring focus:ring-opacity-40"
                 />
+                {errors.password && (
+                  <p className="text-sm text-yellow-600 mt-2">
+                    *{errors.password.message}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -288,12 +313,22 @@ export default function SignUp() {
                 </label>
                 <input
                   {...register("confirmPassword", {
-                    required: true,
+                    required: "User must confirm his password",
                   })}
                   type="password"
                   placeholder="Enter your password"
                   className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-primary dark:focus:border-primary focus:ring-primary focus:outline-none focus:ring focus:ring-opacity-40"
                 />
+                {errors.confirmPassword && (
+                  <p className="text-sm text-yellow-600 mt-2">
+                    *{errors.confirmPassword.message}
+                  </p>
+                )}
+                {signUpErrors && (
+                  <p className="text-sm text-yellow-600 mt-2">
+                    *{signUpErrors}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -311,9 +346,9 @@ export default function SignUp() {
                     fill="currentColor"
                   >
                     <path
-                      fill-rule="evenodd"
+                      fillRule="evenodd"
                       d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                      clip-rule="evenodd"
+                      clipRule="evenodd"
                     />
                   </svg>
                 </button>

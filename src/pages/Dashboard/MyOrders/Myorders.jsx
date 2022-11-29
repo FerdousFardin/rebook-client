@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { Link } from "react-router-dom";
+import { SpinnerCircular } from "spinners-react";
 
 export default function Myorders() {
   const {
@@ -10,13 +11,18 @@ export default function Myorders() {
   } = useQuery({
     queryKey: ["my-orders"],
     queryFn: () =>
-      fetch(`${import.meta.env.VITE_API_URL}/my-orders`, {
+      fetch(`https://rebook-server.vercel.app/my-orders`, {
         headers: {
           authorization: `bearer ${localStorage.getItem("rebookToken")}`,
         },
       }).then((res) => res.json()),
   });
-  if (isLoading) return <div>Loading</div>;
+  if (isLoading)
+    return (
+      <div className="w-full h-screen grid place-items-center">
+        <SpinnerCircular />
+      </div>
+    );
   if (error) return;
   return (
     <table className="border-collapse w-full">

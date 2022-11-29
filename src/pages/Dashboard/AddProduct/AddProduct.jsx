@@ -6,6 +6,7 @@ import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { SpinnerCircular } from "spinners-react";
 import { AuthContext } from "../../../context/AuthProvider";
 import SelectCategory from "./SelectCategory";
 
@@ -20,7 +21,7 @@ export default function AddProduct() {
   } = useQuery({
     queryKey: ["categories"],
     queryFn: () =>
-      fetch(`${import.meta.env.VITE_API_URL}/categories`).then((res) =>
+      fetch(`https://rebook-server.vercel.app/categories`).then((res) =>
         res.json()
       ),
   });
@@ -66,7 +67,7 @@ export default function AddProduct() {
             inStock: true,
             date: Date.now(),
           };
-          fetch(`${import.meta.env.VITE_API_URL}/products`, {
+          fetch(`https://rebook-server.vercel.app/products`, {
             method: "POST",
             headers: {
               authorization: `bearer ${localStorage.getItem("rebookToken")}`,
@@ -100,7 +101,12 @@ export default function AddProduct() {
         setLoading(false);
       });
   };
-  if (isLoading) return <div>Loading</div>;
+  if (isLoading)
+    return (
+      <div className="w-full h-screen grid place-items-center">
+        <SpinnerCircular />
+      </div>
+    );
   if (error) return;
   return (
     <section className="bg-gray-100">
@@ -220,11 +226,11 @@ export default function AddProduct() {
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    stroke-width="2"
+                    strokeWidth="2"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
                     />
                   </svg>
@@ -329,9 +335,9 @@ export default function AddProduct() {
                   stroke="currentColor"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M14 5l7 7m0 0l-7 7m7-7H3"
                   />
                 </svg>

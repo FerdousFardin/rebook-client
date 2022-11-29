@@ -2,6 +2,7 @@ import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
+import { SpinnerCircular } from "spinners-react";
 import Drawer from "./Drawer/Drawer";
 
 export default function Dashboard() {
@@ -27,7 +28,7 @@ export default function Dashboard() {
   } = useQuery({
     queryKey: ["user"],
     queryFn: () =>
-      fetch(`${import.meta.env.VITE_API_URL}/user`, {
+      fetch(`https://rebook-server.vercel.app/user`, {
         headers: {
           authorization: `bearer ${localStorage.getItem("rebookToken")}`,
         },
@@ -35,7 +36,12 @@ export default function Dashboard() {
   });
   const activeClass =
     "relative flex items-center space-x-4 rounded-xl bg-gradient-to-br from-primary to-primary-100/50 px-4 py-3 text-white";
-  if (isLoading) return <div>Loading</div>;
+  if (isLoading)
+    return (
+      <div className="w-full h-screen grid place-items-center">
+        <SpinnerCircular />
+      </div>
+    );
   if (error) return;
   const dashboardList = (
     <ul className="mt-8 space-y-2 tracking-wide">
@@ -53,7 +59,7 @@ export default function Dashboard() {
           <span className="-mr-1 font-medium">My Profile</span>
         </NavLink>
       </li>
-      {userInfo.role.includes("buyer") && (
+      {userInfo?.role?.includes("buyer") && (
         <li>
           <NavLink
             onClick={() => setIsOpen(false)}
@@ -69,7 +75,7 @@ export default function Dashboard() {
           </NavLink>
         </li>
       )}
-      {userInfo.role.includes("admin") && (
+      {userInfo?.role?.includes("admin") && (
         <>
           <li>
             <NavLink
@@ -118,7 +124,7 @@ export default function Dashboard() {
           </li>
         </>
       )}
-      {userInfo.role.includes("seller") && (
+      {userInfo?.role?.includes("seller") && (
         <>
           <li>
             <NavLink
@@ -186,8 +192,8 @@ export default function Dashboard() {
               </h5>
               <span className="hidden text-gray-400 lg:block uppercase">
                 {userInfo && userInfo?.role?.length > 1
-                  ? userInfo.role.join(" and ")
-                  : userInfo.role[0]}
+                  ? userInfo?.role?.join(" and ")
+                  : userInfo?.role[0]}
               </span>
             </div>
 
@@ -219,9 +225,9 @@ export default function Dashboard() {
                   stroke="currentColor"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M4 6h16M4 12h16M4 18h16"
                   />
                 </svg>

@@ -40,7 +40,12 @@ export default function AuthProvider({ children }) {
   const logoutUser = () => {
     setLoading(true);
     setUser(null);
-    return signOut(auth);
+    localStorage.removeItem("rebookToken");
+    signOut(auth)
+      .then(() => {
+        setLoading(false);
+      })
+      .catch(() => {});
   };
 
   return (

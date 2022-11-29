@@ -1,24 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
+import { SpinnerCircular } from "spinners-react";
+import DeleteBtn from "../../../components/Buttons/DeleteBtn";
 import DeleteConfirm from "../DeleteConfirm/DeleteConfirm";
 
 export default function AllSellers() {
-  const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState({});
 
-  function closeModal() {
-    setIsOpen(false);
-    setTimeout(() => {
-      setUser({});
-    }, 200);
-  }
-
-  function openModal(user) {
-    setIsOpen(true);
-    setUser(user);
-  }
   const {
     isLoading,
     data: allSellers,
@@ -28,7 +18,7 @@ export default function AllSellers() {
   } = useQuery({
     queryKey: ["all-sellers"],
     queryFn: () =>
-      fetch(`${import.meta.env.VITE_API_URL}/all-sellers`, {
+      fetch(`https://rebook-server.vercel.app/all-sellers`, {
         headers: {
           authorization: `bearer ${localStorage.getItem("rebookToken")}`,
         },
@@ -36,7 +26,7 @@ export default function AllSellers() {
   });
   const handleVerify = (id) => {
     setLoading(true);
-    fetch(`${import.meta.env.VITE_API_URL}/users?verify=true`, {
+    fetch(`https://rebook-server.vercel.app/users?verify=true`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -55,7 +45,12 @@ export default function AllSellers() {
         setLoading(false);
       });
   };
-  if (isLoading) return <div>Loading</div>;
+  if (isLoading)
+    return (
+      <div className="w-full h-screen grid place-items-center">
+        <SpinnerCircular />
+      </div>
+    );
   if (error) return;
 
   return (
@@ -125,31 +120,29 @@ export default function AllSellers() {
                     ) : (
                       <button
                         onClick={() => handleVerify(_id)}
-                        class="bg-blue-400 flex items-center py-1 px-2 rounded-lg text-white disabled:bg-blue-300 disabled:cursor-not-allowed duration-[500ms,800ms]"
+                        className="bg-blue-400 flex items-center py-1 px-2 rounded-lg text-white disabled:bg-blue-300 disabled:cursor-not-allowed duration-[500ms,800ms]"
                         disabled={loading}
                       >
                         {loading && (
-                          <div class="grid-1 my-auto h-5 w-5 mr-3 border-t-transparent border-solid animate-spin rounded-full border-white border"></div>
+                          <div className="grid-1 my-auto h-5 w-5 mr-3 border-t-transparent border-solid animate-spin rounded-full border-white border"></div>
                         )}
                         {loading ? "Processing" : "Verify"}
                       </button>
                     )}
-                    <button
-                      className="text-white py-1 px-2  rounded bg-red-600 hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600 disabled:opacity-50"
-                      onClick={() => openModal({ _id, name })}
-                    >
-                      Delete
-                    </button>
+                    <DeleteBtn
+                      {...{ fetchLink: "users", _id, name, refetch }}
+                    />
                   </div>
                 </td>
               </tr>
             ))
           ) : (
-            <div>Loading</div>
+            <div className="w-full h-screen grid place-items-center">
+              <SpinnerCircular />
+            </div>
           )}
         </tbody>
       </table>
-      <DeleteConfirm {...{ isOpen, closeModal, user, refetch }} />
     </>
   );
 }

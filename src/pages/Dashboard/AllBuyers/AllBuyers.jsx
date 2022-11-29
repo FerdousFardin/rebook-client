@@ -1,5 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
+import { SpinnerCircular } from "spinners-react";
+import DeleteBtn from "../../../components/Buttons/DeleteBtn";
 import DeleteConfirm from "../DeleteConfirm/DeleteConfirm";
 
 export default function AllBuyers() {
@@ -17,9 +19,6 @@ export default function AllBuyers() {
     setIsOpen(true);
     setUser(user);
   }
-  const handleDelete = (id) => {
-    alert(id);
-  };
   const {
     isLoading,
     data: allBuyers,
@@ -28,14 +27,19 @@ export default function AllBuyers() {
   } = useQuery({
     queryKey: ["all-buyers"],
     queryFn: () =>
-      fetch(`${import.meta.env.VITE_API_URL}/all-buyers`, {
+      fetch(`https://rebook-server.vercel.app/all-buyers`, {
         headers: {
           "content-type": "application/json",
           authorization: `bearer ${localStorage.getItem("rebookToken")}`,
         },
       }).then((res) => res.json()),
   });
-  if (isLoading) return <div>Loading</div>;
+  if (isLoading)
+    return (
+      <div className="w-full h-screen grid place-items-center">
+        <SpinnerCircular />
+      </div>
+    );
   if (error) return;
   return (
     <>
@@ -85,18 +89,12 @@ export default function AllBuyers() {
                   Actions
                 </span>
 
-                <button
-                  className="text-white py-1 px-2  rounded bg-red-600 hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600 disabled:opacity-50"
-                  onClick={() => openModal({ _id, name })}
-                >
-                  Delete
-                </button>
+                <DeleteBtn {...{ fetchLink: "users", _id, name }} />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      <DeleteConfirm {...{ isOpen, closeModal, handleDelete, user, refetch }} />
     </>
   );
 }
