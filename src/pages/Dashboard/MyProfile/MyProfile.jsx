@@ -66,7 +66,7 @@ function MyProfile() {
   if (isLoading) return <Loader />;
   if (error) navigate("/error");
   return (
-    <div className="w-2/3">
+    <div className="lg:w-2/3">
       <form
         onSubmit={handleSubmit(handleUpdateProfile)}
         className="bg-gray-200 shadow rounded py-12 lg:px-28 px-8"

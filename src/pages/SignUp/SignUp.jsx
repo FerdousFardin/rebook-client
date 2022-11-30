@@ -358,12 +358,12 @@ export default function SignUp() {
                 </button>
               </div>
             </form>
-            <div className="w-1/2 text-center my-5">
+            <div className="md:w-1/2 text-center my-5">
               <span className="text-xs text-center text-gray-500 uppercase dark:text-gray-400 hover:underline">
                 or login with Social Media
               </span>
             </div>
-            <div className="w-1/2">
+            <div className="md:w-1/2">
               <button
                 disabled={loading}
                 onClick={handleGoogle}

@@ -123,13 +123,14 @@ export default function MyProducts() {
                       </span>
                     ) : inStock ? (
                       <button
+                        disabled={loading}
                         onClick={() => handleAdvertise(_id)}
-                        className="text-blue-400 hover:text-blue-600 underline pl-6"
+                        className="mx-auto lg:flex justify-center gap-2 shadow w-32 block border-blue-600 border-2 rounded-full focus:outline-none text-sm focus:border-blue-600 disabled:cursor-not-allowed disabled:bg-blue-400 disabled:text-white disabled:border-white px-4 disabled:px-0 py-1 text-blue-600 hover:bg-blue-600 hover:text-white"
                       >
                         {loading && (
-                          <div className="grid-1 my-auto h-5 w-5 mr-3 border-t-transparent border-solid animate-spin rounded-full border-white border"></div>
+                          <div className="grid-1 my-auto h-4 w-4  border-t-transparent border-solid animate-spin rounded-full  border-white border-2"></div>
                         )}
-                        {loading ? "Advertise" : "Advertising..."}
+                        {!loading ? "Advertise" : "Advertising..."}
                       </button>
                     ) : (
                       "-"
