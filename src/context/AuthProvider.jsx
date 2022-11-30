@@ -8,7 +8,9 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  updateProfile,
 } from "firebase/auth";
+import toast from "react-hot-toast";
 export const AuthContext = createContext();
 export default function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
@@ -47,6 +49,17 @@ export default function AuthProvider({ children }) {
       })
       .catch(() => {});
   };
+  const updateInfo = (displayName) => {
+    updateProfile(auth?.currentUser, {
+      displayName,
+    })
+      .then(() => {
+        toast.success("Profile updated.");
+      })
+      .catch(() => {
+        toast.error(`Profile couldn't be updated.`);
+      });
+  };
 
   return (
     <AuthContext.Provider
@@ -56,6 +69,7 @@ export default function AuthProvider({ children }) {
         setLoading,
         loginUser,
         signupUser,
+        updateInfo,
         googleLogin,
         logoutUser,
       }}

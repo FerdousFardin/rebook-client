@@ -7,7 +7,7 @@ import { AuthContext } from "../../context/AuthProvider";
 import useToken from "../../hooks/useToken";
 
 export default function SignUp() {
-  const { signupUser, loading, setLoading, googleLogin } =
+  const { signupUser, loading, setLoading, googleLogin, updateInfo } =
     useContext(AuthContext);
   const [signUpErrors, setSignUpErrors] = useState("");
   const [sendToken, setSendToken] = useState("");
@@ -61,6 +61,7 @@ export default function SignUp() {
                 .post(`${import.meta.env.VITE_API_URL}/users`, userInfo)
                 .then((res) => {
                   if (res.data.acknowledged) {
+                    updateInfo();
                     setSendToken(email);
                     e.target.reset();
                   }
