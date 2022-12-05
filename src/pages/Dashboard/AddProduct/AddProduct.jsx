@@ -358,7 +358,7 @@ export default function AddProduct() {
             <div className="mt-4">
               <button
                 type="submit"
-                disabled={!loading}
+                disabled={loading}
                 className="inline-flex w-full items-center justify-center rounded-lg bg-black hover:bg-primary disabled:cursor-not-allowed disabled:bg-black/40 duration-300 px-5 py-3 text-white sm:w-auto group"
               >
                 <span className="font-medium">
