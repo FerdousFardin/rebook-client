@@ -1,4 +1,4 @@
-# reBOOK - for people who want to buy books
+# reBOOK - for people who want to read books
 Enjoy a secure and reliable platform for selling and buying used books with our modern technologies.
 
 ## Features Section
