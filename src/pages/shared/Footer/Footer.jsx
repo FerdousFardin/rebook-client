@@ -187,7 +187,7 @@ export default function Footer() {
               </div>
               <div className="flex justify-between border-t border-gray-100 dark:border-gray-800 py-4 pb-8 md:pl-16">
                 <span>
-                  &copy; reBOOK 2003 - {format(Date.now(), "y")}{" "}
+                  &copy; YourShelf 2003 - {format(Date.now(), "y")}{" "}
                   <span id="year"></span>{" "}
                 </span>
                 <span>All right reserved</span>

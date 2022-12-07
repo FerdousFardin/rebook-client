@@ -94,7 +94,7 @@ export default function Navbar() {
                 >
                   <img className="" src="../../../public/favicon.ico" alt="" />
                   <span>
-                    re<span className="text-primary">BOOK</span>
+                    Your<span className="text-primary">Shelf</span>
                   </span>
                 </NavLink>
               </div>
