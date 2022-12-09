@@ -29,7 +29,7 @@ export default function Footer() {
                 >
                   <img className="" src="../../../public/favicon.ico" alt="" />
                   <span>
-                    re<span className="text-primary">BOOK</span>
+                    Your<span className="text-primary">Shelf</span>
                   </span>
                 </NavLink>
                 <div className="flex gap-6">
