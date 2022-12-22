@@ -1,13 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
+import { useContext } from "react";
 
 import Loader from "../../components/Loader/Loader";
+import { AuthContext } from "../../context/AuthProvider";
 import Advertised from "./Advertised";
 import Banner from "./Banner";
 import HomeCategories from "./HomeCategories";
 import Offer from "./Offer";
 
 export default function Home() {
+  const { logoutUser } = useContext(AuthContext);
   const [advertised, setAdvertised] = useState([]);
   const {
     isLoading,
@@ -20,7 +23,14 @@ export default function Home() {
         headers: {
           authorization: `bearer ${localStorage.getItem("rebookToken")}`,
         },
-      }).then((res) => res.json()),
+      }).then((res) => {
+        if (res.status !== 400 || res.status !== 403 || res.status !== 401)
+          return res.json();
+        else {
+          logoutUser();
+          console.log("Fariha");
+        }
+      }),
   });
   useEffect(() => {
     if (products?.length) {
@@ -31,8 +41,9 @@ export default function Home() {
     }
   }, [products]);
   if (isLoading) return <Loader />;
-  if (error) return;
-
+  if (error) {
+    return;
+  }
   return (
     <>
       <Banner />

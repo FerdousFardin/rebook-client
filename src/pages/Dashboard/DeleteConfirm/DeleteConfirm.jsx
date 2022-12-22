@@ -25,10 +25,10 @@ export default function DeleteConfirm({
         if (data.deletedCount > 0) {
           toast.success(`${user.name} has been deleted`);
           refetch();
-          closeModal();
         } else toast.error(`Deletion failed`);
       })
       .finally(() => {
+        closeModal();
         setLoading(false);
       });
   };

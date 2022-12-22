@@ -1,22 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
-import DeleteBtn from "../../../components/Buttons/DeleteBtn";
-import Loader from "../../../components/Loader/Loader";
-import NoItems from "../../../components/NoItems/NoItems";
-
-export default function AllBuyers() {
+const MakeAdmin = () => {
   const {
     isLoading,
-    data: allBuyers,
+    data: allUsers,
     error,
     refetch,
   } = useQuery({
-    queryKey: ["all-buyers"],
+    queryKey: ["users"],
     queryFn: () =>
-      fetch(`${import.meta.env.VITE_API_URL}/all-buyers`, {
+      fetch(`${import.meta.env.VITE_API_URL}/users`, {
         headers: {
-          "content-type": "application/json",
           authorization: `bearer ${localStorage.getItem("rebookToken")}`,
         },
       }).then((res) => res.json()),
@@ -25,7 +20,7 @@ export default function AllBuyers() {
   if (error) return;
   return (
     <>
-      {allBuyers.length > 0 ? (
+      {allUsers.length > 0 ? (
         <table className="border-collapse w-full">
           <thead>
             <tr>
@@ -42,7 +37,7 @@ export default function AllBuyers() {
             </tr>
           </thead>
           <tbody>
-            {allBuyers.map(({ _id, name, email, photoURL }) => (
+            {allUsers.map(({ _id, name, email, photoURL }) => (
               <tr
                 key={_id}
                 className="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0"
@@ -72,7 +67,7 @@ export default function AllBuyers() {
                     Actions
                   </span>
 
-                  <DeleteBtn {...{ fetchLink: "users", _id, name, refetch }} />
+                  <button>Make Admin</button>
                 </td>
               </tr>
             ))}
@@ -83,4 +78,6 @@ export default function AllBuyers() {
       )}
     </>
   );
-}
+};
+
+export default MakeAdmin;

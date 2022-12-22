@@ -118,6 +118,21 @@ export default function Dashboard() {
               </span>
             </NavLink>
           </li>
+          <li>
+            <NavLink
+              onClick={() => setIsOpen(false)}
+              to={"/dashboard/make-admin"}
+              className={({ isActive }) =>
+                isActive
+                  ? activeClass
+                  : "group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600 dark:text-gray-300 hover:text-black"
+              }
+            >
+              <span className="group-hover:text-gray-700 dark:group-hover:text-gray-50">
+                Make Admin
+              </span>
+            </NavLink>
+          </li>
         </>
       )}
       {userInfo?.role?.includes("seller") && (
@@ -175,7 +190,7 @@ export default function Dashboard() {
   return (
     userInfo && (
       <section className="bg-gray-100 dark:bg-gray-900 relative">
-        <aside className="absolute top-0 ml-[-100%] flex h-screen w-full flex-col justify-between border-r bg-white px-6 pb-3 transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%] dark:bg-gray-800 dark:border-gray-700">
+        <aside className="absolute top-0 ml-[-100%] flex min-h-screen w-full flex-col justify-between border-r bg-white px-6 pb-3 transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%] dark:bg-gray-800 dark:border-gray-700">
           <div>
             <div className="mt-8 text-center">
               <img
@@ -244,7 +259,7 @@ export default function Dashboard() {
           </div>
 
           <div className="2xl:container">
-            <div className="min-h-[80vh]">
+            <div className="min-h-screen">
               <Outlet />
             </div>
           </div>

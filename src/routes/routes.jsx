@@ -19,6 +19,7 @@ import AdminRoute from "./Admin/AdminRoute";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import SellerRoute from "./Seller/SellerRoute";
 import MyBuyers from "../pages/Dashboard/MyBuyers/MyBuyers";
+import MakeAdmin from "../pages/Dashboard/MakeAdmin/MakeAdmin";
 
 export const routes = createBrowserRouter([
   {
@@ -100,6 +101,14 @@ export const routes = createBrowserRouter([
             element: (
               <AdminRoute>
                 <AllBuyers />
+              </AdminRoute>
+            ),
+          },
+          {
+            path: "/dashboard/make-admin",
+            element: (
+              <AdminRoute>
+                <MakeAdmin />
               </AdminRoute>
             ),
           },
