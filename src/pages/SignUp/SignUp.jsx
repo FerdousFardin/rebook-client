@@ -58,7 +58,7 @@ export default function SignUp() {
                 role: [accountType],
               };
               axios
-                .post(`https://rebook-server.vercel.app/users`, userInfo)
+                .post(`${import.meta.env.VITE_API_URL}/users`, userInfo)
                 .then((res) => {
                   if (res.data.acknowledged) {
                     updateInfo();
@@ -88,7 +88,7 @@ export default function SignUp() {
             role: ["buyer"],
           };
           axios
-            .post(`https://rebook-server.vercel.app/users`, userInfo)
+            .post(`${import.meta.env.VITE_API_URL}/users`, userInfo)
             .then((res) => {
               if (res.data.acknowledged) {
                 toast.success("Signed in successfully.");

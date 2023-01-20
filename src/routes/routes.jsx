@@ -125,7 +125,7 @@ export const routes = createBrowserRouter([
             element: <Checkout />,
             loader: ({ params }) =>
               fetch(
-                `https://rebook-server.vercel.app/bookings?id=${params.id}`,
+                `${import.meta.env.VITE_API_URL}/bookings?id=${params.id}`,
                 {
                   headers: {
                     authorization: `bearer ${localStorage.getItem(

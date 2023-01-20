@@ -17,7 +17,7 @@ export default function ReportedItems() {
   } = useQuery({
     queryKey: ["reported-items"],
     queryFn: () =>
-      fetch(`https://rebook-server.vercel.app/reported-items`, {
+      fetch(`${import.meta.env.VITE_API_URL}/reported-items`, {
         headers: {
           authorization: `bearer ${localStorage.getItem("rebookToken")}`,
         },

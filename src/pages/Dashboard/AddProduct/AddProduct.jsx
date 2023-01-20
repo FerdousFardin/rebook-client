@@ -24,7 +24,7 @@ export default function AddProduct() {
   } = useQuery({
     queryKey: ["categories"],
     queryFn: () =>
-      fetch(`https://rebook-server.vercel.app/categories`).then((res) =>
+      fetch(`${import.meta.env.VITE_API_URL}/categories`).then((res) =>
         res.json()
       ),
   });
@@ -71,7 +71,7 @@ export default function AddProduct() {
             inStock: true,
             date: Date.now(),
           };
-          fetch(`https://rebook-server.vercel.app/products`, {
+          fetch(`${import.meta.env.VITE_API_URL}/products`, {
             method: "POST",
             headers: {
               authorization: `bearer ${localStorage.getItem("rebookToken")}`,

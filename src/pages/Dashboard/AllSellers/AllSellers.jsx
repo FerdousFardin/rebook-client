@@ -20,7 +20,7 @@ export default function AllSellers() {
   } = useQuery({
     queryKey: ["all-sellers"],
     queryFn: () =>
-      fetch(`https://rebook-server.vercel.app/all-sellers`, {
+      fetch(`${import.meta.env.VITE_API_URL}/all-sellers`, {
         headers: {
           authorization: `bearer ${localStorage.getItem("rebookToken")}`,
         },
@@ -28,7 +28,7 @@ export default function AllSellers() {
   });
   const handleVerify = (id) => {
     setLoading(true);
-    fetch(`https://rebook-server.vercel.app/users?verify=true`, {
+    fetch(`${import.meta.env.VITE_API_URL}/users?verify=true`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",

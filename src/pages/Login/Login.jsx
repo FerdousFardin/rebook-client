@@ -32,7 +32,7 @@ export default function Login() {
     const { email, password } = data;
     loginUser(email, password)
       .then(() => {
-        fetch(`https://rebook-server.vercel.app/user-authenticate`, {
+        fetch(`${import.meta.env.VITE_API_URL}/user-authenticate`, {
           method: "POST",
           headers: {
             "content-type": "application/json",
@@ -71,7 +71,7 @@ export default function Login() {
         role: ["buyer"],
       };
       axios
-        .post(`https://rebook-server.vercel.app/users`, userInfo)
+        .post(`${import.meta.env.VITE_API_URL}/users`, userInfo)
         .then((res) => {
           if (res.data.acknowledged) {
             setSendToken(userInfo.email);

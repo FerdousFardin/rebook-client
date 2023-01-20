@@ -28,7 +28,7 @@ export default function BookModal({
       mobile,
       location: userLocation || location,
     };
-    fetch(`https://rebook-server.vercel.app/bookings`, {
+    fetch(`${import.meta.env.VITE_API_URL}/bookings`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

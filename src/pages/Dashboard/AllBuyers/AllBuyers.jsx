@@ -14,7 +14,7 @@ export default function AllBuyers() {
   } = useQuery({
     queryKey: ["all-buyers"],
     queryFn: () =>
-      fetch(`https://rebook-server.vercel.app/all-buyers`, {
+      fetch(`${import.meta.env.VITE_API_URL}/all-buyers`, {
         headers: {
           "content-type": "application/json",
           authorization: `bearer ${localStorage.getItem("rebookToken")}`,

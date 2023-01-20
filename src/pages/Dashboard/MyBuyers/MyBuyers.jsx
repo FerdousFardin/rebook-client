@@ -13,7 +13,7 @@ export default function MyBuyers() {
   } = useQuery({
     queryKey: ["my-buyers"],
     queryFn: () =>
-      fetch(`https://rebook-server.vercel.app/my-buyers`, {
+      fetch(`${import.meta.env.VITE_API_URL}/my-buyers`, {
         headers: {
           authorization: `bearer ${localStorage.getItem("rebookToken")}`,
         },
