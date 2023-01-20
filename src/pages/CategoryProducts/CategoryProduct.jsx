@@ -29,7 +29,7 @@ export default function CategoryProduct() {
   } = useQuery({
     queryKey: ["category-products"],
     queryFn: () =>
-      fetch(`${import.meta.env.VITE_API_URL}/products?categoryId=${id}`, {
+      fetch(`https://rebook-server.vercel.app/products?categoryId=${id}`, {
         headers: {
           authorization: `bearer ${localStorage.getItem("rebookToken")}`,
         },
@@ -45,7 +45,7 @@ export default function CategoryProduct() {
   };
   const handleReport = (id) => {
     setLoading(true);
-    fetch(`${import.meta.env.VITE_API_URL}/products?reported=true`, {
+    fetch(`https://rebook-server.vercel.app/products?reported=true`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",

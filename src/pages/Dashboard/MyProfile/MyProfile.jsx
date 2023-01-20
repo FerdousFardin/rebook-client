@@ -17,7 +17,7 @@ function MyProfile() {
   } = useQuery({
     queryKey: ["user-info"],
     queryFn: () =>
-      fetch(`${import.meta.env.VITE_API_URL}/user`, {
+      fetch(`https://rebook-server.vercel.app/user`, {
         headers: {
           authorization: `bearer ${localStorage.getItem("rebookToken")}`,
         },
@@ -43,7 +43,7 @@ function MyProfile() {
             ...rest,
             photoURL: dataImg.data.url,
           };
-          fetch(`${import.meta.env.VITE_API_URL}/user`, {
+          fetch(`https://rebook-server.vercel.app/user`, {
             method: "PUT",
             headers: {
               authorization: `bearer ${localStorage.getItem("rebookToken")}`,

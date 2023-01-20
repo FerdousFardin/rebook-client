@@ -10,7 +10,7 @@ const MakeAdmin = () => {
   } = useQuery({
     queryKey: ["users"],
     queryFn: () =>
-      fetch(`${import.meta.env.VITE_API_URL}/users`, {
+      fetch(`https://rebook-server.vercel.app/users`, {
         headers: {
           authorization: `bearer ${localStorage.getItem("rebookToken")}`,
         },

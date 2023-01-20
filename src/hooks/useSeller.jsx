@@ -7,7 +7,7 @@ export default function useSeller(email) {
     if (email) {
       setCheckingSeller(true);
       fetch(
-        `${import.meta.env.VITE_API_URL}/user-authorize?isSeller=${email}`,
+        `https://rebook-server.vercel.app/user-authorize?isSeller=${email}`,
         {
           headers: {
             authorization: `bearer ${localStorage.getItem("rebookToken")}`,

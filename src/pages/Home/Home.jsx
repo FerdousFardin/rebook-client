@@ -19,7 +19,7 @@ export default function Home() {
   } = useQuery({
     queryKey: ["advertised"],
     queryFn: () =>
-      fetch(`${import.meta.env.VITE_API_URL}/products`, {
+      fetch(`https://rebook-server.vercel.app/products`, {
         headers: {
           authorization: `bearer ${localStorage.getItem("rebookToken")}`,
         },

@@ -17,7 +17,7 @@ export default function MyProducts() {
   } = useQuery({
     queryKey: ["my-products"],
     queryFn: () =>
-      fetch(`${import.meta.env.VITE_API_URL}/my-products`, {
+      fetch(`https://rebook-server.vercel.app/my-products`, {
         headers: {
           authorization: `bearer ${localStorage.getItem("rebookToken")}`,
         },
@@ -25,7 +25,7 @@ export default function MyProducts() {
   });
   const handleAdvertise = (_id) => {
     setLoading(true);
-    fetch(`${import.meta.env.VITE_API_URL}/my-products?advertised=true`, {
+    fetch(`https://rebook-server.vercel.app/my-products?advertised=true`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",

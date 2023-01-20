@@ -6,11 +6,14 @@ export default function useAdmin(email) {
   useEffect(() => {
     if (email) {
       setCheckingAdmin(true);
-      fetch(`${import.meta.env.VITE_API_URL}/user-authorize?isAdmin=${email}`, {
-        headers: {
-          authorization: `bearer ${localStorage.getItem("rebookToken")}`,
-        },
-      })
+      fetch(
+        `https://rebook-server.vercel.app/user-authorize?isAdmin=${email}`,
+        {
+          headers: {
+            authorization: `bearer ${localStorage.getItem("rebookToken")}`,
+          },
+        }
+      )
         .then((res) => res.json())
         .then((data) => setIsAdmin(data.isAdmin))
         .finally(() => {

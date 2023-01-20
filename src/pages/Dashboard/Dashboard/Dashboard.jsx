@@ -29,7 +29,7 @@ export default function Dashboard() {
   } = useQuery({
     queryKey: ["user"],
     queryFn: () =>
-      fetch(`${import.meta.env.VITE_API_URL}/user`, {
+      fetch(`https://rebook-server.vercel.app/user`, {
         headers: {
           authorization: `bearer ${localStorage.getItem("rebookToken")}`,
         },

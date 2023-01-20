@@ -12,7 +12,7 @@ export default function DeleteConfirm({
   const [loading, setLoading] = useState(false);
   const handleDelete = (id) => {
     setLoading(true);
-    fetch(`${import.meta.env.VITE_API_URL}/${fetchLink}`, {
+    fetch(`https://rebook-server.vercel.app/${fetchLink}`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",

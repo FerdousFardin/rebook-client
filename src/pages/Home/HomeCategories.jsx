@@ -11,7 +11,7 @@ export default function HomeCategories() {
   } = useQuery({
     queryKey: ["categories"],
     queryFn: () =>
-      fetch(`${import.meta.env.VITE_API_URL}/categories`).then((res) =>
+      fetch(`https://rebook-server.vercel.app/categories`).then((res) =>
         res.json()
       ),
   });
