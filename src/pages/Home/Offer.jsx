@@ -1,11 +1,20 @@
 import { ShoppingCartIcon } from "@heroicons/react/24/solid";
 import React from "react";
+import { sectionVariants } from "../../../utility/sectionVariants";
 import PrimaryBtn from "../../components/Buttons/PrimaryBtn";
-
+import { motion } from "framer-motion";
 export default function Offer() {
   return (
-    <div className="py-16">
-      <div className="container m-auto space-y-8 px-6 text-gray-500 md:px-12 lg:px-20">
+    <motion.div
+      initial="offscreen"
+      whileInView="onscreen"
+      viewport={{ once: true, amount: 0.8 }}
+      className="py-16"
+    >
+      <motion.div
+        variants={sectionVariants}
+        className="container m-auto space-y-8 px-6 text-gray-500 md:px-12 lg:px-20"
+      >
         <div className="justify-center gap-6 text-center md:flex md:text-left lg:items-center lg:gap-16">
           <div className="order-last mb-6 space-y-6 md:mb-0 md:w-6/12 lg:w-6/12">
             <h1 className="text-4xl font-bold text-gray-800 md:text-5xl dark:text-white">
@@ -24,12 +33,14 @@ export default function Offer() {
           </div>
           <div className="grid grid-cols-5 grid-rows-4 gap-4 md:w-5/12 lg:w-6/12">
             <div className="col-span-2 row-span-4">
-              <img
+              <motion.img
+                initial={{ y: "-100%" }}
+                animate={{ y: 0, transitionDuration: 0.6 }}
                 src="https://images.unsplash.com/photo-1513001900722-370f803f498d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
                 className="rounded-full h-2/3"
                 width="640"
                 height="960"
-                alt="shoes"
+                alt="books"
                 loading="lazy"
               />
             </div>
@@ -55,7 +66,7 @@ export default function Offer() {
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }

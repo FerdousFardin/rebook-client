@@ -12,8 +12,14 @@ export default function Login() {
   const [selected, setSelected] = useState(loginAs[0]);
   const [sendToken, setSendToken] = useState("");
   const [loginErr, setLoginErr] = useState("");
-  const { loginUser, loading, setLoading, googleLogin, logoutUser } =
-    useContext(AuthContext);
+  const {
+    loginUser,
+    loadingReducer,
+    dispatch,
+    loadingState,
+    googleLogin,
+    logoutUser,
+  } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -58,7 +64,7 @@ export default function Login() {
         toast.error("Sign in failed!");
       })
       .finally(() => {
-        setLoading(false);
+        dispatch({ type: "LOGIN_OFF" });
       });
   };
   const handleGoogle = () => {
@@ -82,7 +88,7 @@ export default function Login() {
           toast.error(`Can't connect to Google at this moment.`);
         })
         .then(() => {
-          setLoading(false);
+          dispatch({ type: "GOOGLE_OFF" });
         });
     });
   };
@@ -100,12 +106,12 @@ export default function Login() {
             </div>
             <div className="mt-12 flex flex-wrap  gap-6 ">
               <button
-                disabled={loading}
+                disabled={loadingState.googleLoading}
                 onClick={handleGoogle}
                 className="w-full h-11 rounded-full border hover:bg-gray-200 border-gray-300/75 bg-white disabled:bg-gray-400 disabled:cursor-not-allowed px-6 transition active:bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-800 dark:hover:border-gray-700 "
               >
                 <div className="w-full mx-auto flex items-center justify-center space-x-4 ">
-                  {loading || (
+                  {loadingState.googleLoading || (
                     <svg className="w-5 h-5 " viewBox="0 0 40 40">
                       <path
                         d="M36.3425 16.7358H35V16.6667H20V23.3333H29.4192C28.045 27.2142 24.3525 30 20 30C14.4775 30 10 25.5225 10 20C10 14.4775 14.4775 9.99999 20 9.99999C22.5492 9.99999 24.8683 10.9617 26.6342 12.5325L31.3483 7.81833C28.3717 5.04416 24.39 3.33333 20 3.33333C10.7958 3.33333 3.33335 10.7958 3.33335 20C3.33335 29.2042 10.7958 36.6667 20 36.6667C29.2042 36.6667 36.6667 29.2042 36.6667 20C36.6667 18.8825 36.5517 17.7917 36.3425 16.7358Z"
@@ -125,11 +131,11 @@ export default function Login() {
                       />
                     </svg>
                   )}
-                  {loading && (
+                  {loadingState.googleLoading && (
                     <div className="grid-1 my-auto h-5 w-5 mr-3 border-t-transparent border-solid animate-spin rounded-full border-white border"></div>
                   )}
                   <span className="block w-max text-sm font-semibold tracking-wide text-black dark:text-white">
-                    {loading && "Signing In"} With Google
+                    {loadingState.googleLoading && "Signing In"} With Google
                   </span>
                 </div>
               </button>
@@ -202,14 +208,14 @@ export default function Login() {
 
               <div>
                 <button
-                  disabled={loading}
+                  disabled={loadingState.emailLoading}
                   className="w-full rounded-full bg-primary disabled:bg-red-800
                   disabled:cursor-not-allowed dark:bg-primary/25 h-11 flex items-center justify-center px-6 py-3 transition hover:bg-primary-100 focus:bg-primary/70 active:bg-primary-100 cursor-pointer text-white"
                 >
-                  {loading && (
+                  {loadingState.emailLoading && (
                     <div className="grid-1 my-auto h-5 w-5 mr-3 border-t-transparent border-solid animate-spin rounded-full border-white border"></div>
                   )}
-                  {loading ? (
+                  {loadingState.emailLoading ? (
                     "Signing In..."
                   ) : (
                     <input type="submit" value="Log In" />

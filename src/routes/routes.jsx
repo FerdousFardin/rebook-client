@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router-dom";
-import Main from "../layout/Main";
 import Blog from "../pages/Blog/Blog";
 import CategoryProduct from "../pages/CategoryProducts/CategoryProduct";
 import AddProduct from "../pages/Dashboard/AddProduct/AddProduct";
@@ -20,21 +19,26 @@ import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import SellerRoute from "./Seller/SellerRoute";
 import MyBuyers from "../pages/Dashboard/MyBuyers/MyBuyers";
 import MakeAdmin from "../pages/Dashboard/MakeAdmin/MakeAdmin";
+import { PageWrapper } from "../components/PageWrapper/PageWrapper";
+import Layout from "../layout/Layout";
 
 export const routes = createBrowserRouter([
   {
     path: "/",
-    element: <Main />,
+    element: <Layout />,
     errorElement: <Error />,
     children: [
-      { path: "/", element: <Home /> },
+      {
+        path: "/",
+        element: (
+          <PageWrapper>
+            <Home />
+          </PageWrapper>
+        ),
+      },
       {
         path: "/category/:id",
-        element: (
-          <PrivateRoute>
-            <CategoryProduct />
-          </PrivateRoute>
-        ),
+        element: <CategoryProduct />,
       },
       {
         path: "/login",
@@ -46,7 +50,11 @@ export const routes = createBrowserRouter([
       },
       {
         path: "/blog",
-        element: <Blog />,
+        element: (
+          <PageWrapper>
+            <Blog />
+          </PageWrapper>
+        ),
       },
       {
         path: "/dashboard",
@@ -56,6 +64,10 @@ export const routes = createBrowserRouter([
           </PrivateRoute>
         ),
         children: [
+          {
+            path: "/dashboard",
+            element: <MyProfile />,
+          },
           {
             path: "/dashboard/my-profile",
             element: <MyProfile />,

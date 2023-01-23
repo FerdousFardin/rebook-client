@@ -8,6 +8,9 @@ import Advertised from "./Advertised";
 import Banner from "./Banner";
 import HomeCategories from "./HomeCategories";
 import Offer from "./Offer";
+import { motion } from "framer-motion";
+import ScrollProgress from "../../components/ScrollProgress/ScrollProgress";
+import Box from "../../components/Box/Box";
 
 export default function Home() {
   const { logoutUser } = useContext(AuthContext);
@@ -28,7 +31,6 @@ export default function Home() {
           return res.json();
         else {
           logoutUser();
-          console.log("Fariha");
         }
       }),
   });
@@ -46,10 +48,30 @@ export default function Home() {
   }
   return (
     <>
-      <Banner />
-      <Offer />
-      {advertised.length > 0 && <Advertised {...{ advertised }} />}
-      <HomeCategories />
+      <ScrollProgress />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0, x: -15 }}
+        transition={{ delay: 0.25 }}
+      >
+        <Box>
+          <Banner />
+        </Box>
+        <Box>
+          <Offer />
+        </Box>
+
+        {advertised.length > 0 && (
+          <Box>
+            {" "}
+            <Advertised {...{ advertised }} />
+          </Box>
+        )}
+        <Box>
+          <HomeCategories />
+        </Box>
+      </motion.div>
     </>
   );
 }

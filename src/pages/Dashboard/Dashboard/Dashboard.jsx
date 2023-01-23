@@ -36,7 +36,7 @@ export default function Dashboard() {
       }).then((res) => res.json()),
   });
   const activeClass =
-    "relative flex items-center space-x-4 rounded-xl bg-gradient-to-br from-primary to-primary-100/50 px-4 py-3 text-white";
+    "relative flex items-center space-x-4 rounded-xl bg-primary to-primary-100/50 px-4 py-3 text-white";
   if (isLoading) return <Loader />;
   if (error) return;
   const dashboardList = (
@@ -44,7 +44,11 @@ export default function Dashboard() {
       <li>
         <NavLink
           onClick={() => setIsOpen(false)}
-          to={"/dashboard/my-profile"}
+          to={
+            location.pathname === "/dashboard"
+              ? "/dashboard"
+              : "/dashboard/my-profile"
+          }
           aria-label="dashboard"
           className={({ isActive }) =>
             isActive
@@ -190,7 +194,7 @@ export default function Dashboard() {
   return (
     userInfo && (
       <section className="bg-gray-100 dark:bg-gray-900 relative">
-        <aside className="absolute top-0 ml-[-100%] flex min-h-screen w-full flex-col justify-between border-r bg-white px-6 pb-3 transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%] dark:bg-gray-800 dark:border-gray-700">
+        <aside className="absolute top-0 ml-[-100%] flex min-h-screen w-full h-full flex-col justify-between border-r bg-white px-6 pb-3 transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%] dark:bg-gray-800 dark:border-gray-700">
           <div>
             <div className="mt-8 text-center">
               <img

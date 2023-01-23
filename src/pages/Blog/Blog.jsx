@@ -1,9 +1,21 @@
-import React from "react";
+import { motion } from "framer-motion";
+import { ScrollRestoration } from "react-router-dom";
+import ScrollProgress from "../../components/ScrollProgress/ScrollProgress";
 export default function Blog() {
   return (
-    <section className="bg-white dark:bg-gray-900">
+    <motion.section
+      className="bg-white dark:bg-gray-900 relative"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0, x: 15 }}
+      transition={{ delay: 0.25 }}
+    >
+      <ScrollProgress />
       <div className="container px-6 py-10 mx-auto">
-        <h1 className="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark:text-white">
+        <h1
+          id="restore-blog"
+          className="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark:text-white"
+        >
           From the blog
         </h1>
 
@@ -335,6 +347,7 @@ export default function Blog() {
           </div>
         </div>
       </div>
-    </section>
+      <ScrollRestoration />
+    </motion.section>
   );
 }

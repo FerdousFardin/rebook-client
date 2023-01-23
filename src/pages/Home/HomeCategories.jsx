@@ -17,7 +17,7 @@ export default function HomeCategories() {
   });
   if (isLoading) return <Loader />;
   return (
-    <div className="bg-white py-6 sm:py-8 lg:py-12">
+    <div id="category" className="bg-white py-6 sm:py-8 lg:py-12">
       <div className="max-w-screen-2xl px-4 md:px-8 mx-auto">
         {/* <!-- text - start --> */}
         <div className="mb-10 md:mb-16">

@@ -1,10 +1,44 @@
 import { format } from "date-fns";
-import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
 
 export default function Footer() {
+  const navItems = [
+    {
+      name: "Home",
+      to: "/",
+    },
+    {
+      name: "Blog",
+      to: "/blog",
+    },
+    {
+      name: "Dashboard",
+      to: "/dashboard",
+    },
+    {
+      name: "Login",
+      to: "/login",
+    },
+    {
+      name: "Register",
+      to: "/signup",
+    },
+  ];
+  const location = useLocation();
   return (
-    <footer>
+    <motion.footer
+      initial={{
+        y: "100%",
+      }}
+      whileInView={{
+        y: 0,
+        transition: {
+          type: "spring",
+          bounce: 0.4,
+        },
+      }}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="-mb-0.5 w-full"
@@ -23,15 +57,15 @@ export default function Footer() {
           <div className="grid grid-cols-8 gap-6 md:gap-0">
             <div className="col-span-8 border-r border-gray-100 dark:border-gray-800 md:col-span-2 lg:col-span-3">
               <div className="flex items-center justify-between gap-6 border-b border-white dark:border-gray-800 py-6 md:block md:space-y-6 md:border-none md:py-0">
-                <NavLink
-                  to={"/"}
+                <Link
+                  to={location.pathname === "/" ? "/#header" : "/"}
                   className="text-2xl font-bold text-gray-800 transition-colors duration-300 transform dark:text-white lg:text-3xl hover:text-gray-700 dark:hover:text-gray-300 flex items-center gap-2"
                 >
                   <img className="" src="../../../public/favicon.ico" alt="" />
                   <span>
                     Your<span className="text-primary">Shelf</span>
                   </span>
-                </NavLink>
+                </Link>
                 <div className="flex gap-6">
                   <a
                     href="#header"
@@ -93,31 +127,16 @@ export default function Footer() {
                     Company
                   </h6>
                   <ul className="mt-4 list-inside space-y-4">
-                    <li>
-                      <a href="#" className="transition hover:text-primary">
-                        About
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="transition hover:text-primary">
-                        Customers
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="transition hover:text-primary">
-                        Enterprise
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="transition hover:text-primary">
-                        Partners
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="transition hover:text-primary">
-                        Jobs
-                      </a>
-                    </li>
+                    {navItems.map((el) => (
+                      <li key={el.to}>
+                        <Link
+                          to={el.to}
+                          className="transition hover:text-primary"
+                        >
+                          {el.name}
+                        </Link>
+                      </li>
+                    ))}
                   </ul>
                 </div>
                 <div>
@@ -125,31 +144,16 @@ export default function Footer() {
                     Products
                   </h6>
                   <ul className="mt-4 list-inside space-y-4">
-                    <li>
-                      <a href="#" className="transition hover:text-primary">
-                        About
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="transition hover:text-primary">
-                        Customers
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="transition hover:text-primary">
-                        Enterprise
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="transition hover:text-primary">
-                        Partners
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="transition hover:text-primary">
-                        Jobs
-                      </a>
-                    </li>
+                    {navItems.map((el) => (
+                      <li key={el.to}>
+                        <Link
+                          to={el.to}
+                          className="transition hover:text-primary"
+                        >
+                          {el.name}
+                        </Link>
+                      </li>
+                    ))}
                   </ul>
                 </div>
                 <div>
@@ -157,38 +161,23 @@ export default function Footer() {
                     Ressources
                   </h6>
                   <ul className="mt-4 list-inside space-y-4">
-                    <li>
-                      <a href="#" className="transition hover:text-primary">
-                        About
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="transition hover:text-primary">
-                        Customers
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="transition hover:text-primary">
-                        Enterprise
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="transition hover:text-primary">
-                        Partners
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="transition hover:text-primary">
-                        Jobs
-                      </a>
-                    </li>
+                    {navItems.map((el) => (
+                      <li key={el.to}>
+                        <Link
+                          to={el.to}
+                          className="transition hover:text-primary"
+                        >
+                          {el.name}
+                        </Link>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>
               <div className="flex justify-between border-t border-gray-100 dark:border-gray-800 py-4 pb-8 md:pl-16">
                 <span>
                   &copy; YourShelf 2003 - {format(Date.now(), "y")}{" "}
-                  <span id="year"></span>{" "}
+                  <span id="year"></span>
                 </span>
                 <span>All right reserved</span>
               </div>
@@ -196,6 +185,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-    </footer>
+    </motion.footer>
   );
 }
