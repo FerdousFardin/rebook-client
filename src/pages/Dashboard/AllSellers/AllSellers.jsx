@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import DeleteBtn from "../../../components/Buttons/DeleteBtn";
 import Loader from "../../../components/Loader/Loader";
 import NoItems from "../../../components/NoItems/NoItems";
+import SmallBtn from "../../../components/SmallBtn/SmallBtn";
 import DeleteConfirm from "../DeleteConfirm/DeleteConfirm";
 
 export default function AllSellers() {
@@ -47,7 +48,12 @@ export default function AllSellers() {
         setLoading(false);
       });
   };
-  if (isLoading) return <Loader />;
+  if (isLoading)
+    return (
+      <div className="w-full h-full grid place-items-center">
+        <Loader />
+      </div>
+    );
   if (error) return;
 
   return (
@@ -80,7 +86,11 @@ export default function AllSellers() {
                 >
                   <td className="w-full lg:w-auto p-3 text-gray-700 text-center lg:text-left border border-b block lg:table-cell relative lg:static font-semibold">
                     <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase"></span>
-                    <img src={photoURL} className="w-10 rounded-full" alt="" />
+                    <img
+                      src={photoURL}
+                      className="w-10 h-10 rounded-full object-cover"
+                      alt=""
+                    />
                   </td>
                   <td className="w-full lg:w-auto p-3 text-gray-800 text-center  border border-b  block lg:table-cell relative lg:static">
                     <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">
@@ -116,16 +126,12 @@ export default function AllSellers() {
                       {isVerified ? (
                         ""
                       ) : (
-                        <button
-                          onClick={() => handleVerify(_id)}
-                          className="bg-blue-400 flex items-center py-1 px-2 rounded-lg text-white disabled:bg-blue-300 disabled:cursor-not-allowed duration-[500ms,800ms]"
-                          disabled={loading}
-                        >
-                          {loading && (
-                            <div className="grid-1 my-auto h-5 w-5 mr-3 border-t-transparent border-solid animate-spin rounded-full border-white border"></div>
-                          )}
-                          {loading ? "Processing" : "Verify"}
-                        </button>
+                        <SmallBtn
+                          colorPref={"#007c89"}
+                          handler={() => handleVerify(_id)}
+                          loading={loading}
+                          variants={["Verify", "Processing"]}
+                        />
                       )}
                       <DeleteBtn
                         {...{ fetchLink: "users", _id, name, refetch }}

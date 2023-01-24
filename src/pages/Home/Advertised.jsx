@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function Advertised({ advertised }) {
   return (
-    <div className="py-16">
+    <div className="lg:px-28 py-16">
       <div className="xl:container m-auto px-6 text-gray-500 md:px-12">
         <div>
           <h2 className="mt-4 text-2xl text-center font-bold text-gray-700 dark:text-white md:text-4xl">

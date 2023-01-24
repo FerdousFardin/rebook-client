@@ -12,22 +12,22 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/solid";
 export default function Navbar() {
-  const { user, logoutUser, loading } = useContext(AuthContext);
+  const { user, logoutUser, loadingState } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   let [width] = useWindowSize();
   const location = useLocation();
-  const hoverStyles = width < 1024 ? { translateX: 1.25 } : { scale: 1.05 };
-  const activeClass = "text-white bg-primary";
+  const hoverStyles = width < 1024 ? { translateX: 1.25 } : { scale: 1.02 };
+  const activeClass = "text-primary underline underline-offset-2";
   const navItems = (
     <>
       <motion.span whileHover={hoverStyles}>
         <Link
           onClick={() => setIsOpen(false)}
           to={"/"}
-          className={`px-3 py-2 mx-3 mt-2 rounded-md lg:mt-0 duration-300 transform transition-colors font-semibold ${
+          className={`px-3 text-lg lg:text-sm py-2 mx-3 mt-2 rounded-md lg:mt-0 duration-300 transform transition-colors font-medium ${
             location.pathname === "/"
               ? activeClass
-              : "text-gray-700  dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-primary"
+              : "text-gray-700  dark:text-gray-200 hover: hover:underline underline-offset-2 dark:hover:bg-gray-700 hover:text-primary"
           }`}
         >
           Home
@@ -38,10 +38,10 @@ export default function Navbar() {
           <Link
             onClick={() => setIsOpen(false)}
             to={"/dashboard"}
-            className={`px-3 py-2 mx-3 mt-2 rounded-md lg:mt-0 duration-300 transform transition-colors font-semibold ${
+            className={`px-3 text-lg lg:text-sm py-2 mx-3 mt-2 rounded-md lg:mt-0 duration-300 transform transition-colors font-medium ${
               location.pathname === "/dashboard"
                 ? activeClass
-                : "text-gray-700  dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-primary"
+                : "text-gray-700  dark:text-gray-200 hover:underline underline-offset-2 dark:hover:bg-gray-700 hover:text-primary"
             }`}
           >
             Dashboard
@@ -52,19 +52,19 @@ export default function Navbar() {
         <Link
           onClick={() => setIsOpen(false)}
           to={"/blog"}
-          className={`px-3 py-2 mx-3 mt-2 rounded-md lg:mt-0 duration-300 transform transition-colors font-semibold ${
+          className={`px-3 text-lg lg:text-sm py-2 mx-3 mt-2 rounded-md lg:mt-0 duration-300 transform transition-colors font-medium ${
             location.pathname === "/blog"
               ? activeClass
-              : "text-gray-700  dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-primary"
+              : "text-gray-700  dark:text-gray-200 hover:underline underline-offset-2 dark:hover:bg-gray-700 hover:text-primary"
           }`}
         >
           Blog
         </Link>
       </motion.span>
       {user?.uid ? (
-        <PrimaryBtn className={"h-10 px-4"} onClick={logoutUser}>
-          {loading ? "Signing Out..." : "Sign Out"}{" "}
-          <svg
+        <PrimaryBtn className={"h-10 px-6"} onClick={logoutUser}>
+          {loadingState.logoutLoading ? "Signing Out" : "Sign Out"}{" "}
+          {/* <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5"
             fill="none"
@@ -77,11 +77,11 @@ export default function Navbar() {
               strokeWidth="2"
               d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
             />
-          </svg>
+          </svg> */}
         </PrimaryBtn>
       ) : (
         <PrimaryBtn
-          className={"h-10 px-4"}
+          className={"h-10 px-6"}
           to={"/login"}
           onClick={() => setIsOpen(false)}
         >
@@ -102,7 +102,7 @@ export default function Navbar() {
             bounce: 0.5,
           },
         }}
-        className="sticky top-0 min-h-16 z-50 border-b bg-white/80 backdrop-blur-sm dark:bg-gray-800 dark:border-gray-700 lg:py-2.5"
+        className="sticky top-0 h-16 sm:h-20 lg:px-28 lg:h-24 z-50 border-b bg-white/80 backdrop-blur-sm dark:bg-gray-800 dark:border-gray-700 lg:py-2.5"
       >
         <nav className="container px-6 py-4 mx-auto">
           <div className="lg:flex lg:items-center lg:justify-between">

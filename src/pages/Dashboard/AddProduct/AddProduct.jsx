@@ -105,13 +105,19 @@ export default function AddProduct() {
         setLoading(false);
       });
   };
+  const test = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 5000);
+  };
   if (isLoading) return <Loader />;
   if (error) return;
   return (
     <section className="bg-gray-100">
       <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="rounded-lg bg-white p-8 shadow-lg lg:col-span-3 lg:p-12">
-          <form onSubmit={handleSubmit(handleAddProduct)} className="space-y-4">
+          <form onSubmit={handleSubmit(test)} className="space-y-4">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
                 <label className="sr-only" htmlFor="product-name">
@@ -359,29 +365,14 @@ export default function AddProduct() {
               <button
                 type="submit"
                 disabled={loading}
-                className="inline-flex w-full items-center justify-center rounded-lg bg-black hover:bg-primary disabled:cursor-not-allowed disabled:bg-black/40 duration-300 px-5 py-3 text-white sm:w-auto group"
+                className="inline-flex w-full items-center justify-center rounded-lg border-2 border-primary hover: disabled:cursor-not-allowed disabled:bg-black/40 duration-300 px-3 py-2 text-primary sm:w-auto group hover:shadow-[0px_5px_0px_0px_#231b15] hover:-translate-y-1 hover:border-b active:border-b active:translate-y-0 active:shadow-[0px_3px_0px_0px_#231b15]"
               >
-                <span className="font-medium">
+                <span className="font-semibold duration-300">
                   {loading && (
                     <div className="grid-1 my-auto h-5 w-5 mr-3 border-t-transparent border-solid animate-spin rounded-full border-white border"></div>
                   )}
                   {!loading ? "Add Product" : `Adding Product`}
                 </span>
-
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="ml-3 h-5 w-5 group-hover:translate-x-1 duration-200"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M14 5l7 7m0 0l-7 7m7-7H3"
-                  />
-                </svg>
               </button>
             </div>
           </form>

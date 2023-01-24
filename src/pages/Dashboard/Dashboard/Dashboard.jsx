@@ -2,7 +2,6 @@ import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
-
 import Loader from "../../../components/Loader/Loader";
 import Drawer from "./Drawer/Drawer";
 
@@ -36,7 +35,7 @@ export default function Dashboard() {
       }).then((res) => res.json()),
   });
   const activeClass =
-    "relative flex items-center space-x-4 rounded-xl bg-primary to-primary-100/50 px-4 py-3 text-white";
+    "relative flex items-center space-x-4 rounded bg-primary to-primary-100/50 px-3 py-3 text-white";
   if (isLoading) return <Loader />;
   if (error) return;
   const dashboardList = (
@@ -53,7 +52,7 @@ export default function Dashboard() {
           className={({ isActive }) =>
             isActive
               ? activeClass
-              : "group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600 dark:text-gray-300 hover:text-black"
+              : "group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600 dark:text-gray-300 hover:text-primary duration-300 hover:scale-105"
           }
         >
           <span className="-mr-1 font-medium">My Profile</span>
@@ -68,7 +67,7 @@ export default function Dashboard() {
             className={({ isActive }) =>
               isActive
                 ? activeClass
-                : "group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600 dark:text-gray-300 hover:text-black"
+                : "group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600 dark:text-gray-300 hover:text-primary duration-300 hover:scale-105"
             }
           >
             <span className="-mr-1 font-medium">My Orders</span>
@@ -84,12 +83,10 @@ export default function Dashboard() {
               className={({ isActive }) =>
                 isActive
                   ? activeClass
-                  : "group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600 dark:text-gray-300 hover:text-black"
+                  : "group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600 dark:text-gray-300 hover:text-primary duration-300 hover:scale-105"
               }
             >
-              <span className="group-hover:text-gray-700 dark:group-hover:text-gray-50">
-                All Sellers
-              </span>
+              <span className="dark:group-hover:text-gray-50">All Sellers</span>
             </NavLink>
           </li>
           <li>
@@ -99,12 +96,10 @@ export default function Dashboard() {
               className={({ isActive }) =>
                 isActive
                   ? activeClass
-                  : "group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600 dark:text-gray-300 hover:text-black"
+                  : "group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600 dark:text-gray-300 hover:text-primary duration-300 hover:scale-105"
               }
             >
-              <span className="group-hover:text-gray-700 dark:group-hover:text-gray-50">
-                All Buyers
-              </span>
+              <span className="dark:group-hover:text-gray-50">All Buyers</span>
             </NavLink>
           </li>
           <li>
@@ -114,10 +109,10 @@ export default function Dashboard() {
               className={({ isActive }) =>
                 isActive
                   ? activeClass
-                  : "group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600 dark:text-gray-300 hover:text-black"
+                  : "group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600 dark:text-gray-300 hover:text-primary duration-300 hover:scale-105"
               }
             >
-              <span className="group-hover:text-gray-700 dark:group-hover:text-gray-50">
+              <span className="dark:group-hover:text-gray-50">
                 Reported Items
               </span>
             </NavLink>
@@ -129,12 +124,10 @@ export default function Dashboard() {
               className={({ isActive }) =>
                 isActive
                   ? activeClass
-                  : "group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600 dark:text-gray-300 hover:text-black"
+                  : "group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600 dark:text-gray-300 hover:text-primary duration-300 hover:scale-105"
               }
             >
-              <span className="group-hover:text-gray-700 dark:group-hover:text-gray-50">
-                Make Admin
-              </span>
+              <span className="dark:group-hover:text-gray-50">Make Admin</span>
             </NavLink>
           </li>
         </>
@@ -148,10 +141,10 @@ export default function Dashboard() {
               className={({ isActive }) =>
                 isActive
                   ? activeClass
-                  : "group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600 dark:text-gray-300 hover:text-black"
+                  : "group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600 dark:text-gray-300 hover:text-primary duration-300 hover:scale-105"
               }
             >
-              <span className="group-hover:text-gray-700 dark:group-hover:text-gray-50">
+              <span className="dark:group-hover:text-gray-50">
                 Add a product
               </span>
             </NavLink>
@@ -163,12 +156,10 @@ export default function Dashboard() {
               className={({ isActive }) =>
                 isActive
                   ? activeClass
-                  : "group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600 dark:text-gray-300 hover:text-black "
+                  : "group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600 dark:text-gray-300 hover:text-primary duration-300 hover:scale-105"
               }
             >
-              <span className="group-hover:text-gray-700 dark:group-hover:text-white">
-                My Buyers
-              </span>
+              <span className="dark:group-hover:text-white ">My Buyers</span>
             </NavLink>
           </li>
           <li>
@@ -178,12 +169,10 @@ export default function Dashboard() {
               className={({ isActive }) =>
                 isActive
                   ? activeClass
-                  : "group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600 dark:text-gray-300 hover:text-black "
+                  : "group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600 dark:text-gray-300 hover:text-primary duration-300 hover:scale-105"
               }
             >
-              <span className="group-hover:text-gray-700 dark:group-hover:text-white">
-                My Products
-              </span>
+              <span className="dark:group-hover:text-white ">My Products</span>
             </NavLink>
           </li>
         </>

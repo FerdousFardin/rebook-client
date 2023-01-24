@@ -6,9 +6,9 @@ export default function PrimaryBtn({ className, onClick, to, children }) {
     <Link
       onClick={onClick}
       to={to}
-      className={`relative flex items-center justify-center px-8 before:absolute before:inset-0 before:rounded-full before:bg-black hover:before:bg-primary before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 ${className}`}
+      className={`relative text-xs font-medium flex items-center justify-center px-8 duration-300  text-black border border-primary inset-0 rounded-full hover:shadow-[0px_3px_0px_0px_#231b15] hover:-translate-y-1 active:translate-y-0 active:shadow-[0px_2px_0px_0px_#231b15] ${className}`}
     >
-      <span className="flex relative text-white items-center gap-5 tracking-wider">
+      <span className="flex relative items-center gap-5 tracking-wider">
         {children}
       </span>
     </Link>

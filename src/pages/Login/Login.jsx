@@ -31,6 +31,7 @@ export default function Login() {
   const [token] = useToken({ email: sendToken });
   if (token) {
     navigate(from, { replace: true });
+    toast.success(`Logged in with Google`);
   }
   const handleSignIn = (data, e) => {
     setSendToken("");
@@ -94,8 +95,8 @@ export default function Login() {
   };
   return (
     <div className="m-auto xl:container px-12 sm:px-0 mx-auto">
-      <div className="mx-auto  h-full sm:w-max">
-        <div className="m-auto w-full max-w-lg py-12 ">
+      <div className="mx-auto h-full sm:w-max">
+        <div className="m-auto w-full max-w-lg py-12">
           <h3 className="text-2xl font-semibold text-gray-700 dark:text-white">
             Login to your account
           </h3>

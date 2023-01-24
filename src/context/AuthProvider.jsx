@@ -16,7 +16,7 @@ export const AuthContext = createContext();
 export default function AuthProvider({ children }) {
   const initialState = {
     googleLoading: false,
-    emailLoading: false,
+    emailLoading: true,
     registerLoading: false,
     anonymousLoading: false,
     logoutLoading: false,
@@ -48,7 +48,6 @@ export default function AuthProvider({ children }) {
     }
   };
   const [loadingState, dispatch] = useReducer(loadingReducer, initialState);
-  // const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const auth = getAuth(app);
   const googleProvider = new GoogleAuthProvider();
@@ -57,7 +56,7 @@ export default function AuthProvider({ children }) {
       if (user === null) {
         setUser(currentUser);
       }
-      dispatch({ type: "RESET" });
+      dispatch({ type: "LOGIN_OFF" });
     });
 
     return () => unsubscribe();

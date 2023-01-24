@@ -13,7 +13,7 @@ export default function Offer() {
     >
       <motion.div
         variants={sectionVariants}
-        className="container m-auto space-y-8 px-6 text-gray-500 md:px-12 lg:px-20"
+        className="container sm:px-20 space-y-8 px-6 text-gray-500 md:px-12 lg:px-28"
       >
         <div className="justify-center gap-6 text-center md:flex md:text-left lg:items-center lg:gap-16">
           <div className="order-last mb-6 space-y-6 md:mb-0 md:w-6/12 lg:w-6/12">
@@ -25,9 +25,9 @@ export default function Offer() {
               Get every item you’ll need this winter, during our Winter Sale!
               Starts December and runs until January!
             </p>
-            <div className="flex flex-wrap gap-6">
+            <div className="flex flex-wrap gap-2">
               <PrimaryBtn className={"sm:w-max h-12 w-full"}>
-                Shop Now <ShoppingCartIcon className="w-6 h-6" />
+                Shop Now <ShoppingCartIcon className="w-3 h-3" />
               </PrimaryBtn>
             </div>
           </div>

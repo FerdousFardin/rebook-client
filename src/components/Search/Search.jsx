@@ -19,7 +19,6 @@ function Search() {
       })
       .finally(() => setSearchLoading(false));
   };
-  console.log(result);
   return (
     <form
       onSubmit={handleSearch}

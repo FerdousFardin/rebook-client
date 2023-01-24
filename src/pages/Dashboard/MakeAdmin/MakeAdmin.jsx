@@ -1,5 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useReducer } from "react";
+import usersReducer from "../../../../utility/usersReducer";
+import Loader from "../../../components/Loader/Loader";
+import NoItems from "../../../components/NoItems/NoItems";
+import SmallBtn from "../../../components/SmallBtn/SmallBtn";
 
 const MakeAdmin = () => {
   const {
@@ -16,11 +20,26 @@ const MakeAdmin = () => {
         },
       }).then((res) => res.json()),
   });
+  const usersInitial = {};
+  allUsers?.forEach((user) => {
+    usersInitial[user._id] = false;
+  });
+  const [userState, dispatch] = useReducer(usersReducer, usersInitial);
+  // console.log(usersInitial);
   if (isLoading) return <Loader />;
   if (error) return;
+
+  const handleAdmin = (id) => {
+    dispatch({ type: "MAKE_ADMIN", field: id, payload: true });
+    console.log(userState, usersInitial);
+    setTimeout(() => {
+      // console.log(id);
+      dispatch({ type: "MAKE_ADMIN", field: id, payload: false });
+    }, 7000);
+  };
   return (
     <>
-      {allUsers.length > 0 ? (
+      {/* {allUsers.length > 0 ? (
         <table className="border-collapse w-full">
           <thead>
             <tr>
@@ -37,7 +56,7 @@ const MakeAdmin = () => {
             </tr>
           </thead>
           <tbody>
-            {allUsers.map(({ _id, name, email, photoURL }) => (
+            {allUsers.map(({ _id, name, email, photoURL, role }) => (
               <tr
                 key={_id}
                 className="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0"
@@ -45,7 +64,7 @@ const MakeAdmin = () => {
                 <td className="w-full lg:w-fit lg:max-w-xs p-3 text-gray-700 text-center lg:text-left border border-b block lg:table-cell relative lg:static font-semibold">
                   <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase"></span>
                   <img
-                    className="w-10 rounded-full object-cover"
+                    className="w-10 h-10 rounded-full object-cover"
                     src={photoURL}
                     alt={name}
                   />
@@ -67,7 +86,17 @@ const MakeAdmin = () => {
                     Actions
                   </span>
 
-                  <button>Make Admin</button>
+                  <div className="flex w-full justify-center">
+                    {role?.includes("admin") ? (
+                      "-"
+                    ) : (
+                      <SmallBtn
+                        loading={userState._id}
+                        handler={() => handleAdmin(_id)}
+                        variants={["Make admin", "Wait"]}
+                      />
+                    )}
+                  </div>
                 </td>
               </tr>
             ))}
@@ -75,7 +104,8 @@ const MakeAdmin = () => {
         </table>
       ) : (
         <NoItems page={"All Buyers"} message={"Try again later."} />
-      )}
+      )} */}
+      <NoItems page={"All Buyers"} message={"Currently in Production!"} />
     </>
   );
 };

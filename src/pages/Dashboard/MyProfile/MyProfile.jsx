@@ -129,11 +129,11 @@ function MyProfile() {
               <input type="file" className="opacity-0" {...register("image")} />
             </label>
           </div>
-          <div className="flex items-center justify-center w-full">
+          <div className="flex items-center w-full">
             <button
               type="submit"
               disabled={loading}
-              className="mt-9 text-base font-semibold leading-none text-white py-4 px-10 bg-primary-100 rounded hover:bg-primary focus:ring-2 focus:ring-offset-2 disabled:bg-primary/40 disabled:cursor-not-allowed focus:ring-primary focus:outline-none"
+              className="inline-flex w-24 mt-5 items-center justify-center rounded border-2 border-primary hover: disabled:cursor-not-allowed disabled:bg-black/40 duration-300 px-3 py-2 bg-primary text-white hover:shadow-[0px_4px_0px_0px_#231b15] hover:-translate-y-1 active:translate-y-0 active:shadow-[0px_2px_0px_0px_#231b15]"
             >
               {loading && (
                 <svg

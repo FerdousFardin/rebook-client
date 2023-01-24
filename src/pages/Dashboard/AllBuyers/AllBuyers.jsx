@@ -50,7 +50,7 @@ export default function AllBuyers() {
                 <td className="w-full lg:w-fit lg:max-w-xs p-3 text-gray-700 text-center lg:text-left border border-b block lg:table-cell relative lg:static font-semibold">
                   <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase"></span>
                   <img
-                    className="w-10 rounded-full object-cover"
+                    className="w-10 h-10 rounded-full object-cover"
                     src={photoURL}
                     alt={name}
                   />

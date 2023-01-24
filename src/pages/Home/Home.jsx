@@ -5,7 +5,7 @@ import { useContext } from "react";
 import Loader from "../../components/Loader/Loader";
 import { AuthContext } from "../../context/AuthProvider";
 import Advertised from "./Advertised";
-import Banner from "./Banner";
+import { Banner } from "./Banner";
 import HomeCategories from "./HomeCategories";
 import Offer from "./Offer";
 import { motion } from "framer-motion";

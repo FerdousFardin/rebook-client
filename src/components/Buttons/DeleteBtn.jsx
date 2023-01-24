@@ -1,3 +1,4 @@
+import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
 import React, { useState } from "react";
 import DeleteConfirm from "../../pages/Dashboard/DeleteConfirm/DeleteConfirm";
 
@@ -17,10 +18,10 @@ export default function DeleteBtn({ _id, name, refetch, fetchLink }) {
   return (
     <>
       <button
-        className="text-white py-1 px-2  rounded bg-red-600 hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600 disabled:opacity-50"
+        className="py-2 px-4 flex items-center gap-1 rounded-full border text-xs border-red-800 text-red-800 dark:bg-red-500 dark:hover:bg-red-600 duration-300 disabled:opacity-50 hover:shadow-[0px_3px_0px_0px_#231b15] hover:-translate-y-0.5 hover:border-b active:border-b active:translate-y-0 active:shadow-[0px_1px_0px_0px_#231b15]"
         onClick={() => openModal({ _id, name })}
       >
-        Delete
+        Delete <ExclamationCircleIcon className="w-4 h-4" />
       </button>
       <DeleteConfirm {...{ isOpen, closeModal, fetchLink, user, refetch }} />
     </>
