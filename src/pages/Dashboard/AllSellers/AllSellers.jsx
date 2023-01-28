@@ -51,7 +51,7 @@ export default function AllSellers() {
   if (isLoading)
     return (
       <div className="w-full h-full grid place-items-center">
-        <Loader />
+        <Loader color={"rgba(219, 60, 38, 1)"} />
       </div>
     );
   if (error) return;
@@ -141,7 +141,7 @@ export default function AllSellers() {
                 </tr>
               ))
             ) : (
-              <Loader />
+              <Loader color={"rgba(219, 60, 38, 1)"} />
             )}
           </tbody>
         </table>

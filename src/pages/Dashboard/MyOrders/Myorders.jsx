@@ -20,7 +20,7 @@ export default function Myorders() {
         },
       }).then((res) => res.json()),
   });
-  if (isLoading) return <Loader />;
+  if (isLoading) return <Loader color={"rgba(219, 60, 38, 1)"} />;
   if (error) return;
   return (
     <>

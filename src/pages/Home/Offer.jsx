@@ -13,21 +13,21 @@ export default function Offer() {
     >
       <motion.div
         variants={sectionVariants}
-        className="container sm:px-20 space-y-8 px-6 text-gray-500 md:px-12 lg:px-28"
+        className="container space-y-8 sm:px-20 px-6 text-gray-500 md:px-12 lg:px-28"
       >
         <div className="justify-center gap-6 text-center md:flex md:text-left lg:items-center lg:gap-16">
           <div className="order-last mb-6 space-y-6 md:mb-0 md:w-6/12 lg:w-6/12">
-            <h1 className="text-4xl font-bold text-gray-800 md:text-5xl dark:text-white">
+            <h1 className="text-3xl lg:text-5xl md:text-4xl sm:text-2xl text-gray-800 dark:text-white">
               Buy now and benefit up to{" "}
               <span className="text-primary dark:text-sky-300">50% off</span>
             </h1>
-            <p className="text-lg text-gray-600 dark:text-gray-300">
+            <p className="lg:text-2xl md:text-xl text-lg  sm:leading-relaxed text-gray-900 dark:text-gray-300">
               Get every item you’ll need this winter, during our Winter Sale!
               Starts December and runs until January!
             </p>
             <div className="flex flex-wrap gap-2">
-              <PrimaryBtn className={"sm:w-max h-12 w-full"}>
-                Shop Now <ShoppingCartIcon className="w-3 h-3" />
+              <PrimaryBtn to="/#categories" className={"sm:w-max h-12 w-full "}>
+                Shop Now
               </PrimaryBtn>
             </div>
           </div>

@@ -1,62 +1,92 @@
-import React from "react";
+import { Transition } from "@headlessui/react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import incrementIdx, { placeholders } from "../../../utility/incrementIdx";
+import SecondaryBtn from "../../components/SecondaryBtn/SecondaryBtn";
 
 export default function Advertised({ advertised }) {
+  const [idx, setIdx] = useState(0);
+  const [selectedBook, setSelectedBook] = useState(advertised[idx]);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setIdx(incrementIdx({ idx, length: advertised.length }));
+      setSelectedBook(advertised[idx]);
+    }, 7000);
+    return () => clearInterval(intervalId);
+  }, [idx]);
+  const motionDiv = (
+    <motion.div
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{
+        opacity: 1,
+        scale: 1,
+      }}
+      exit={{ opacity: 0.3, scale: 0.2, transitionDuration: 0.3 }}
+      className="lg:min-h-[450px] lg:w-1/2 border rounded-md border-[#e6e6e6] duration-200 sm:flex gap-2 p-2"
+    >
+      <img
+        src={selectedBook.img}
+        className="sm:h-full h-60 object-scale-down w-full sm:w-2/5"
+        alt=""
+      />
+      <div className="leading-7 flex flex-col py-10 w-full">
+        <motion.h1 className="text-2xl text-primary">
+          {selectedBook.name}
+        </motion.h1>
+        <h3 className="text-lg text-gray-400">{selectedBook.writer}</h3>
+        <p className="mt-5 tracking-wider w-full">
+          {selectedBook.description && selectedBook.description.length > 10
+            ? ""
+            : placeholders}
+          {selectedBook.description}
+          ...
+        </p>
+        <div className="flex items-center my-5 justify-between px-5 justify-self-end h-full ">
+          <h1 className="text-3xl sm:text-2xl lg:text-4xl text-gray-900">
+            ${selectedBook.resalePrice}
+          </h1>
+          <SecondaryBtn to={`/item/${selectedBook._id}`}>See more</SecondaryBtn>
+        </div>
+      </div>
+    </motion.div>
+  );
+  const change = (id, index) => {
+    setSelectedBook({});
+    setTimeout(() => {
+      const newSelect = advertised.find((i) => i._id === id);
+      setSelectedBook(newSelect);
+    }, 250);
+    setIdx(index);
+  };
   return (
     <div className="lg:px-28 py-16">
       <div className="xl:container m-auto px-6 text-gray-500 md:px-12">
         <div>
-          <h2 className="mt-4 text-2xl text-center font-bold text-gray-700 dark:text-white md:text-4xl">
-            Advertised
+          <h2 className="mt-4 text-center text-gray-900 text-3xl lg:text-5xl md:text-4xl sm:text-2xl dark:text-white">
+            Most Popular Books
           </h2>
-          <h5 className="text-center mt-5 text-lg">
-            Check out this week's latest books.
+          <h5 className="text-center mt-5 lg:text-2xl md:text-xl text-lg  sm:leading-relaxed text-gray-800">
+            Check out this week's latest trends.
           </h5>
         </div>
-        <div className="mt-16 grid divide-x divide-y divide-gray-100 dark:divide-gray-700 overflow-hidden rounded-3xl border border-gray-100 dark:border-gray-700 sm:grid-cols-2 lg:grid-cols-4 lg:divide-y-0 xl:grid-cols-4">
-          {advertised.map((elem) => (
-            <Link
-              to={`/category/${elem.categoryId}`}
-              key={elem._id}
-              className="group relative shadow-sm bg-white dark:bg-gray-800 transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10"
-            >
-              <div className="relative space-y-8 py-12 p-8">
-                <img
-                  src={elem.img}
-                  className="w-20"
-                  width="512"
-                  height="512"
-                  alt={elem.name}
-                />
-
-                <div className="space-y-2">
-                  <h5 className="text-xl font-medium text-gray-700 dark:text-white transition group-hover:text-primary">
-                    {elem.name}
-                  </h5>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">
-                    {elem?.description?.length > 150
-                      ? elem.description.slice(0, 150) + "..."
-                      : elem?.description}
-                  </p>
-                </div>
-                <span className="flex items-center justify-between group-hover:text-primary">
-                  <span className="text-sm">Read more</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="w-5 h-5 -translate-x-4 text-2xl opacity-0 transition duration-300 group-hover:translate-x-0 group-hover:opacity-100"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M12.97 3.97a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 11-1.06-1.06l6.22-6.22H3a.75.75 0 010-1.5h16.19l-6.22-6.22a.75.75 0 010-1.06z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </span>
-              </div>
-            </Link>
-          ))}
+        <div className="flex sm:gap-10 justify-center my-10 sm:flex-col lg:flex-row">
+          <AnimatePresence>{motionDiv}</AnimatePresence>
+          <div className="lg:w-1/2 sm:grid sm:grid-cols-4 lg:grid-cols-3 gap-4 hidden">
+            {advertised.map((item, idx) => (
+              <img
+                key={item._id}
+                className={`h-44 lg:h-52 w-36 lg:w-40 object-cover rounded cursor-pointer duration-300 hover:shadow-[0px_0px_2px_2px_#d43621] ${
+                  selectedBook._id === item._id
+                    ? "shadow-[0px_0px_2px_4px_#db3c26]"
+                    : ""
+                }`}
+                src={item.img}
+                alt=""
+                onClick={() => change(item._id, idx)}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>

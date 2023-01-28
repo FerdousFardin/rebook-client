@@ -8,7 +8,8 @@ export default function PrivateRoute({ children }) {
   const location = useLocation();
 
   const loaders = Object.keys(loadingState);
-  for (const loader of loaders) if (loadingState[loader]) return <Loader />;
+  for (const loader of loaders)
+    if (loadingState[loader]) return <Loader color={"rgba(219, 60, 38, 1)"} />;
   if (user?.uid) return <>{children}</>;
   else
     return <Navigate to={"/login"} state={{ from: location }} replace={true} />;

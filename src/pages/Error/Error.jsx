@@ -21,9 +21,11 @@ export default function Error() {
             Try going back, or return home to start from the beginning.
           </p>
 
-          <PrimaryBtn className="h-12 w-fit mx-auto mt-5" to="/">
-            Go Back Home
-          </PrimaryBtn>
+          <div className="w-full flex justify-center">
+            <PrimaryBtn className="h-12 w-fit mt-5" to="/">
+              Go Back Home
+            </PrimaryBtn>
+          </div>
         </div>
       </div>
     </div>

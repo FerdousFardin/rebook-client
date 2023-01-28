@@ -3,7 +3,7 @@ import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
 
 const boxVariant = {
-  visible: { opacity: 1, scale: 1, transition: { duration: 0.35 } },
+  visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } },
   hidden: { opacity: 0, scale: 0 },
 };
 
@@ -24,8 +24,11 @@ export default function Box({ children }) {
       className="w-full h-full"
       ref={ref}
       variants={boxVariant}
-      initial="hidden"
-      animate={control}
+      whileInView={{
+        x: 0,
+        opacity: [0, 0.25, 0.75, 1],
+        scale: 1,
+      }}
     >
       {children}
     </motion.div>

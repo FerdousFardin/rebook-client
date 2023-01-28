@@ -6,6 +6,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
 import useToken from "../../hooks/useToken";
 import SelectType from "./SelectType";
+import { motion } from "framer-motion";
 
 const loginAs = [{ name: "buyer" }, { name: "seller" }];
 export default function Login() {
@@ -97,21 +98,27 @@ export default function Login() {
     <div className="m-auto xl:container px-12 sm:px-0 mx-auto">
       <div className="mx-auto h-full sm:w-max">
         <div className="m-auto w-full max-w-lg py-12">
-          <h3 className="text-2xl font-semibold text-gray-700 dark:text-white">
+          <h3 className="text-2xl md:text-3xl text-gray-700 dark:text-white">
             Login to your account
           </h3>
-          <div className="mt-12 rounded-3xl border bg-slate-50 dark:border-gray-700 dark:bg-gray-800 -mx-6 sm:-mx-10 p-8 sm:p-10">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, x: -15 }}
+            transition={{ duration: 0.65 }}
+            className="mt-12 sm:min-w-[50vw] lg:min-w-[30vw] rounded-3xl border bg-slate-50 dark:border-gray-700 dark:bg-gray-800 -mx-6 sm:-mx-10 p-8 sm:p-10"
+          >
             <div className="flex gap-5 items-center justify-between">
               <span className="text-gray-500 text-xl">Login as</span>
               <SelectType {...{ selected, setSelected, loginAs }} />
             </div>
-            <div className="mt-12 flex flex-wrap  gap-6 ">
+            <div className="mt-12 flex flex-wrap gap-4 w-auto justify-center">
               <button
                 disabled={loadingState.googleLoading}
                 onClick={handleGoogle}
-                className="w-full h-11 rounded-full border hover:bg-gray-200 border-gray-300/75 bg-white disabled:bg-gray-400 disabled:cursor-not-allowed px-6 transition active:bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-800 dark:hover:border-gray-700 "
+                className="w-auto h-10 bg-transparent sm:mx-0 text-sm font-medium flex items-center justify-center px-4 duration-300  text-black border border-black inset-0 rounded-full hover:shadow-[0px_3px_0px_0px_#231b15] hover:-translate-y-1 active:translate-y-0 active:shadow-[0px_2px_0px_0px_#231b15] "
               >
-                <div className="w-full mx-auto flex items-center justify-center space-x-4 ">
+                <div className="w-full mx-auto flex items-center justify-center space-x-2">
                   {loadingState.googleLoading || (
                     <svg className="w-5 h-5 " viewBox="0 0 40 40">
                       <path
@@ -135,7 +142,7 @@ export default function Login() {
                   {loadingState.googleLoading && (
                     <div className="grid-1 my-auto h-5 w-5 mr-3 border-t-transparent border-solid animate-spin rounded-full border-white border"></div>
                   )}
-                  <span className="block w-max text-sm font-semibold tracking-wide text-black dark:text-white">
+                  <span className="block w-max text-sm tracking-wide text-black dark:text-white">
                     {loadingState.googleLoading && "Signing In"} With Google
                   </span>
                 </div>
@@ -152,7 +159,7 @@ export default function Login() {
               className="mt-10 space-y-8 dark:text-white"
             >
               <div>
-                <div className="relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-primary-100 dark:before:bg-primary-100/50 focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
+                <div className="w-full focus-within:invalid:before:bg-red-400">
                   <input
                     {...register("email", {
                       required: "User must provide an email.",
@@ -164,7 +171,7 @@ export default function Login() {
                     id="email"
                     type="email"
                     placeholder="Your email or user name"
-                    className="w-full bg-transparent pb-3  border-b border-gray-300 dark:placeholder-gray-300 dark:border-gray-600 outline-none  invalid:border-red-400 transition"
+                    className="w-full bg-transparent py-3 pl-3 border border-gray-300 dark:placeholder-gray-300 duration-300 rounded focus:border-primary dark:border-gray-600 outline-none  invalid:border-warning"
                   />
                 </div>
                 {errors?.email && (
@@ -175,7 +182,7 @@ export default function Login() {
               </div>
 
               <div className="flex flex-col items-end">
-                <div className="w-full relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-primary-100 dark:before:bg-primary-100/50 focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
+                <div className="w-full focus-within:invalid:before:bg-red-400">
                   <input
                     {...register("password", {
                       required: "User must provide a password.",
@@ -187,7 +194,7 @@ export default function Login() {
                     id="password"
                     type="password"
                     placeholder="Your Password"
-                    className="w-full bg-transparent pb-3  border-b border-gray-300 dark:placeholder-gray-300 dark:border-gray-600 outline-none  invalid:border-red-400 transition"
+                    className="w-full bg-transparent py-3 pl-3 border border-gray-300 dark:placeholder-gray-300 duration-300 rounded focus:border-primary dark:border-gray-600 outline-none  invalid:border-red-400"
                   />
                 </div>
                 {errors?.password && (
@@ -207,11 +214,10 @@ export default function Login() {
                 </button>
               </div>
 
-              <div>
+              <div className="flex items-center flex-col">
                 <button
                   disabled={loadingState.emailLoading}
-                  className="w-full rounded-full bg-primary disabled:bg-red-800
-                  disabled:cursor-not-allowed dark:bg-primary/25 h-11 flex items-center justify-center px-6 py-3 transition hover:bg-primary-100 focus:bg-primary/70 active:bg-primary-100 cursor-pointer text-white"
+                  className="w-auto h-10 bg-primary mx-auto sm:mx-0 text-sm font-medium flex items-center justify-center px-8 duration-300  text-black border border-black inset-0 rounded-full hover:shadow-[0px_3px_0px_0px_#231b15] hover:-translate-y-1 active:translate-y-0 active:shadow-[0px_2px_0px_0px_#231b15] "
                 >
                   {loadingState.emailLoading && (
                     <div className="grid-1 my-auto h-5 w-5 mr-3 border-t-transparent border-solid animate-spin rounded-full border-white border"></div>
@@ -222,16 +228,56 @@ export default function Login() {
                     <input type="submit" value="Log In" />
                   )}
                 </button>
-                <Link to={"/signup"} className="-ml-3  w-max p-3">
+                <Link to={"/signup"} className="-ml-3  w-max p-3 self-start">
                   <span className="text-sm tracking-wide text-primary dark:text-primary">
                     Create new account
                   </span>
                 </Link>
               </div>
             </form>
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>
   );
+}
+{
+  /*
+<div class="w-full flex flex-wrap">
+
+        <!-- Login Section -->
+        <div class="w-full md:w-1/2 flex flex-col">
+
+            <div class="flex justify-center md:justify-start pt-12 md:pl-12 md:-mb-24">
+                <a href="#" class="bg-black text-white font-bold text-xl p-4">Logo</a>
+            </div>
+
+            <div class="flex flex-col justify-center md:justify-start my-auto pt-8 md:pt-0 px-8 md:px-24 lg:px-32">
+                <p class="text-center text-3xl">Welcome.</p>
+                <form class="flex flex-col pt-3 md:pt-8" onsubmit="event.preventDefault();">
+                    <div class="flex flex-col pt-4">
+                        <label for="email" class="text-lg">Email</label>
+                        <input type="email" id="email" placeholder="your@email.com" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+    
+                    <div class="flex flex-col pt-4">
+                        <label for="password" class="text-lg">Password</label>
+                        <input type="password" id="password" placeholder="Password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+    
+                    <input type="submit" value="Log In" class="bg-black text-white font-bold text-lg hover:bg-gray-700 p-2 mt-8">
+                </form>
+                <div class="text-center pt-12 pb-12">
+                    <p>Don't have an account? <a href="register.html" class="underline font-semibold">Register here.</a></p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Image Section -->
+        <div class="w-1/2 shadow-2xl">
+            <img class="object-cover w-full h-screen hidden md:block" src="https://source.unsplash.com/IXUM4cJynP0">
+        </div>
+    </div>
+*/
 }

@@ -111,7 +111,7 @@ export default function AddProduct() {
       setLoading(false);
     }, 5000);
   };
-  if (isLoading) return <Loader />;
+  if (isLoading) return <Loader color={"rgba(219, 60, 38, 1)"} />;
   if (error) return;
   return (
     <section className="bg-gray-100">

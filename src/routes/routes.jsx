@@ -45,10 +45,6 @@ export const routes = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "/signup",
-        element: <SignUp />,
-      },
-      {
         path: "/blog",
         element: (
           <PageWrapper>
@@ -154,5 +150,9 @@ export const routes = createBrowserRouter([
   {
     path: "/error",
     element: <Error />,
+  },
+  {
+    path: "/signup",
+    element: <SignUp />,
   },
 ]);

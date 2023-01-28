@@ -35,8 +35,8 @@ export default function Dashboard() {
       }).then((res) => res.json()),
   });
   const activeClass =
-    "relative flex items-center space-x-4 rounded bg-primary to-primary-100/50 px-3 py-3 text-white";
-  if (isLoading) return <Loader />;
+    "text-primary underline underline-offset-2 px-4 py-3 space-x-4";
+  if (isLoading) return <Loader color={"rgba(219, 60, 38, 1)"} />;
   if (error) return;
   const dashboardList = (
     <ul className="mt-8 space-y-2 tracking-wide">
@@ -52,7 +52,7 @@ export default function Dashboard() {
           className={({ isActive }) =>
             isActive
               ? activeClass
-              : "group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600 dark:text-gray-300 hover:text-primary duration-300 hover:scale-105"
+              : "group flex  items-center space-x-4 rounded-md px-4 py-3 text-gray-600 dark:text-gray-300 hover:text-primary duration-300 hover:scale-105"
           }
         >
           <span className="-mr-1 font-medium">My Profile</span>
@@ -209,7 +209,7 @@ export default function Dashboard() {
             <div className="flex items-center justify-between space-x-4 px-6 2xl:container">
               <h5
                 hidden
-                className="text-2xl font-light text-gray-600 lg:block dark:text-white uppercase"
+                className="text-xl font-light text-gray-400 lg:block dark:text-white capitalize"
               >
                 Dashboard{" "}
                 {dashboardMenu && (

@@ -62,7 +62,7 @@ export default function CategoryProduct() {
       })
       .finally(() => setLoading(false));
   };
-  if (isLoading || loading) return <Loader />;
+  if (isLoading || loading) return <Loader color={"rgba(219, 60, 38, 1)"} />;
   if (error) return navigate("/error");
   return (
     <>

@@ -26,7 +26,7 @@ const MakeAdmin = () => {
   });
   const [userState, dispatch] = useReducer(usersReducer, usersInitial);
   // console.log(usersInitial);
-  if (isLoading) return <Loader />;
+  if (isLoading) return <Loader color={"rgba(219, 60, 38, 1)"} />;
   if (error) return;
 
   const handleAdmin = (id) => {

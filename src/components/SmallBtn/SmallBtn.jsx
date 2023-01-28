@@ -1,6 +1,6 @@
 import React from "react";
 
-function SmallBtn({ loading, handler, colorPref, variants }) {
+function SmallBtn({ loading, handler, colorPref, variants, type }) {
   return (
     <button
       style={{

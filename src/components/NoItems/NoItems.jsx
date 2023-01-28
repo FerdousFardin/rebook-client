@@ -8,7 +8,7 @@ export default function NoItems({ page, message }) {
           OOPS!
         </p>
         <p className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-wider text-gray-300 mt-2">
-          Nothing found on {page} page
+          Nothing found on {page}
         </p>
         <p className="text-lg md:text-xl lg:text-2xl text-gray-500 my-12">
           {message}
